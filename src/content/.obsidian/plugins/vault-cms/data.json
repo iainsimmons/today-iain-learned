@@ -1,0 +1,365 @@
+{
+  "projectRoot": "",
+  "configFilePath": "",
+  "contentTypes": [],
+  "frontmatterProperties": {},
+  "preset": "vanilla",
+  "enableWYSIWYG": false,
+  "enabledPlugins": [],
+  "disabledPlugins": [],
+  "theme": "",
+  "basesCMSConfig": {
+    "views": []
+  },
+  "astroComposerConfig": {
+    "customContentTypes": [],
+    "defaultTemplate": "",
+    "configFilePath": "",
+    "terminalProjectRootPath": ""
+  },
+  "seoConfig": {
+    "titleProperty": "title",
+    "scanDirectories": "",
+    "useFilenameAsTitle": false,
+    "useFilenameAsSlug": true
+  },
+  "commanderConfig": {
+    "pageHeaderCommands": []
+  },
+  "propertyOverFileName": {
+    "propertyKey": "title"
+  },
+  "uiTweaker": {
+    "titleBar": "show",
+    "fileExplorerNavHeader": "show",
+    "otherNavHeaders": "show",
+    "leftTabHeaders": "show",
+    "rightTabHeaders": "show",
+    "ribbonRevealOnHover": false,
+    "vaultSwitcher": "reveal",
+    "helpButton": "show",
+    "settingsButton": "show",
+    "tabBar": false,
+    "enableWindowDragging": false,
+    "newNoteButton": true,
+    "newFolderButton": true,
+    "sortOrderButton": false,
+    "autoRevealButton": false,
+    "collapseAllButton": true,
+    "readingModeButton": false,
+    "searchSettingsButton": false,
+    "tabListIcon": "show",
+    "newTabIcon": "show",
+    "tabCloseButton": "show",
+    "statusBar": false,
+    "scrollBars": "show",
+    "leftSidebarToggleButton": "show",
+    "rightSidebarToggleButton": "show",
+    "tooltips": false,
+    "searchSuggestions": false,
+    "searchTermCounts": false,
+    "propertiesInReadingView": true,
+    "propertiesInHeading": true,
+    "addPropertyButton": true,
+    "instructions": false,
+    "mobileChevronsIcon": false,
+    "navigateBackButton": false,
+    "navigateForwardButton": false,
+    "quickSwitcherButton": false,
+    "mobileNewTabButton": false,
+    "openTabButton": false,
+    "ribbonMenuButton": false,
+    "swapMobileNewTabIcon": false,
+    "hideMobileTitle": false,
+    "hideMobileSyncIcon": false,
+    "navigateButtonPosition": "1",
+    "navigationButtonPosition": "2",
+    "quickSwitcherPosition": "3",
+    "newTabPosition": "4",
+    "openTabsPosition": "5",
+    "ribbonMenuPosition": "6",
+    "vaultSwitcherBackgroundTransparency": 1,
+    "helpButtonReplacement": {
+      "enabled": false,
+      "commandId": "ui-tweaker:open-settings",
+      "iconId": "wrench"
+    },
+    "syncButtonReplacement": {
+      "enabled": false,
+      "commandId": "",
+      "iconId": "wrench"
+    },
+    "tabBarCommands": [
+      {
+        "id": "editing-toolbar:hide-show-menu",
+        "icon": "lucide-chevron-down",
+        "name": "Toggle editing toolbar",
+        "displayName": "Editing Toolbar: Hide/Show ",
+        "mode": "any",
+        "toggleIcon": "lucide-chevron-up",
+        "showOnFileTypes": "md,mdx"
+      }
+    ],
+    "statusBarItems": [
+      {
+        "id": "plugin-editor-status;1",
+        "name": "plugin-editor-status",
+        "type": "existing",
+        "hidden": false,
+        "mdOnly": false,
+        "sticky": "left"
+      },
+      {
+        "id": "plugin-backlink;1",
+        "name": "0 backlinks",
+        "type": "existing",
+        "hidden": false,
+        "mdOnly": false
+      },
+      {
+        "id": "plugin-word-count;1",
+        "name": "0 words0 characters",
+        "type": "existing",
+        "hidden": false,
+        "mdOnly": false
+      },
+      {
+        "id": "plugin-editing-toolbar-editingToolbar-statusbar-button;1",
+        "name": "plugin-editing-toolbar-editingToolbar-statusbar-button",
+        "type": "existing",
+        "hidden": true,
+        "mdOnly": false
+      },
+      {
+        "id": "plugin-obsidian-git;2",
+        "name": "master",
+        "type": "existing",
+        "hidden": false,
+        "mdOnly": false,
+        "sticky": "right"
+      },
+      {
+        "id": "plugin-obsidian-git;1",
+        "name": "plugin-obsidian-git",
+        "type": "existing",
+        "hidden": false,
+        "mdOnly": false,
+        "sticky": "right"
+      },
+      {
+        "id": "custom-obsidian-git:push",
+        "name": "Git: Commit-and-sync",
+        "displayName": "Git: Commit-and-sync",
+        "icon": "lucide-arrow-up-circle",
+        "type": "custom",
+        "hidden": false,
+        "mdOnly": false,
+        "commandId": "obsidian-git:push",
+        "mode": "any",
+        "sticky": "right"
+      }
+    ],
+    "explorerCommands": [],
+    "explorerButtonItems": [
+      {
+        "id": "native-newNote",
+        "name": "New note",
+        "ariaLabel": "New note",
+        "type": "native",
+        "hidden": false
+      },
+      {
+        "id": "native-newFolder",
+        "name": "New folder",
+        "ariaLabel": "New folder",
+        "type": "native",
+        "hidden": false
+      },
+      {
+        "id": "native-sortOrder",
+        "name": "Change sort order",
+        "ariaLabel": "Change sort order",
+        "type": "native",
+        "hidden": false
+      },
+      {
+        "id": "native-autoReveal",
+        "name": "Auto-reveal current file",
+        "ariaLabel": "Auto-reveal current file",
+        "type": "native",
+        "hidden": false
+      },
+      {
+        "id": "native-collapseAll",
+        "name": "Expand all",
+        "ariaLabel": "Collapse all",
+        "type": "native",
+        "hidden": false
+      },
+      {
+        "id": "external-toggle-focus",
+        "name": "Toggle focus",
+        "ariaLabel": "Toggle focus",
+        "type": "external",
+        "hidden": false
+      }
+    ],
+    "nativeExplorerButtonColors": {},
+    "nativeExplorerButtonIcons": {}
+  },
+  "imageInserter": {
+    "valueFormat": "[[attachments/{image-url}]]",
+    "insertFormat": "[[attachments/{image-url}]]"
+  },
+  "imageManager": {
+    "enableRenameOnPaste": true,
+    "enableRenameOnDrop": true,
+    "imageNameTemplate": "{{fileName}}",
+    "attachmentLocation": "obsidian",
+    "customAttachmentPath": "./assets",
+    "defaultProvider": "unsplash",
+    "unsplashProxyServer": "",
+    "pexelsApiKey": "",
+    "pexelsApiKeySecretId": "pexels-api-key",
+    "pixabayApiKey": "",
+    "pixabayApiKeySecretId": "pixabay-api-key",
+    "defaultOrientation": "any",
+    "defaultImageSize": "large",
+    "enablePropertyPaste": true,
+    "propertyLinkFormat": "custom",
+    "customPropertyLinkFormat": "[[attachments/{image-url}]]",
+    "defaultPropertyName": "image",
+    "defaultIconPropertyName": "icon",
+    "autoConvertRemoteImages": false,
+    "convertOnNoteOpen": false,
+    "convertOnNoteSave": false,
+    "autoRename": false,
+    "dupNumberDelimiter": "-",
+    "dupNumberAtStart": false,
+    "disableRenameNotice": false,
+    "enableDescriptiveImages": true,
+    "insertSize": "",
+    "insertReferral": true,
+    "insertBackLink": false,
+    "appendReferral": false,
+    "banner": {
+      "properties": {
+        "imageProperty": "image",
+        "iconProperty": "icon"
+      },
+      "desktop": {
+        "enabled": true,
+        "height": 240,
+        "viewOffset": 0,
+        "noteOffset": -32,
+        "borderRadius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "padding": 0,
+        "fade": true,
+        "iconEnabled": false,
+        "iconSize": 96,
+        "iconRadius": 8,
+        "iconBackground": true,
+        "iconBorder": 2,
+        "iconFrame": true,
+        "iconAlignmentH": "flex-start",
+        "iconAlignmentV": "flex-end",
+        "iconOffsetX": 0,
+        "iconOffsetY": -24,
+        "animation": false
+      },
+      "tablet": {
+        "enabled": true,
+        "height": 190,
+        "viewOffset": 0,
+        "noteOffset": -32,
+        "borderRadius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "padding": 8,
+        "fade": true,
+        "iconEnabled": false,
+        "iconSize": 96,
+        "iconRadius": 8,
+        "iconBackground": true,
+        "iconBorder": 2,
+        "iconFrame": true,
+        "iconAlignmentH": "flex-start",
+        "iconAlignmentV": "flex-end",
+        "iconOffsetX": 0,
+        "iconOffsetY": -24
+      },
+      "phone": {
+        "enabled": true,
+        "height": 160,
+        "viewOffset": 0,
+        "noteOffset": -32,
+        "borderRadius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "padding": 8,
+        "fade": true,
+        "iconEnabled": false,
+        "iconSize": 56,
+        "iconRadius": 8,
+        "iconBackground": true,
+        "iconBorder": 2,
+        "iconFrame": true,
+        "iconAlignmentH": "flex-start",
+        "iconAlignmentV": "flex-end",
+        "iconOffsetX": 0,
+        "iconOffsetY": -24
+      }
+    },
+    "supportedExtensions": [
+      "md"
+    ],
+    "debugMode": false
+  },
+  "homeBase": {
+    "homeBasePath": "bases/Home.base",
+    "homeBaseType": "File",
+    "homeBaseValue": "bases/Home.base",
+    "openOnStartup": true,
+    "openViewMode": "default",
+    "openMode": "replace-all",
+    "manualOpenMode": "retain",
+    "replaceNewTab": false,
+    "newTabMode": "only-when-empty",
+    "openWhenAllTabsClosed": false,
+    "keepExistingTabs": false,
+    "useDifferentFileForNewTab": false,
+    "newTabType": "File",
+    "newTabValue": "bases/Home.base",
+    "newTabSeparateMobile": false,
+    "mobileNewTabType": "Graph view",
+    "mobileNewTabValue": "",
+    "showStickyHomeIcon": true,
+    "stickyIconName": "lucide-home",
+    "hideHomeTabHeader": true,
+    "replaceMobileNewTab": false,
+    "separateMobile": false,
+    "mobileHomeBasePath": "",
+    "mobileHomeBaseType": "File",
+    "mobileHomeBaseValue": "",
+    "commandOnOpen": "",
+    "revertView": false,
+    "autoScroll": false,
+    "hideReleaseNotes": false,
+    "openWhenEmpty": false,
+    "stickyIconReplaceTab": false
+  },
+  "runWizardOnStartup": false,
+  "wizardCompleted": false,
+  "enableMdxSupport": false
+}
