@@ -79,22 +79,8 @@ export default defineConfig({
     enabled: true
   },
   redirects: (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'build') ? {
-  '/about-me': '/about',
-  '/about-us': '/about',
   '/contact-me': '/contact',
-  '/contact-us': '/contact',
-  '/privacy': '/privacy-policy',
-  '/posts/mermaid-test': '/posts/obsidian-embeds-demo',
-  '/posts/mermaid-diagram-test': '/posts/obsidian-embeds-demo',
-  '/posts/mermaid-diagrams': '/posts/obsidian-embeds-demo',
-  '/posts/astro-suite-vault-modular-guide': '/posts/vault-cms-guide',
-  '/posts/astro-suite-obsidian-vault-guide-astro-modular': '/posts/vault-cms-guide',
-  '/posts/obsidian-vault-guide': '/posts/vault-cms-guide',
-  '/projects/obsidian-astro-composer': '/projects/astro-composer',
-  '/projects/obsidian-astro-suite': '/projects/vault-cms',
-  '/docs/api-reference': '/docs/api',
-  '/docs/astro-modular-configuration': '/docs/configuration',
-  '/docs/sourcetree-and-git': '/docs/sourcetree-and-git-setup'
+  '/contact-us': '/contact'
 } : {},
 image: {
     service: {
@@ -196,6 +182,7 @@ image: {
       middlewareMode: false,
       hmr: true,
       watch: {
+      ignored: ['**/.obsidian/**', '**/_bases/**', '**/bases/**'],
         usePolling: process.platform === 'win32', // Use polling on Windows for better file watching
         interval: 1000
       },
