@@ -3,3 +3,6 @@ onlyBuiltDependencies:
   - sharp
   - swup
   - workerd
+
+packages:
+  - .
