@@ -1,127 +1,82 @@
 {
   "nodes": [
     {
-      "id": "formatting-reference",
+      "id": "Acupuncture is great",
       "type": "post",
-      "title": "Formatting Reference",
-      "slug": "formatting-reference",
-      "connections": 13
-    },
-    {
-      "id": "getting-started",
-      "type": "post",
-      "title": "Getting Started",
-      "slug": "getting-started",
-      "connections": 6
-    },
-    {
-      "id": "obsidian-embeds-demo",
-      "type": "post",
-      "title": "Obsidian Embeds Demo",
-      "slug": "obsidian-embeds-demo",
+      "title": "Acupuncture is great",
+      "slug": "Acupuncture is great",
       "connections": 0
     },
     {
-      "id": "sample-folder-based-post",
+      "id": "Add keybinds or shortcuts for other keys in Hyprland",
       "type": "post",
-      "title": "Sample Folder-Based Post",
-      "slug": "sample-folder-based-post",
+      "title": "Add keybinds or shortcuts for other keys in Hyprland",
+      "slug": "Add keybinds or shortcuts for other keys in Hyprland",
       "connections": 0
     },
     {
-      "id": "vault-cms-guide",
+      "id": "How to fix WezTerm in Hyprland",
       "type": "post",
-      "title": "Vault CMS Guide",
-      "slug": "vault-cms-guide",
+      "title": "How to fix WezTerm in Hyprland",
+      "slug": "How to fix WezTerm in Hyprland",
+      "connections": 0
+    },
+    {
+      "id": "Learned or Learnt",
+      "type": "post",
+      "title": "Learned or Learnt",
+      "slug": "Learned or Learnt",
+      "connections": 0
+    },
+    {
+      "id": "Raycast Extension fetch error",
+      "type": "post",
+      "title": "Raycast Extension fetch error",
+      "slug": "Raycast Extension fetch error",
+      "connections": 0
+    },
+    {
+      "id": "Remap the CapsLock key in Linux",
+      "type": "post",
+      "title": "Remap the CapsLock key in Linux",
+      "slug": "Remap the CapsLock key in Linux",
+      "connections": 0
+    },
+    {
+      "id": "Restarting a MacBook in recovery mode",
+      "type": "post",
+      "title": "Restarting a MacBook in recovery mode",
+      "slug": "Restarting a MacBook in recovery mode",
+      "connections": 0
+    },
+    {
+      "id": "Set custom cursor in Hyprland",
+      "type": "post",
+      "title": "Set custom cursor in Hyprland",
+      "slug": "Set custom cursor in Hyprland",
+      "connections": 0
+    },
+    {
+      "id": "Walker + Elephant = Raycast on Linux",
+      "type": "post",
+      "title": "Walker + Elephant = Raycast on Linux",
+      "slug": "Walker + Elephant = Raycast on Linux",
+      "connections": 0
+    },
+    {
+      "id": "kitty sessions",
+      "type": "post",
+      "title": "kitty sessions",
+      "slug": "kitty sessions",
       "connections": 0
     }
   ],
-  "connections": [
-    {
-      "source": "formatting-reference",
-      "target": "getting-started",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "getting-started",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "sample-folder-based-post",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "vault-cms-guide",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "obsidian-embeds-demo",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "getting-started",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "getting-started",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "getting-started",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "obsidian-embeds-demo",
-      "type": "link"
-    },
-    {
-      "source": "formatting-reference",
-      "target": "obsidian-embeds-demo",
-      "type": "link"
-    },
-    {
-      "source": "getting-started",
-      "target": "vault-cms-guide",
-      "type": "link"
-    },
-    {
-      "source": "getting-started",
-      "target": "formatting-reference",
-      "type": "link"
-    },
-    {
-      "source": "getting-started",
-      "target": "vault-cms-guide",
-      "type": "link"
-    },
-    {
-      "source": "getting-started",
-      "target": "formatting-reference",
-      "type": "link"
-    },
-    {
-      "source": "getting-started",
-      "target": "vault-cms-guide",
-      "type": "link"
-    },
-    {
-      "source": "getting-started",
-      "target": "formatting-reference",
-      "type": "link"
-    }
-  ],
+  "connections": [],
   "metadata": {
-    "totalPosts": 5,
-    "totalConnections": 16,
+    "totalPosts": 10,
+    "totalConnections": 0,
     "maxNodesApplied": false,
-    "originalNodeCount": 5
+    "originalNodeCount": 10
   }
 }
+
