@@ -232,9 +232,9 @@ export const siteConfig: SiteConfig = {
     source: "local", // "local" for self-hosted @fontsource fonts, "cdn" for Google Fonts CDN
     families: {
       // [CONFIG:FONT_BODY]
-      body: "Inter", // Body text font family
+      body: "JetBrains Mono", // Body text font family
       // [CONFIG:FONT_HEADING]
-      heading: "Inter", // Heading font family
+      heading: "JetBrains Mono", // Heading font family
       // [CONFIG:FONT_MONO]
       mono: "JetBrains Mono", // Monospace font family
     },
@@ -243,7 +243,7 @@ export const siteConfig: SiteConfig = {
   },
   layout: {
     // [CONFIG:LAYOUT_CONTENT_WIDTH]
-    contentWidth: "45rem",
+    contentWidth: "55rem",
   },
   tableOfContents: {
     // [CONFIG:TABLE_OF_CONTENTS_ENABLED]
@@ -831,10 +831,10 @@ function validateSiteConfig(config: SiteConfig): {
   // Content width validation
   if (
     !config.layout.contentWidth ||
-    !config.layout.contentWidth.match(/^\d+(\.\d+)?(rem|px|em)$/)
+    !config.layout.contentWidth.match(/^\d+(\.\d+)?(rem|px|em|ch)$/)
   ) {
     errors.push(
-      `Content width must be a valid CSS length value like "45rem", "800px", or "90em". Current value "${config.layout.contentWidth}" is invalid.`,
+      `Content width must be a valid CSS length value like "45rem", "60ch", "800px", or "90em". Current value "${config.layout.contentWidth}" is invalid.`,
     );
   }
 
@@ -1006,4 +1006,3 @@ if (!validation.isValid) {
 
 // Export the configuration as default
 export default siteConfig;
-
