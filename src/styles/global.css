@@ -1,6 +1,5 @@
-
 /* KaTeX Math Rendering - Must be first */
-@import 'katex/dist/katex.css';
+@import "katex/dist/katex.css";
 
 @tailwind base;
 @tailwind components;
@@ -48,7 +47,6 @@
   display: inline-block !important;
 }
 
-
 .katex-display {
   margin: 1.5rem 0;
   text-align: center;
@@ -80,9 +78,6 @@ p:has(.katex-display) {
 .dark .katex {
   color: rgb(var(--color-foreground));
 }
-
-
-
 
 /* KaTeX error styling */
 .katex-error {
@@ -126,8 +121,6 @@ p:has(.katex-display) {
   margin: 0 0.25rem;
 }
 
-
-
 /* CSS Custom Properties - Essential globals only */
 :root {
   /* Code block colors for light theme */
@@ -135,7 +128,7 @@ p:has(.katex-display) {
   --code-text: 240 240 240;
   --inline-code-bg: 240 240 240;
   --inline-code-text: 33 33 33;
-  
+
   /* Highlight/selection colors */
   --selection-bg: 112 135 148;
 }
@@ -160,8 +153,16 @@ html {
 
 body {
   @apply bg-primary-50 dark:bg-primary-900 text-primary-900 dark:text-primary-100;
-  font-family: var(--font-prose, 'Inter'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-feature-settings: "rlig" 1, "calt" 1;
+  font-family:
+    var(--font-prose, "Inter"),
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -262,8 +263,19 @@ code ::-moz-selection,
 }
 
 /* Typography - Dynamic fonts will be applied via CSS custom properties */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading, 'Inter'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    var(--font-heading, "Inter"),
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   font-weight: 500;
   line-height: 1.3;
   color: rgb(var(--color-foreground));
@@ -320,8 +332,14 @@ a:hover {
 /* Code Styles - Working with Tailwind prose plugin */
 
 /* Monospace font support */
-code, pre, .astro-code, kbd, .font-mono {
-  font-family: var(--font-mono, 'JetBrains Mono'), 'Monaco', 'Consolas', 'Courier New', monospace;
+code,
+pre,
+.astro-code,
+kbd,
+.font-mono {
+  font-family:
+    var(--font-mono, "JetBrains Mono"), "Monaco", "Consolas", "Courier New",
+    monospace;
   font-display: var(--font-display, swap);
 }
 
@@ -345,7 +363,6 @@ pre.astro-code {
   font-size: 0.875rem !important;
 }
 
-
 .astro-code code,
 pre.astro-code code {
   background-color: transparent !important;
@@ -354,40 +371,53 @@ pre.astro-code code {
   border-radius: 0 !important;
 }
 
-/* Enhanced code block scrolling */  
-pre, .prose pre, .astro-code, .prose .astro-code {  
-  overflow-x: auto !important;  
-  scrollbar-width: thin !important;  
-  scrollbar-color: rgba(156, 163, 175, 0.5) transparent !important;  
-}  
-  
-/* Show scrollbars on hover for better UX */  
-pre:hover, .prose pre:hover,   
-.astro-code:hover, .prose .astro-code:hover {  
-  scrollbar-color: rgba(156, 163, 175, 0.8) transparent !important;  
-}  
-  
-/* Webkit scrollbar styling for code blocks */  
-pre::-webkit-scrollbar, .prose pre::-webkit-scrollbar,  
-.astro-code::-webkit-scrollbar, .prose .astro-code::-webkit-scrollbar {  
-  height: 8px !important;  
-  display: block !important;  
-}  
-  
-pre::-webkit-scrollbar-track, .prose pre::-webkit-scrollbar-track,  
-.astro-code::-webkit-scrollbar-track, .prose .astro-code::-webkit-scrollbar-track {  
-  background: transparent !important;  
-}  
-  
-pre::-webkit-scrollbar-thumb, .prose pre::-webkit-scrollbar-thumb,  
-.astro-code::-webkit-scrollbar-thumb, .prose .astro-code::-webkit-scrollbar-thumb {  
-  background-color: rgba(156, 163, 175, 0.5) !important;  
-  border-radius: 4px !important;  
-}  
-  
-pre::-webkit-scrollbar-thumb:hover, .prose pre::-webkit-scrollbar-thumb:hover,  
-.astro-code::-webkit-scrollbar-thumb:hover, .prose .astro-code::-webkit-scrollbar-thumb:hover {  
-  background-color: rgba(156, 163, 175, 0.8) !important;  
+/* Enhanced code block scrolling */
+pre,
+.prose pre,
+.astro-code,
+.prose .astro-code {
+  overflow-x: auto !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent !important;
+}
+
+/* Show scrollbars on hover for better UX */
+pre:hover,
+.prose pre:hover,
+.astro-code:hover,
+.prose .astro-code:hover {
+  scrollbar-color: rgba(156, 163, 175, 0.8) transparent !important;
+}
+
+/* Webkit scrollbar styling for code blocks */
+pre::-webkit-scrollbar,
+.prose pre::-webkit-scrollbar,
+.astro-code::-webkit-scrollbar,
+.prose .astro-code::-webkit-scrollbar {
+  height: 8px !important;
+  display: block !important;
+}
+
+pre::-webkit-scrollbar-track,
+.prose pre::-webkit-scrollbar-track,
+.astro-code::-webkit-scrollbar-track,
+.prose .astro-code::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+pre::-webkit-scrollbar-thumb,
+.prose pre::-webkit-scrollbar-thumb,
+.astro-code::-webkit-scrollbar-thumb,
+.prose .astro-code::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5) !important;
+  border-radius: 4px !important;
+}
+
+pre::-webkit-scrollbar-thumb:hover,
+.prose pre::-webkit-scrollbar-thumb:hover,
+.astro-code::-webkit-scrollbar-thumb:hover,
+.prose .astro-code::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.8) !important;
 }
 
 /* Keyboard Shortcuts */
@@ -463,35 +493,57 @@ input[type="search"],
 textarea {
   @apply block w-full px-3 py-2 border border-primary-300 dark:border-primary-600 rounded-lg bg-white dark:bg-primary-800 text-primary-900 dark:text-primary-100 placeholder-primary-500 dark:placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-highlight-500 focus:border-transparent;
 }
-  
-.form-sleek {  
-  @apply space-y-4;  
-}  
-  
-.form-sleek input,  
-.form-sleek textarea {  
-  @apply bg-primary-50/50 dark:bg-primary-800/50 border-primary-200/50 dark:border-primary-600/50 backdrop-blur-sm;  
+
+.form-sleek {
+  @apply space-y-4;
+}
+
+.form-sleek input,
+.form-sleek textarea {
+  @apply bg-primary-50/50 dark:bg-primary-800/50 border-primary-200/50 dark:border-primary-600/50 backdrop-blur-sm;
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.animate-fade-in { animation: fadeIn 0.2s ease-in-out; }
-.animate-slide-up { animation: slideUp 0.3s ease-out; }
-.animate-scale-in { animation: scaleIn 0.2s ease-out; }
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-in-out;
+}
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
+}
 
 /* Callout Styles */
 .callout {
@@ -510,38 +562,62 @@ textarea {
   @apply text-sm;
 }
 
-.callout-content > *:first-child { @apply mt-0; }
-.callout-content > *:last-child { @apply mb-0; }
+.callout-content > *:first-child {
+  @apply mt-0;
+}
+.callout-content > *:last-child {
+  @apply mb-0;
+}
 
 .callout-note {
   @apply bg-blue-50 dark:bg-blue-950/30 border-blue-400 dark:border-blue-600;
 }
-.callout-note .callout-title { @apply text-blue-700 dark:text-blue-300; }
-.callout-note .callout-content { @apply text-blue-800 dark:text-blue-200; }
+.callout-note .callout-title {
+  @apply text-blue-700 dark:text-blue-300;
+}
+.callout-note .callout-content {
+  @apply text-blue-800 dark:text-blue-200;
+}
 
 .callout-tip {
   @apply bg-green-50 dark:bg-green-950/30 border-green-400 dark:border-green-600;
 }
-.callout-tip .callout-title { @apply text-green-700 dark:text-green-300; }
-.callout-tip .callout-content { @apply text-green-800 dark:text-green-200; }
+.callout-tip .callout-title {
+  @apply text-green-700 dark:text-green-300;
+}
+.callout-tip .callout-content {
+  @apply text-green-800 dark:text-green-200;
+}
 
 .callout-important {
   @apply bg-purple-50 dark:bg-purple-950/30 border-purple-400 dark:border-purple-600;
 }
-.callout-important .callout-title { @apply text-purple-700 dark:text-purple-300; }
-.callout-important .callout-content { @apply text-purple-800 dark:text-purple-200; }
+.callout-important .callout-title {
+  @apply text-purple-700 dark:text-purple-300;
+}
+.callout-important .callout-content {
+  @apply text-purple-800 dark:text-purple-200;
+}
 
 .callout-warning {
   @apply bg-yellow-50 dark:bg-yellow-950/30 border-yellow-400 dark:border-yellow-600;
 }
-.callout-warning .callout-title { @apply text-yellow-700 dark:text-yellow-300; }
-.callout-warning .callout-content { @apply text-yellow-800 dark:text-yellow-200; }
+.callout-warning .callout-title {
+  @apply text-yellow-700 dark:text-yellow-300;
+}
+.callout-warning .callout-content {
+  @apply text-yellow-800 dark:text-yellow-200;
+}
 
 .callout-caution {
   @apply bg-red-50 dark:bg-red-950/30 border-red-400 dark:border-red-600;
 }
-.callout-caution .callout-title { @apply text-red-700 dark:text-red-300; }
-.callout-caution .callout-content { @apply text-red-800 dark:text-red-200; }
+.callout-caution .callout-title {
+  @apply text-red-700 dark:text-red-300;
+}
+.callout-caution .callout-content {
+  @apply text-red-800 dark:text-red-200;
+}
 
 /* Collapsible Callout Styles */
 .callout-collapsible .callout-title {
@@ -622,32 +698,68 @@ textarea {
   margin: 0.5rem 0;
 }
 
-.prose .image-grid-1 { grid-template-columns: 1fr; }
-.prose .image-grid-2 { grid-template-columns: 1fr 1fr; }
-.prose .image-grid-3 { grid-template-columns: 1fr 1fr; }
-.prose .image-grid-4 { grid-template-columns: 1fr 1fr; }
-.prose .image-grid-5 { grid-template-columns: 1fr 1fr; }
-.prose .image-grid-6 { grid-template-columns: 1fr 1fr; }
+.prose .image-grid-1 {
+  grid-template-columns: 1fr;
+}
+.prose .image-grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+.prose .image-grid-3 {
+  grid-template-columns: 1fr 1fr;
+}
+.prose .image-grid-4 {
+  grid-template-columns: 1fr 1fr;
+}
+.prose .image-grid-5 {
+  grid-template-columns: 1fr 1fr;
+}
+.prose .image-grid-6 {
+  grid-template-columns: 1fr 1fr;
+}
 
 @media (min-width: 600px) {
-  .prose .image-grid-1 { grid-template-columns: 1fr; }
-  .prose .image-grid-2 { grid-template-columns: 1fr 1fr; }
-  .prose .image-grid-3 { grid-template-columns: 1fr 1fr; }
-  .prose .image-grid-4 { grid-template-columns: 1fr 1fr; }
-  .prose .image-grid-5 { grid-template-columns: 1fr 1fr; }
-  .prose .image-grid-6 { grid-template-columns: 1fr 1fr; }
+  .prose .image-grid-1 {
+    grid-template-columns: 1fr;
+  }
+  .prose .image-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .prose .image-grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .prose .image-grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .prose .image-grid-5 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .prose .image-grid-6 {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (min-width: 900px) {
-  .prose .image-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-  .prose .image-grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-  .prose .image-grid-5 { grid-template-columns: 1fr 1fr 1fr; }
-  .prose .image-grid-6 { grid-template-columns: 1fr 1fr 1fr; }
+  .prose .image-grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .prose .image-grid-4 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .prose .image-grid-5 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .prose .image-grid-6 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 @media (min-width: 1200px) {
-  .prose .image-grid-5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
-  .prose .image-grid-6 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; }
+  .prose .image-grid-5 {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  .prose .image-grid-6 {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
 }
 
 .prose .image-grid img,
@@ -700,46 +812,86 @@ textarea {
 }
 
 .prose .image-grid .image-button:hover img {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* Prose Styles */
 .prose {
   @apply text-primary-700 dark:text-primary-300;
-  font-family: var(--font-prose, 'Inter'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    var(--font-prose, "Inter"),
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   font-display: var(--font-display, swap);
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
   @apply font-semibold text-primary-900 dark:text-primary-50;
-  font-family: var(--font-heading, 'Inter'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    var(--font-heading, "Inter"),
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   scroll-margin-top: 8rem;
   font-display: var(--font-display, swap);
 }
 
-.prose h1 { @apply text-xl mt-8 mb-6; }
-.prose h2 { @apply text-lg mt-8 mb-4; }
-.prose h3 { @apply text-base mt-6 mb-3; }
-.prose h4 { @apply text-base mt-5 mb-2; }
-.prose h5 { @apply text-base mt-4 mb-2; }
-.prose h6 { @apply text-base mt-4 mb-2; }
+.prose h1 {
+  @apply text-xl mt-8 mb-6;
+}
+.prose h2 {
+  @apply text-lg mt-8 mb-4;
+}
+.prose h3 {
+  @apply text-base mt-6 mb-3;
+}
+.prose h4 {
+  @apply text-base mt-5 mb-2;
+}
+.prose h5 {
+  @apply text-base mt-4 mb-2;
+}
+.prose h6 {
+  @apply text-base mt-4 mb-2;
+}
 
-.prose h1 a, .prose h2 a, .prose h3 a, .prose h4 a, .prose h5 a, .prose h6 a {
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a,
+.prose h5 a,
+.prose h6 a {
   @apply text-primary-900 dark:text-primary-50 no-underline transition-colors duration-200;
 }
 
-.prose h1 a:hover, .prose h2 a:hover, .prose h3 a:hover, .prose h4 a:hover, .prose h5 a:hover, .prose h6 a:hover {
+.prose h1 a:hover,
+.prose h2 a:hover,
+.prose h3 a:hover,
+.prose h4 a:hover,
+.prose h5 a:hover,
+.prose h6 a:hover {
   @apply text-highlight-600 dark:text-highlight-400 no-underline;
 }
 
-.prose a {  
-  @apply text-highlight-600 dark:text-highlight-400 font-medium no-underline transition-colors duration-200;  
-}  
-  
-.prose a:hover {  
-  @apply text-highlight-700 dark:text-highlight-300 no-underline;  
-} 
+.prose a {
+  @apply text-highlight-600 dark:text-highlight-400 font-medium no-underline transition-colors duration-200;
+}
 
+.prose a:hover {
+  @apply text-highlight-700 dark:text-highlight-300 no-underline;
+}
 
 .prose strong {
   @apply text-primary-900 dark:text-primary-200 font-semibold;
@@ -758,12 +910,24 @@ textarea {
 }
 
 /* Lists */
-.prose ul, .prose ol { @apply my-1; }
-.prose li { @apply my-0; }
-.prose li > p { @apply my-0; }
-.prose ul > li, .prose ol > li { @apply pl-1; }
+.prose ul,
+.prose ol {
+  @apply my-1;
+}
+.prose li {
+  @apply my-0;
+}
+.prose li > p {
+  @apply my-0;
+}
+.prose ul > li,
+.prose ol > li {
+  @apply pl-1;
+}
 
-.prose ul li input[type="checkbox"] { @apply mr-2; }
+.prose ul li input[type="checkbox"] {
+  @apply mr-2;
+}
 
 .prose ul li:has(input[type="checkbox"]) {
   list-style: none;
@@ -800,18 +964,21 @@ textarea {
   overflow: hidden;
 }
 
-.prose th, .prose td {
+.prose th,
+.prose td {
   @apply border-0 border-r border-b border-primary-200 dark:border-primary-600 px-4 py-3;
   white-space: nowrap;
   min-width: 100px;
   transition: background-color 0.2s ease;
 }
 
-.prose th:last-child, .prose td:last-child {
+.prose th:last-child,
+.prose td:last-child {
   @apply border-r-0;
 }
 
-.prose tr:last-child th, .prose tr:last-child td {
+.prose tr:last-child th,
+.prose tr:last-child td {
   @apply border-b-0;
 }
 
@@ -849,7 +1016,8 @@ textarea {
 }
 
 @media (min-width: 768px) {
-  .prose th, .prose td {
+  .prose th,
+  .prose td {
     white-space: normal;
     min-width: auto;
   }
@@ -860,39 +1028,79 @@ textarea {
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
-  .prose th, .prose td {
+  .prose th,
+  .prose td {
     @apply px-3 py-2;
     min-width: 80px;
   }
 }
 
 /* Utility Classes */
-.text-balance { text-wrap: balance; }
-.text-pretty { text-wrap: pretty; }
-.btn-center { @apply flex justify-center; }
-.btn-left { @apply flex justify-start; }
-.btn-right { @apply flex justify-end; }
+.text-balance {
+  text-wrap: balance;
+}
+.text-pretty {
+  text-wrap: pretty;
+}
+.btn-center {
+  @apply flex justify-center;
+}
+.btn-left {
+  @apply flex justify-start;
+}
+.btn-right {
+  @apply flex justify-end;
+}
 
 /* Theme Transitions */
-:root, html, body, [data-theme], .theme-transition {
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+:root,
+html,
+body,
+[data-theme],
+.theme-transition {
+  transition:
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 /* Loading States */
-.loading { @apply animate-pulse; }
-.skeleton { @apply bg-primary-200 dark:bg-primary-700 rounded; }
+.loading {
+  @apply animate-pulse;
+}
+.skeleton {
+  @apply bg-primary-200 dark:bg-primary-700 rounded;
+}
 
 /* Mobile Responsive */
 @media (max-width: 640px) {
-  html { scroll-padding-top: 1rem; }
-  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { scroll-margin-top: 6rem; }
-  .prose sup a, .prose .footnote-ref, .prose .footnotes, .prose .footnote { scroll-margin-top: 6rem; }
+  html {
+    scroll-padding-top: 1rem;
+  }
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    scroll-margin-top: 6rem;
+  }
+  .prose sup a,
+  .prose .footnote-ref,
+  .prose .footnotes,
+  .prose .footnote {
+    scroll-margin-top: 6rem;
+  }
 }
 
 /* Accessibility */
 @media (prefers-contrast: high) {
-  .wikilink { border-bottom-width: 2px; }
-  .btn { @apply border-2; }
+  .wikilink {
+    border-bottom-width: 2px;
+  }
+  .btn {
+    @apply border-2;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -901,7 +1109,9 @@ textarea {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Swup Transitions - Simplified */
@@ -972,7 +1182,8 @@ body {
 /* Avoid global scroll locking during transitions; let Swup handle scroll */
 
 /* Keep footer and nav stable during transitions */
-footer, nav {
+footer,
+nav {
   transform: translateZ(0);
 }
 
@@ -982,7 +1193,12 @@ header {
 }
 
 /* Ensure smooth transitions for interactive elements only */
-a, button, .btn, .card, .callout, nav a {
+a,
+button,
+.btn,
+.card,
+.callout,
+nav a {
   transition: all 0.2s ease-out;
 }
 
@@ -990,7 +1206,6 @@ a, button, .btn, .card, .callout, nav a {
 html {
   scroll-behavior: auto;
 }
-
 
 /* Navigation active states - more subtle */
 nav a.active,
@@ -1037,14 +1252,19 @@ main {
   @apply bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm hover:shadow-md transition-shadow duration-200;
 }
 
-
 /* Smooth transitions for all interactive elements */
-a, button, .btn, .card, .callout {
+a,
+button,
+.btn,
+.card,
+.callout {
   transition: all 0.2s ease-in-out;
 }
 
 /* Enhanced focus states for better accessibility during transitions */
-a:focus-visible, button:focus-visible, .btn:focus-visible {
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
   @apply outline-2 outline-highlight-500 dark:outline-highlight-400 outline-offset-2;
   transition: outline 0.2s ease-in-out;
 }
@@ -1248,9 +1468,15 @@ img + p em {
 
 /* Print Styles */
 @media print {
-  .no-print { display: none !important; }
-  body { @apply text-black bg-white; }
-  a { @apply text-black no-underline; }
+  .no-print {
+    display: none !important;
+  }
+  body {
+    @apply text-black bg-white;
+  }
+  a {
+    @apply text-black no-underline;
+  }
   .prose a::after {
     content: " (" attr(href) ")";
     @apply text-sm text-gray-600;
@@ -1391,18 +1617,28 @@ svg:has(text:contains("mermaid version")) {
     min-height: 300px;
     max-height: 500px;
   }
-  
+
   .pdf-embed .pdf-info {
     @apply flex-col items-start gap-2;
   }
-  
+
   .pdf-embed .pdf-download-link {
     @apply w-full text-center;
   }
-  
+
   .audio-embed,
   .video-embed,
   .youtube-embed {
     @apply my-6;
   }
+}
+
+/* Custom styles */
+figure img {
+  margin-inline: auto;
+}
+
+.astro-code {
+  border-color: cyan;
+  border-width: 1px;
 }

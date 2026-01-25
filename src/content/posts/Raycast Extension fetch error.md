@@ -17,6 +17,6 @@ Turns out it doesn't like self signed certificates and uses some sort of default
 
 It's a simple fix, and just requires a change to the Raycast Advanced Settings to set the Certificates to **Keychain** instead of **Default**:
 
-![[Raycast-Settings-Advanced-Certificates.png]]
+![[Raycast-Settings-Advanced-Certificates.png|Raycast Advanced Settings]]
 
 As is often the case, the fix was found in the [GitHub issues for raycast/extensions](https://github.com/raycast/extensions/issues/12514#issuecomment-2437587019).
