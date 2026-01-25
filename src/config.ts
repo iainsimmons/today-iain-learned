@@ -215,10 +215,9 @@ export const siteConfig: SiteConfig = {
   // [CONFIG:SITE_LANGUAGE]
   language: "en",
   // [CONFIG:FAVICON_THEME_ADAPTIVE]
-  faviconThemeAdaptive: true, // If true, favicon switches between favicon-dark.png and favicon-light.png based on browser's system theme preference. If false, always uses favicon.png
+  faviconThemeAdaptive: false, // If true, favicon switches between favicon-dark.png and favicon-light.png based on browser's system theme preference. If false, always uses favicon.png
   // [CONFIG:DEFAULT_OG_IMAGE_ALT]
-  defaultOgImageAlt:
-    "the letter i, in this case, the initial of my first name, Iain", // Alt text for the default Open Graph image, public/open-graph.png
+  defaultOgImageAlt: "til: today iain learned", // Alt text for the default Open Graph image, public/open-graph.png
 
   // Global Settings
   // [CONFIG:THEME]
