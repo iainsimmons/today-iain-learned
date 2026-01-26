@@ -76,7 +76,7 @@ const shouldShowCoverImage = (() => {
 ---
 
 <article class={`group ${featured ? 'featured-post' : 'post-card'}`} role="article" aria-labelledby={`post-title-${post.id}`}>
-  <a href={`/posts/${post.id}`} class="block" aria-label={`View post: ${title}`}>
+<div class="block">
     {image && shouldShowCoverImage && (
       <div class="overflow-hidden rounded-t-lg bg-primary-100 dark:bg-primary-800" style={`aspect-ratio: ${getPostCardAspectRatio()};`}>
         <ImageWrapper
@@ -181,10 +181,12 @@ const shouldShowCoverImage = (() => {
         )}
       </div>
 
-      <h3 id={`post-title-${post.id}`} class={`font-medium text-primary-900 dark:text-primary-100 leading-relaxed group-hover:text-highlight-600 dark:group-hover:text-highlight-400 transition-colors ${
+      <h3 id={`post-title-${post.id}`} >
+  <a href={`/posts/${post.id}`} class={`post-title-link font-medium text-primary-900 dark:text-primary-100 leading-relaxed hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors ${
         featured ? 'text-lg' : 'text-base'
       }`}>
-        {title}
+          {title}
+        </a>
       </h3>
 
       {featured && description && (
@@ -194,7 +196,7 @@ const shouldShowCoverImage = (() => {
       )}
 
       {tags && tags.length > 0 && siteConfig.postOptions.tags && (
-        <div class="mt-3">
+        <div class="post-card-tags mt-3">
           {tags.map((tag) => (
             <a
               href={`/posts/tag/${tag}`}
@@ -207,5 +209,5 @@ const shouldShowCoverImage = (() => {
         </div>
       )}
     </div>
-  </a>
+  </div>
 </article>

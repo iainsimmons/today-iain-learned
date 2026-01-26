@@ -1642,3 +1642,19 @@ figure img {
   border-color: cyan;
   border-width: 1px;
 }
+
+.post-card {
+  position: relative;
+}
+
+.post-title-link::after {
+  content: "";
+  display: block;
+  inset: 0;
+  position: absolute;
+  cursor: pointer;
+}
+
+.post-card-tags {
+  isolation: isolate;
+}
