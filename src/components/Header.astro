@@ -3,18 +3,6 @@ import { siteConfig } from '../config';
 import ThemeToggle from './ThemeToggle.astro';
 import Icon from './Icon.astro';
 
-const showProfilePicture = siteConfig.profilePicture.enabled && siteConfig.profilePicture.placement === 'header';
-const profilePicture = siteConfig.profilePicture;
-
-// Style classes for profile picture in header
-const getHeaderProfilePictureClasses = (style: string) => {
-  switch (style) {
-    case 'circle': return 'w-8 h-8 rounded-full object-cover border-2 border-primary-200 dark:border-primary-700';
-    case 'square': return 'w-8 h-8 rounded-lg object-cover border-2 border-primary-200 dark:border-primary-700';
-    default: return 'h-8 object-contain'; // none - height constrained, width flexible
-  }
-};
-
 // Check if shortcut is defined and not empty
 const hasShortcut = siteConfig.commandPalette.shortcut && siteConfig.commandPalette.shortcut.trim();
 
@@ -33,20 +21,12 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
 <header id="main-header" class="sticky top-0 z-40 w-full bg-white dark:bg-primary-950 transition-shadow duration-200">
   <div class="mx-auto px-4 sm:px-6 lg:px-8" style={`max-width: ${siteConfig.layout.contentWidth}`}>
     <div class="flex items-center justify-between h-16">
-      <!-- Logo / Site Title / Profile Picture -->
+      <!-- Site Title -->
       <div class="flex items-center">
-        <a href="/" class="hover:opacity-75 transition-opacity">
-          {showProfilePicture ? (
-            <img
-              src={profilePicture.image}
-              alt={profilePicture.alt}
-              class={getHeaderProfilePictureClasses(profilePicture.style)}
-            />
-          ) : (
-            <span class="font-semibold text-primary-900 dark:text-primary-50">
-              {siteConfig.title}
-            </span>
-          )}
+        <a href="/">
+          <span class="font-semibold text-primary-900 dark:text-primary-50 hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors">
+            {siteConfig.title}
+          </span>
         </a>
       </div>
 
@@ -73,13 +53,13 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
                             ? `flex items-center space-x-1 text-xs font-normal transition-colors hover:text-highlight-600 dark:hover:text-highlight-400 text-primary-500 dark:text-primary-400`
                             : `flex items-center space-x-1 text-sm font-medium transition-colors hover:text-highlight-600 dark:hover:text-highlight-400 text-primary-600 dark:text-primary-300`
                         }
-                        target={page.url.startsWith('http') ? '_blank' : undefined}
+                        target={page.url?.startsWith('http') ? '_blank' : undefined}
                         aria-label={`Navigate to ${page.title}`}
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
                         <span>{siteConfig.navigation.style === 'minimal' ? page.title.toLowerCase() : page.title}</span>
-                        {page.url.startsWith('http') && (
+                        {page.url?.startsWith('http') && (
                           <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
                         )}
                         <Icon name="chevron-down" class="w-3 h-3 ml-1 text-primary-400 dark:text-primary-500" />
@@ -102,7 +82,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
                     )}
                     {/* Dropdown menu */}
                     <div class="nav-dropdown-menu absolute top-full left-0 mt-1 hidden bg-white dark:bg-primary-900 border border-primary-200 dark:border-primary-700 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
-                      {page.children.map(child => (
+                      {page.children?.map(child => (
                         <a
                           href={child.url || '#'}
                           class="block px-4 py-2 text-sm text-primary-700 dark:text-primary-200 hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors"
@@ -224,11 +204,11 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
                       <a 
                         href={page.url}
                         class="flex-1 flex items-center justify-between px-3 py-2 text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 hover:bg-primary-50 dark:hover:bg-primary-800 transition-colors font-medium rounded-md"
-                        target={page.url.startsWith('http') ? '_blank' : undefined}
+                        target={page.url?.startsWith('http') ? '_blank' : undefined}
                         aria-label={`Navigate to ${page.title}`}
                       >
                         <span>{page.title}</span>
-                        {page.url.startsWith('http') && (
+                        {page.url?.startsWith('http') && (
                           <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
                         )}
                       </a>
@@ -249,7 +229,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
                   </div>
                   {/* Children menu (collapsed by default) */}
                   <div class="mobile-nav-children hidden pl-4 pt-1">
-                    {page.children.map(child => (
+                    {page.children?.map(child => (
                       <a
                         href={child.url || '#'}
                         class="block px-3 py-2 text-sm text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 hover:bg-primary-50 dark:hover:bg-primary-800 transition-colors font-medium rounded-md"
