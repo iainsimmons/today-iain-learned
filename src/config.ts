@@ -205,7 +205,7 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   // Site Information
   // [CONFIG:SITE_URL]
-  site: "https://today-iain-learned.emptiful.workers.dev",
+  site: "https://til.iainsimmons.com",
   // [CONFIG:SITE_TITLE]
   title: "today iain learned",
   // [CONFIG:SITE_DESCRIPTION]
