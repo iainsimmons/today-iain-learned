@@ -19,11 +19,11 @@ const IMAGE_SYNC_CONFIGS = [
     target: "public/posts/attachments",
     name: "posts",
   },
-  {
-    source: "src/content/pages/attachments",
-    target: "public/pages/attachments",
-    name: "pages",
-  },
+  // {
+  //   source: "src/content/pages/attachments",
+  //   target: "public/pages/attachments",
+  //   name: "pages",
+  // },
   // {
   //   source: 'src/content/projects/attachments',
   //   target: 'public/projects/attachments',
@@ -435,7 +435,7 @@ async function syncAllImages() {
   // Sync folder-based images for all content types
   const contentTypes = [
     "posts",
-    "pages",
+    // "pages",
     // "projects",
     // "docs",
     "special",
