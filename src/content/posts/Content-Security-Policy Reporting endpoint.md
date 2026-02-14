@@ -87,6 +87,6 @@ Here's a random placeholder image from an external site that should trigger it:
 
 And here's what the received report looks like in the Cloudflare logs:
 
-![CSP violation report in Cloudflare Worker logs](attachments/csp-violation-report-in-cloudflare-worker-logs.png)
+![[csp-violation-report-in-cloudflare-worker-logs.png|CSP violation report in Cloudflare Worker logs]]
 
 Again, you could instead store these in a database and generate a report at some other time, or send emails when they occur (though I'd be very careful that you don't get spammed by sending/receiving too many of these).
