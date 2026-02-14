@@ -83,13 +83,6 @@ export default defineConfig({
   devToolbar: {
     enabled: true,
   },
-  redirects:
-    process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "build"
-      ? {
-          "/contact-me": "/contact",
-          "/contact-us": "/contact",
-        }
-      : {},
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",
