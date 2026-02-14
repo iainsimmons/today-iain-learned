@@ -1,5 +1,5 @@
 {
-  "projectRoot": "../../",
+  "projectRoot": "/home/iain/coding/today-iain-learned",
   "configFilePath": "../config.ts",
   "contentTypes": [
     {
@@ -69,7 +69,9 @@
   },
   "attachmentHandlingMode": "subfolder",
   "preset": "vanilla",
-  "enableWYSIWYG": false,
+  "presetName": "",
+  "presetsRepo": "davidvkimball/vault-cms-presets",
+  "enableEditingToolbar": false,
   "enabledPlugins": [
     "astro-composer",
     "bases-cms",
@@ -104,15 +106,8 @@
     "useFilenameAsSlug": true,
     "enableMDXSupport": false
   },
-  "commanderConfig": {
-    "pageHeaderCommands": []
-  },
   "propertyOverFileName": {
     "propertyKey": "title"
-  },
-  "imageInserter": {
-    "valueFormat": "[[attachments/{image-url}]]",
-    "insertFormat": "[[attachments/{image-url}]]"
   },
   "imageManager": {
     "enableRenameOnPaste": true,
@@ -264,8 +259,22 @@
     "gitIgnoreConfigured": true,
     "viteIgnoreConfigured": true
   },
+  "gitConfig": {
+    "enabled": false,
+    "isPrivate": true,
+    "branchName": "main",
+    "autoConfigureObsidianGit": true
+  },
   "runWizardOnStartup": false,
   "wizardCompleted": true,
+  "enableWYSIWYG": false,
+  "commanderConfig": {
+    "pageHeaderCommands": []
+  },
+  "imageInserter": {
+    "valueFormat": "[[attachments/{image-url}]]",
+    "insertFormat": "[[attachments/{image-url}]]"
+  },
   "enableMdxSupport": false,
   "defaultContentTypeId": "content-type-1768737627006-hkhgdcdwr"
 }
