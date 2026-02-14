@@ -8,13 +8,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const publicDir = path.join(__dirname, "..", "public");
+const buildDir = path.join(__dirname, "..", "dist");
 const oldPath = path.join(publicDir, "headers.txt");
-const newPath = path.join(publicDir, "_headers");
+const newPath = path.join(buildDir, "_headers");
 
 try {
   if (fs.existsSync(oldPath)) {
     fs.renameSync(oldPath, newPath);
-    console.log("✅ Successfully renamed headers.txt to _headers");
+    console.log("✅ Successfully renamed public/headers.txt to dist/_headers");
   } else {
     console.warn(
       "⚠️ headers.txt not found in " + publicDir + ". Skipping rename.",
