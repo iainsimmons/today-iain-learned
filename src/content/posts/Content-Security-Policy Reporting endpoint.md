@@ -1,7 +1,7 @@
 ---
 title: Content-Security-Policy Reporting endpoint
 description: "today iain learned: Content-Security-Policy Reporting endpoint"
-date: 2025-11-04
+date: 2026-02-15
 tags:
   - webdev
   - security
@@ -46,7 +46,7 @@ Where `https://example.com/csp-reports` would be a server endpoint that accepts 
 
 That endpoint could log or email the violations as needed.
 
-On this very site I've implemented the endpoint with a [Cloudflare Worker](https://developers.cloudflare.com/workers/).
+On this very site I implemented the endpoint with a [Cloudflare Worker](https://developers.cloudflare.com/workers/). **Note:** I've since removed it so I don't get spammed. 🙂
 
 Here's the relevant code to handle the CSP reporting requests:
 
@@ -83,4 +83,10 @@ export default {
 
 Here's a random placeholder image from an external site that should trigger it:
 
-![Placeholder image](https://placehold.co/200x50?text=CSP+Violation!)
+![CSP Violation placeholder image](https://placehold.co/200x50?text=CSP+Violation!)
+
+And here's what the received report looks like in the Cloudflare logs:
+
+![CSP violation report in Cloudflare Worker logs](attachments/csp-violation-report-in-cloudflare-worker-logs.png)
+
+Again, you could instead store these in a database and generate a report at some other time, or send emails when they occur (though I'd be very careful that you don't get spammed by sending/receiving too many of these).

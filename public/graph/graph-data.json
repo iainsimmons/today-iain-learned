@@ -15,6 +15,20 @@
       "connections": 0
     },
     {
+      "id": "Content-Security-Policy Reporting endpoint",
+      "type": "post",
+      "title": "Content-Security-Policy Reporting endpoint",
+      "slug": "Content-Security-Policy Reporting endpoint",
+      "connections": 0
+    },
+    {
+      "id": "DRAFT Use terminal commands for displaying a Neovim dashboard logo",
+      "type": "post",
+      "title": "Use terminal commands for displaying a Neovim dashboard logo",
+      "slug": "DRAFT Use terminal commands for displaying a Neovim dashboard logo",
+      "connections": 0
+    },
+    {
       "id": "How to fix WezTerm in Hyprland",
       "type": "post",
       "title": "How to fix WezTerm in Hyprland",
@@ -73,9 +87,9 @@
   ],
   "connections": [],
   "metadata": {
-    "totalPosts": 10,
+    "totalPosts": 12,
     "totalConnections": 0,
     "maxNodesApplied": false,
-    "originalNodeCount": 10
+    "originalNodeCount": 12
   }
 }
