@@ -10,7 +10,7 @@ const profilePicture = siteConfig.profilePicture;
 const footerEnabled = siteConfig.footer.enabled;
 
 // Replace placeholder with actual author name
-const footerContent = siteConfig.footer.content.replace('{author}', siteConfig.author);
+const footerContent = siteConfig.footer.content.replace('{year}', `${new Date().getFullYear()}`).replace('{author}', siteConfig.author);
 
 // Size and style classes for profile picture
 const getProfilePictureClasses = (size: string, style: string) => {
