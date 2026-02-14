@@ -1,5 +1,8 @@
 import type { Post, PostData, ReadingTime, Heading } from "@/types";
 import { render } from "astro:content";
+import siteConfig from "@/config";
+
+export const language = siteConfig.language ?? "en-US";
 
 // Check if a date is valid (not January 1, 1970 or invalid)
 export function isValidDate(date: Date): boolean {
@@ -101,7 +104,7 @@ export function getReadingTimeMobile(readingTime: ReadingTime): string {
 // Extract reading time from remark plugin or calculate manually
 export function getReadingTime(
   remarkData: any,
-  content?: string
+  content?: string,
 ): ReadingTime | null {
   // Validate remark plugin reading time data
   if (
@@ -141,7 +144,7 @@ export async function generateTOC(headings: Heading[]): Promise<Heading[]> {
   const { getTableOfContentsDepth } = await import("@/config");
   const maxDepth = getTableOfContentsDepth();
   return headings.filter(
-    (heading) => heading.depth >= 2 && heading.depth <= maxDepth
+    (heading) => heading.depth >= 2 && heading.depth <= maxDepth,
   );
 }
 
@@ -178,16 +181,16 @@ export function formatDate(date: Date): string {
     const localDate = new Date(
       date.getUTCFullYear(),
       date.getUTCMonth(),
-      date.getUTCDate()
+      date.getUTCDate(),
     );
-    return localDate.toLocaleDateString("en-US", {
+    return localDate.toLocaleDateString(language, {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
   }
 
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(language, {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -207,16 +210,16 @@ export function formatDateMobile(date: Date): string {
     const localDate = new Date(
       date.getUTCFullYear(),
       date.getUTCMonth(),
-      date.getUTCDate()
+      date.getUTCDate(),
     );
-    return localDate.toLocaleDateString("en-US", {
+    return localDate.toLocaleDateString(language, {
       year: "numeric",
       month: "short",
       day: "numeric",
     });
   }
 
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(language, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -235,7 +238,10 @@ function isDevelopmentMode(): boolean {
 }
 
 // Check if a post should be shown in production
-export function shouldShowPost(post: Post, isDev: boolean | undefined = undefined): boolean {
+export function shouldShowPost(
+  post: Post,
+  isDev: boolean | undefined = undefined,
+): boolean {
   const { draft, title, date } = post.data;
 
   // Always require title and date
@@ -263,7 +269,7 @@ export function shouldShowPost(post: Post, isDev: boolean | undefined = undefine
 // Generic function to check if any content item should be shown
 export function shouldShowContent(
   item: { data: { title: string; draft?: boolean } },
-  isDev: boolean | undefined = undefined
+  isDev: boolean | undefined = undefined,
 ): boolean {
   const { draft, title } = item.data;
 
@@ -287,7 +293,7 @@ export function shouldShowContent(
 
 // Sort content by date (newest first)
 export function sortPostsByDate<T extends { data: { date: Date } }>(
-  posts: T[]
+  posts: T[],
 ): T[] {
   return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
@@ -307,24 +313,26 @@ export function getAdjacentPosts(posts: Post[], currentSlug: string) {
 }
 
 // Get next and previous documentation items within the same category, sorted by order
-export function getAdjacentDocs<T extends { id: string; data: { category?: string | null; order: number; title: string } }>(
-  docs: T[],
-  currentSlug: string,
-  currentCategory: string | null
-) {
+export function getAdjacentDocs<
+  T extends {
+    id: string;
+    data: { category?: string | null; order: number; title: string };
+  },
+>(docs: T[], currentSlug: string, currentCategory: string | null) {
   // Filter docs by the same category
   const categoryDocs = docs.filter((doc) => {
-    const docCategory = doc.data.category && 
-      doc.data.category.trim() !== '' && 
-      doc.data.category !== 'General'
-      ? doc.data.category
-      : null;
-    
+    const docCategory =
+      doc.data.category &&
+      doc.data.category.trim() !== "" &&
+      doc.data.category !== "General"
+        ? doc.data.category
+        : null;
+
     // If current doc has no category, match docs with no category
     if (!currentCategory) {
       return !docCategory;
     }
-    
+
     // Match exact category
     return docCategory === currentCategory;
   });
@@ -403,7 +411,7 @@ export function filterPostsByTag(posts: Post[], tag: string): Post[] {
         (postTag) =>
           postTag &&
           typeof postTag === "string" &&
-          postTag.trim() === tag.trim()
+          postTag.trim() === tag.trim(),
       );
     });
   } catch (error) {
