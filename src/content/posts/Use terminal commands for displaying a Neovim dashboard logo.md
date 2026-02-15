@@ -58,7 +58,7 @@ return {
         },
       }
 
-	  return opts
+   return opts
     end,
 }
 ```
@@ -66,6 +66,7 @@ return {
 I later moved to using [the snacks.nvim dashboard](https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md) and used a new logo generated with this Go-based TUI: [superstarryeyes/bit](https://github.com/superstarryeyes/bit)
 
 And it looked a bit like this:
+
 ```
 
   ▀▀▀             ▀▀▀                        ▀▀▀               
@@ -80,7 +81,7 @@ Which might have been fine to leave it at that, but I wanted a little something 
 
 The `bit` TUI can be used to generate a bash script that uses ANSI escape sequences to output colour.
 
-[!tip] Here's a good article explaining ANSI escape sequences that has helped me manually add them in other bash scripts: [Bash Colors | ShellHacks](https://www.shellhacks.com/bash-colors/)
+> [!tip] Here's a good article explaining ANSI escape sequences that has helped me manually add them in other bash scripts: [Bash Colors | ShellHacks](https://www.shellhacks.com/bash-colors/)
 
 The generated script, saved as `iainvim_logo` and included in the `PATH`, looks like this:
 
@@ -137,3 +138,4 @@ return {
 And you get a result like this:
 
 ![[attachments/iainsimmons_neovim_dashboard_2025-11-23.png|Neovim dashboard with gradient logo]]
+
