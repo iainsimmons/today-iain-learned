@@ -36,4 +36,5 @@ Finally, I replaced the existing image files used on this blog, pushed the chang
 
 You could use this for any number of different cases where you need to quickly generate some graphics without having to use a dedicated tool.
 
-Also see [Chrome DevTools Tips #33 - 4 ways to capture screenshots with DevTools](https://developer.chrome.com/blog/devtools-tips-33) if you prefer learning with video content.
+Also see [Chrome DevTools Tips - 4 ways to capture screenshots with DevTools](https://developer.chrome.com/blog/devtools-tips-33) if you prefer learning with video content.
+
