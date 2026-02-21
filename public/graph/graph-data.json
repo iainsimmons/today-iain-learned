@@ -22,13 +22,6 @@
       "connections": 0
     },
     {
-      "id": "DRAFT Use terminal commands for displaying a Neovim dashboard logo",
-      "type": "post",
-      "title": "Use terminal commands for displaying a Neovim dashboard logo",
-      "slug": "DRAFT Use terminal commands for displaying a Neovim dashboard logo",
-      "connections": 0
-    },
-    {
       "id": "How to fix WezTerm in Hyprland",
       "type": "post",
       "title": "How to fix WezTerm in Hyprland",
@@ -64,10 +57,24 @@
       "connections": 0
     },
     {
+      "id": "Screenshot DOM nodes to create favicon and Open Graph images",
+      "type": "post",
+      "title": "Screenshot DOM nodes to create favicon and Open Graph images",
+      "slug": "Screenshot DOM nodes to create favicon and Open Graph images",
+      "connections": 0
+    },
+    {
       "id": "Set custom cursor in Hyprland",
       "type": "post",
       "title": "Set custom cursor in Hyprland",
       "slug": "Set custom cursor in Hyprland",
+      "connections": 0
+    },
+    {
+      "id": "Use terminal commands for displaying a Neovim dashboard logo",
+      "type": "post",
+      "title": "Use terminal commands for displaying a Neovim dashboard logo",
+      "slug": "Use terminal commands for displaying a Neovim dashboard logo",
       "connections": 0
     },
     {
@@ -87,9 +94,9 @@
   ],
   "connections": [],
   "metadata": {
-    "totalPosts": 12,
+    "totalPosts": 13,
     "totalConnections": 0,
     "maxNodesApplied": false,
-    "originalNodeCount": 12
+    "originalNodeCount": 13
   }
 }

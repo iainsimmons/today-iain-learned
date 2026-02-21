@@ -306,7 +306,7 @@ a:hover {
 }
 
 .prose a.wikilink:hover {
-  @apply text-highlight-700 dark:text-highlight-300 opacity-80 no-underline !important;
+  @apply text-highlight-700 dark:text-highlight-300 opacity-80 underline underline-offset-2 decoration-2 !important;
 }
 
 /* EXCLUDE heading links from wikilink styling */
@@ -890,7 +890,7 @@ textarea {
 }
 
 .prose a:hover {
-  @apply text-highlight-700 dark:text-highlight-300 no-underline;
+  @apply text-highlight-700 dark:text-highlight-300 underline underline-offset-2 decoration-2;
 }
 
 .prose strong {
