@@ -184,4 +184,4 @@ bind = SUPER SHIFT, TAB, exec, cycle-active-workspaces prev
 
 And here's what it looks like (taken at night to hide all the mess on my desk 😉):
 
-![[attachments/mini-monitor-below-main-monitor.jpg|Mini monitor below main monitor]]
+![[attachments/mini-monitor-below-main-monitor.jpg|Mini-monitor below main monitor]]

@@ -1658,3 +1658,7 @@ figure img {
 .post-card-tags {
   isolation: isolate;
 }
+
+.prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  text-wrap: pretty;
+}
