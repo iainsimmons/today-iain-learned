@@ -1638,9 +1638,24 @@ figure img {
   margin-inline: auto;
 }
 
-.astro-code {
+.astro-code,
+pre.astro-code {
   border-color: cyan;
   border-width: 1px;
+
+  &:not([data-language="plaintext"]) {
+    /* Damn you !important, making me override with more !important */
+    padding: 1.5rem 1.5rem 1rem 1rem !important;
+    position: relative;
+
+    &::after {
+      content: attr(data-language);
+      position: absolute;
+      inset: 0 0.25rem auto auto;
+      z-index: 10;
+      color: gold;
+    }
+  }
 }
 
 .post-card {
