@@ -44,7 +44,7 @@
     },
     {
       "repo": "davidvkimball/obsidian-alias-file-name-history",
-      "version": "latest"
+      "version": ""
     },
     {
       "repo": "davidvkimball/obsidian-seo",
@@ -71,7 +71,7 @@
   "loggingPath": "BRAT-log",
   "loggingVerboseEnabled": false,
   "debuggingMode": false,
-  "notificationsEnabled": true,
+  "notificationsEnabled": false,
   "personalAccessToken": "",
   "selectLatestPluginVersionByDefault": false,
   "allowIncompatiblePlugins": false

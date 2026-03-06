@@ -46,7 +46,7 @@ properties:
   note.undefined:
     displayName: Undefined
 views:
-  - type: bases-cms
+  - type: cms
     name: Posts
     filters:
       and:
@@ -70,7 +70,7 @@ views:
     propertyDisplay1: file.fullname
     showTextPreview: true
     propertyLabels: above
-  - type: bases-cms
+  - type: cms
     name: Pages
     filters:
       and:
@@ -92,7 +92,7 @@ views:
     propertyDisplay1: file.fullname
     showTextPreview: true
     propertyLabels: above
-  - type: bases-cms
+  - type: cms
     name: Special
     filters:
       and:
@@ -112,7 +112,7 @@ views:
     propertyDisplay1: file.fullname
     showTextPreview: true
     propertyLabels: above
-  - type: bases-cms
+  - type: cms
     name: Guide
     filters:
       and:
