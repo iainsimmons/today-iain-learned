@@ -338,7 +338,7 @@ export const siteConfig: SiteConfig = {
       { title: "Posts", url: "/posts/" },
       {
         title: "GitHub",
-        url: "https://github.com/iainsimmons",
+        url: "https://github.com/iainsimmons/today-iain-learned",
       },
     ],
     // [CONFIG:NAVIGATION_SOCIAL]
