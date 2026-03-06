@@ -8,7 +8,7 @@ tags:
   - terminal
   - tools
 hideTOC: false
-draft: true
+draft: false
 aliases:
 ---
 CSVs are terrible. If you're a web developer like me, or have worked with computers for a long time, then I'm sure you've come across them at one point.
