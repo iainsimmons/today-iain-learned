@@ -11,8 +11,6 @@ tags:
   - workflow
 hideTOC: false
 draft: false
-aliases:
-  - always-on-mini-monitor-as-a-dashboard
 ---
 Recently I've wanted to be more organised with my to-do list, especially at work, but also for this blog.
 
@@ -26,8 +24,8 @@ But there was one other thing that always bugged me about all of these solutions
 
 I set out to build something mostly with things I already had available, and one new, key piece of hardware: a small touchscreen monitor. I found one on Amazon (AU) for a decent price, the [GeeekPi 7-Inch IPS LCD Touch Screen](https://www.amazon.com.au/dp/B0CJWXWJ6K).
 
-> It would be have been nice to get a e-paper/e-ink screen, but they were fairly expensive for what they were, and even more so for a touch-enabled one. I even considered trying to make my own DIY equivalent of the [TRMNL](https://trmnl.com/)  device, though it is only for viewing information, and not controlling anything. It is also fairly expensive for something that isn't fully open and configurable. 
- 
+> It would be have been nice to get a e-paper/e-ink screen, but they were fairly expensive for what they were, and even more so for a touch-enabled one. I even considered trying to make my own DIY equivalent of the [TRMNL](https://trmnl.com/)  device, though it is only for viewing information, and not controlling anything. It is also fairly expensive for something that isn't fully open and configurable.
+
 In any case, I first attempted to connect the mini-monitor to an old Raspberry Pi 3B my brother gave me, but it was already not working well, and it seemed to really struggle keeping up, so I quickly abandoned that.
 
 I also tried connecting it to my work MacBook Pro directly, but managing a 3rd screen (laptop screen, external monitor, and then the mini-monitor) was painful and the touchscreen functionality didn't work at all. Window management was especially annoying.
@@ -100,11 +98,14 @@ With the assumption that I always wanted this available, I set up a shell script
 ```sh
 #!/bin/sh
 
-is_mini_monitor_connected=$(hyprctl monitors -j | jq '.[] | select(.model == "CL07-HDMI")')
+MONITOR_MODEL="CL07-HDMI"
 
-if [[ $is_mini_monitor_connected != "null" ]]; then
-	omarchy-launch-webapp "https://ticktick.com/webapp/#q/all/tasks" &
+is_mini_monitor_connected=$(hyprctl monitors -j | jq -r --arg model "$MONITOR_MODEL" '.[] | select(.model == $model) | .model')
+
+if [[ $is_mini_monitor_connected == "$MONITOR_MODEL" ]]; then
+ omarchy-launch-webapp "https://ticktick.com/webapp/#q/all/tasks" &
 fi
+
 ```
 
 > [!note]
@@ -118,7 +119,7 @@ I then added this so it would run on startup:
 exec-once = launch-tick-tick-on-mini-monitor
 ```
 
-And the final piece of the puzzle was another shell script to cycle active workspaces ***without*** going through the workspace shown on the mini-monitor. (I do confess, I needed a bit of assistance from Gemini to get this started, as I'm not that good with bash scripts):
+And the final piece of the puzzle was another shell script to cycle active workspaces _**without**_ going through the workspace shown on the mini-monitor. (I do confess, I needed a bit of assistance from Gemini to get this started, as I'm not that good with bash scripts):
 
 `cycle-active-workspaces.sh`
 
@@ -185,3 +186,4 @@ bind = SUPER SHIFT, TAB, exec, cycle-active-workspaces prev
 And here's what it looks like (taken at night to hide all the mess on my desk 😉):
 
 ![[attachments/mini-monitor-below-main-monitor.jpg|Mini-monitor below main monitor]]
+
