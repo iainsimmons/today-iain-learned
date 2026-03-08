@@ -1,5 +1,5 @@
 {
-  "projectRoot": "/home/iain/coding/today-iain-learned",
+  "projectRoot": "../../../coding/today-iain-learned",
   "configFilePath": "../config.ts",
   "contentTypes": [
     {
@@ -72,6 +72,7 @@
   "presetName": "",
   "presetsRepo": "davidvkimball/vault-cms-presets",
   "enableEditingToolbar": false,
+  "enableExtendedFileTypes": false,
   "enabledPlugins": [
     "astro-composer",
     "bases-cms",
