@@ -167,6 +167,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-display: var(--font-display, swap);
+  scrollbar-gutter: stable;
 }
 
 /* Scrollbar Configuration */
@@ -1119,25 +1120,6 @@ body,
   navigation: auto;
 }
 
-/* Simple fade animation for view transitions */
-::view-transition-old(root) {
-  animation: fade-out 0.2s ease-out;
-}
-
-::view-transition-new(root) {
-  animation: fade-in 0.2s ease-out;
-}
-
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 /* TOC handling */
 #toc.toc-not-ready {
   opacity: 0;
@@ -1159,20 +1141,6 @@ body {
   opacity: 1;
 }
 
-/* Subtle fade-in for initial page load */
-body {
-  animation: pageLoadFade 0.3s ease-out;
-}
-
-@keyframes pageLoadFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 /* Simple page transitions */
 /* Removed global overflow hidden on html during transitions to prevent scroll bugs */
 
@@ -1180,14 +1148,15 @@ body {
 /* Avoid global scroll locking during transitions; let Swup handle scroll */
 
 /* Keep footer and nav stable during transitions */
-footer,
-nav {
-  transform: translateZ(0);
-}
+/* footer, */
+/* nav { */
+/*   transform: translateZ(0); */
+/* } */
 
 /* Header needs special handling to maintain sticky positioning */
-header {
+#main-header {
   /* Don't apply transform to header as it interferes with sticky positioning */
+  view-transition-name: header;
 }
 
 /* Ensure smooth transitions for interactive elements only */
@@ -1248,15 +1217,6 @@ main {
 
 .featured-post {
   @apply bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm hover:shadow-md transition-shadow duration-200;
-}
-
-/* Smooth transitions for all interactive elements */
-a,
-button,
-.btn,
-.card,
-.callout {
-  transition: all 0.2s ease-in-out;
 }
 
 /* Enhanced focus states for better accessibility during transitions */
