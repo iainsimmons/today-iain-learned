@@ -1073,8 +1073,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     }
   </script>
 
-  <!-- View Transitions - temporarily disabled to fix compiler issues -->
-  <!-- <ViewTransitions /> -->
+  <!-- Native CSS view transitions enabled via CSS -->
 
   <!-- Additional head content -->
   <slot name="head" />
@@ -1096,9 +1095,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
   <!-- Main content -->
   <main id="main-content" class="container mx-auto relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
-    <div id="swup-container" class="transition-swup-fade">
-      <slot />
-    </div>
+    <slot />
   </main>
 
   <!-- Footer -->
@@ -1344,194 +1341,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
       setupCommandPaletteShortcut();
     }
 
-    // CRITICAL: Listen for Swup page transitions using hooks API
-    // Wait for Swup to be available
-    let swupRetryCount = 0;
-    const maxSwupRetries = 50; // Max 5 seconds of retries
-
-    function setupSwupHooks() {
-      if (window.swup) {
-        if (isDev) {
-        }
-
-        // Use the correct Swup hooks API
-        window.swup.hooks.on('content:replace', () => {
-          if (isDev) {
-          }
-          // Re-initialize theme properly respecting theme switching availability
-          const theme = getThemeWithoutClearing();
-          document.documentElement.setAttribute('data-theme', theme);
-          updateThemeCSSVariables(theme).catch(console.error);
-          // Close any open lightbox before content replacement
-          if (window.lightboxInstance && window.lightboxInstance.isOpen) {
-            window.lightboxInstance.closeLightbox();
-          }
-          // Reinitialize favicon after page transition
-          setFavicon();
-          // Initialize after content replacement
-          setTimeout(() => {
-            if (document.querySelector('#giscus-comments')) {
-              window.initializeGiscusComments();
-            }
-            // Initialize base embeds first, then wrap tables
-            if (window.initializeBaseEmbeds) {
-              window.initializeBaseEmbeds();
-            }
-            window.initializeTableWrappers();
-            // Initialize linked mentions
-            if (window.initializeLinkedMentions) {
-              window.initializeLinkedMentions();
-            }
-            // Initialize wikilinks
-            if (window.initializeWikilinks) {
-              window.initializeWikilinks();
-            }
-            // Initialize image galleries
-            if (typeof window['initializeImageGalleries'] === 'function') {
-              window['initializeImageGalleries']();
-            }
-            // Initialize category filtering
-            if (typeof window['initializeCategoryFiltering'] === 'function') {
-              window['initializeCategoryFiltering']();
-            }
-            // Process external links to open in new tabs
-            if (window.processExternalLinks) {
-              window.processExternalLinks();
-            }
-            // Re-setup smooth scrolling for anchor links
-            setupSmoothScrolling();
-          }, 100);
-        });
-
-        window.swup.hooks.on('page:view', () => {
-          if (isDev) {
-          }
-          // Re-initialize theme properly respecting theme switching availability
-          const theme = getThemeWithoutClearing();
-          document.documentElement.setAttribute('data-theme', theme);
-          updateThemeCSSVariables(theme).catch(console.error);
-          setTimeout(() => {
-            if (document.querySelector('#giscus-comments')) {
-              window.initializeGiscusComments();
-            }
-            // Initialize with small delay to ensure DOM is ready
-            setTimeout(() => {
-              // Initialize base embeds first, then wrap tables
-              if (window.initializeBaseEmbeds) {
-                window.initializeBaseEmbeds();
-              }
-              window.initializeTableWrappers();
-            }, 50);
-            // Re-initialize GraphModal after page transition
-            if (window.initializeGraphModal) {
-              window.initializeGraphModal();
-            }
-            // Initialize linked mentions
-            if (window.initializeLinkedMentions) {
-              window.initializeLinkedMentions();
-            }
-            // Initialize wikilinks
-            if (window.initializeWikilinks) {
-              window.initializeWikilinks();
-            }
-            // Initialize category filtering
-            if (typeof window['initializeCategoryFiltering'] === 'function') {
-              window['initializeCategoryFiltering']();
-            }
-            // Initialize table of contents
-            if (window.initializeTableOfContents) {
-              window.initializeTableOfContents();
-            }
-            // Reset and initialize local graph
-            if (window.resetGraph) {
-              window.resetGraph();
-            }
-            if (window.initializeGraph) {
-              window.initializeGraph();
-            }
-            if (window.setupGraphButtons) {
-              window.setupGraphButtons();
-            }
-            // Process external links to open in new tabs
-            if (window.processExternalLinks) {
-              window.processExternalLinks();
-            }
-            // Re-setup smooth scrolling for anchor links
-            setupSmoothScrolling();
-          }, 100);
-        });
-
-        // Favicon is handled by CSS media queries - no JavaScript needed
-      } else if (swupRetryCount < maxSwupRetries) {
-        swupRetryCount++;
-        if (isDev) {
-        }
-        setTimeout(setupSwupHooks, 100);
-      } else {
-        if (isDev) {
-        }
-      }
-    }
-
-    // Start setting up Swup hooks
-    setupSwupHooks();
-
-    // Favicon is now handled by CSS media queries - no JavaScript needed
-
-    // FALLBACK: Use MutationObserver to detect when comments container appears
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              const element = node;
-              // Check if the added node or its children contain the comments container
-              if (element.id === 'giscus-comments' || element.querySelector('#giscus-comments')) {
-                if (isDev) {
-                }
-                setTimeout(() => {
-                  window.initializeGiscusComments();
-                }, 200);
-              }
-            }
-          });
-        }
-      });
-    });
-
-    // Start observing the swup container for changes
-    const swupContainer = document.querySelector('#swup-container');
-    if (swupContainer) {
-      observer.observe(swupContainer, {
-        childList: true,
-        subtree: true
-      });
-      if (isDev) {
-      }
-    }
-
-    // AGGRESSIVE FALLBACK: Check for comments on every navigation click
-    document.addEventListener('click', (event) => {
-      const target = event.target;
-      if (!target) return;
-
-      // Check if it's a navigation link
-      const href = target.getAttribute('href');
-      if (target.tagName === 'A' && href && !href.startsWith('#')) {
-        if (isDev) {
-        }
-        // Delay to allow Swup to process the navigation
-        setTimeout(() => {
-          if (document.querySelector('#giscus-comments')) {
-            if (isDev) {
-            }
-            window.initializeGiscusComments();
-          }
-        }, 500);
-      }
-    });
-
-    // Global image preloader to prevent reloading across navigation
+    // Global image preloader for better UX
     class ImagePreloader {
       constructor() {
         this.loadedImages = new Set();
@@ -1977,130 +1787,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
       });
     }
 
-    // Simple scroll behavior: let browser handle everything naturally
-    function setupSwupScrollBehavior() {
-      if (typeof window !== 'undefined' && window.swup) {
-        const swup = window.swup;
-
-        // Completely disable all scroll behavior - let browser handle it naturally
-        swup.hooks.on('page:view', () => {
-          // Do nothing - let browser handle scroll position naturally
-          // Still update navigation highlighting and linked mentions
-          updateNavigationHighlighting();
-          if (window.initializeLinkedMentions) {
-            window.initializeLinkedMentions();
-          }
-          // Re-initialize LocalGraph after page transition
-          if (window.resetLocalGraph) {
-            window.resetLocalGraph();
-          }
-          if (window.initializeLocalGraph) {
-            window.initializeLocalGraph();
-          }
-          // Initialize doc category filtering after page transition
-          if (window.initializeDocCategoryFiltering) {
-            window.initializeDocCategoryFiltering();
-          }
-          // Initialize project category filtering after page transition
-          if (window.initializeProjectCategoryFiltering) {
-            window.initializeProjectCategoryFiltering();
-          }
-          // Initialize collapsible categories after page transition (for docs index page)
-          if (window.initializeCollapsibleCategories) {
-            window.initializeCollapsibleCategories();
-          }
-          if (window.setupLocalGraphButtons) {
-            window.setupLocalGraphButtons();
-          }
-        });
-
-        swup.hooks.on('visit:end', () => {
-          // Update navigation highlighting after page transition is complete
-          updateNavigationHighlighting();
-          // Initialize linked mentions after page transition is complete
-          if (window.initializeLinkedMentions) {
-            window.initializeLinkedMentions();
-          }
-          // Initialize base embeds after page transition is complete
-          if (window.initializeBaseEmbeds) {
-            window.initializeBaseEmbeds();
-          }
-          // Then wrap tables
-          window.initializeTableWrappers();
-          // Initialize Mermaid diagrams after page transition is complete
-          if (typeof window.initializeMermaid === 'function') {
-            window.initializeMermaid();
-          }
-          // Re-initialize GraphModal after page transition is complete
-          if (window.initializeGraphModal) {
-            window.initializeGraphModal();
-          }
-          // Re-initialize LocalGraph after page transition is complete
-          if (window.initializeLocalGraph) {
-            window.initializeLocalGraph();
-          }
-          if (window.setupLocalGraphButtons) {
-            window.setupLocalGraphButtons();
-          }
-          // Initialize table of contents after page transition is complete
-          if (window.initializeTableOfContents) {
-            window.initializeTableOfContents();
-          }
-          // Initialize doc category filtering after page transition is complete
-          if (window.initializeDocCategoryFiltering) {
-            window.initializeDocCategoryFiltering();
-          }
-          // Initialize project category filtering after page transition is complete
-          if (window.initializeProjectCategoryFiltering) {
-            window.initializeProjectCategoryFiltering();
-          }
-          // Initialize Twitter widgets after page transition is complete
-          if (window.initializeTwitterWidgets) {
-            window.initializeTwitterWidgets();
-          }
-          // Initialize collapsible categories after page transition (for docs index page)
-          if (window.initializeCollapsibleCategories) {
-            window.initializeCollapsibleCategories();
-          }
-          if (window.initializeCategoryScroll) {
-            window.initializeCategoryScroll();
-          }
-          // Graph initialization is handled in page:view hook to prevent duplicates
-          // Don't call handleInitialHashScroll() here - it interferes with back/forward navigation
-        });
-
-      }
-    }
-
-
-    if (typeof window !== 'undefined') {
-      // Setup smooth scrolling when DOM is ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          setupSmoothScrolling();
-          // Initialize Twitter widgets on initial page load
-          initializeTwitterWidgets();
-        });
-      } else {
-        setupSmoothScrolling();
-        // Initialize Twitter widgets on initial page load
-        initializeTwitterWidgets();
-      }
-    }
-
-    // Mermaid diagrams are initialized by the utility automatically
-
-    // Setup Swup behavior when available
-    if (typeof window !== 'undefined') {
-      if (window.swup) {
-        setupSwupScrollBehavior();
-      } else {
-        // Wait for Swup to be available
-        document.addEventListener('swup:enable', setupSwupScrollBehavior);
-      }
-    }
-
-    // Listen for theme changes using MutationObserver (elegant approach from master)
+    // Listen for theme changes
     if (typeof window !== 'undefined') {
       // Watch for class changes on documentElement (theme toggle)
       const observer = new MutationObserver((mutations) => {
@@ -2151,7 +1838,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
       });
     }
 
-    // Expose for Swup hooks
+    // Expose for global use
     window.initializeTableWrappers = initializeTableWrappers;
   </script>
 

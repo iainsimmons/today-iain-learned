@@ -347,12 +347,8 @@ import Icon from './Icon.astro';
                 // External link - open in new tab
                 window.open(href, '_blank');
               } else {
-                // Internal link - use Swup if available, otherwise regular navigation
-                if ((window as any).swup) {
-                  (window as any).swup.navigate(href);
-                } else {
-                  window.location.href = href;
-                }
+                // Internal link - standard navigation (view transitions handle the rest)
+                window.location.href = href;
               }
             }, 50);
           }
@@ -991,12 +987,8 @@ import Icon from './Icon.astro';
             // External link - open in new tab
             window.open(item.url, '_blank');
           } else {
-            // Internal link - use Swup if available, otherwise regular navigation
-            if ((window as any).swup) {
-              (window as any).swup.navigate(item.url);
-            } else {
-              window.location.href = item.url;
-            }
+            // Internal link - standard navigation
+            window.location.href = item.url;
           }
         }, 50);
       });
@@ -1172,12 +1164,8 @@ import Icon from './Icon.astro';
               // For external links, open in new tab
               window.open(anchor.href, '_blank');
             } else {
-              // For internal links, use Swup if available, otherwise fallback to regular navigation
-              if ((window as any).swup) {
-                (window as any).swup.navigate(anchor.href);
-              } else {
-                window.location.href = anchor.href;
-              }
+              // For internal links, use standard navigation
+              window.location.href = anchor.href;
             }
           } else if (item.tagName === 'BUTTON') {
             if (item.hasAttribute('data-action')) {

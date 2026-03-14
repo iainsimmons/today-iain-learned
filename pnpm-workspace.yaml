@@ -1,7 +1,6 @@
 onlyBuiltDependencies:
   - esbuild
   - sharp
-  - swup
   - workerd
 
 packages:

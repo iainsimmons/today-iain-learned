@@ -263,11 +263,7 @@ const shouldShowGraph = true;
           resetLocalGraph();
           
           const url = `/posts/${d.slug}`;
-          if ((window as any).swup) {
-            (window as any).swup.navigate(url);
-          } else {
-            window.location.href = url;
-          }
+          window.location.href = url;
         }
       });
 
@@ -746,61 +742,6 @@ const shouldShowGraph = true;
   } else {
     initializeLocalGraph();
     setupLocalGraphButtons();
-  }
-
-  if ((window as any).swup) {
-    (window as any).swup.hooks.on('visit:start', () => {
-      const fullscreenModals = document.querySelectorAll('.fixed.inset-0.z-50:not(#command-palette-overlay):not(#graph-modal-overlay)');
-      fullscreenModals.forEach(modal => {
-        if (modal.id !== 'graph-modal-overlay' && modal.id !== 'command-palette-overlay') {
-          modal.remove();
-        }
-      });
-      document.body.style.overflow = '';
-      fullscreenModalOpen = false;
-    });
-    
-    (window as any).swup.hooks.on('page:view', () => {
-      // Reset and re-initialize local graph after page transition
-      resetLocalGraph();
-      localGraphInitialized = false;
-      
-      // Wait for DOM to be ready and then reinitialize
-      setTimeout(() => {
-        const outerContainer = document.getElementById('local-graph-container');
-        const innerContainer = document.getElementById('local-graph-content');
-        
-        if (outerContainer && innerContainer) {
-          initializeLocalGraph();
-          setupLocalGraphButtons();
-        } else {
-          setTimeout(() => {
-            const retryOuterContainer = document.getElementById('local-graph-container');
-            const retryInnerContainer = document.getElementById('local-graph-content');
-            if (retryOuterContainer && retryInnerContainer) {
-              initializeLocalGraph();
-              setupLocalGraphButtons();
-            } else {
-            }
-          }, 500);
-        }
-      }, 100); // Reduced timeout for faster reinitialization
-    });
-    
-    (window as any).swup.hooks.on('visit:end', () => {
-      // Also reinitialize on visit:end as a backup
-      if (!localGraphInitialized) {
-        setTimeout(() => {
-          const outerContainer = document.getElementById('local-graph-container');
-          const innerContainer = document.getElementById('local-graph-content');
-          if (outerContainer && innerContainer) {
-            initializeLocalGraph();
-            setupLocalGraphButtons();
-          } else {
-          }
-        }, 200);
-      }
-    });
   }
 
   // Listen for theme changes to update graph colors

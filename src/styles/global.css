@@ -1114,30 +1114,28 @@ body,
   }
 }
 
-/* Swup Transitions - Simplified */
-.transition-swup-fade {
-  transition: opacity 0.2s ease-out;
+/* Native CSS View Transitions - Cross-document transitions */
+@view-transition {
+  navigation: auto;
 }
 
-/* Page leaving - simple fade out */
-html.is-leaving .transition-swup-fade {
-  opacity: 0;
+/* Simple fade animation for view transitions */
+::view-transition-old(root) {
+  animation: fade-out 0.2s ease-out;
 }
 
-/* Page entering - simple fade in */
-html.is-animating .transition-swup-fade {
-  opacity: 0;
+::view-transition-new(root) {
+  animation: fade-in 0.2s ease-out;
 }
 
-/* Page ready - final state */
-html.is-ready .transition-swup-fade {
-  opacity: 1;
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
-/* Ensure smooth transitions with hardware acceleration */
-#swup-container {
-  transform: translateZ(0);
-  backface-visibility: hidden;
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* TOC handling */

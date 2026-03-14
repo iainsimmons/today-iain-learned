@@ -387,16 +387,8 @@ import Icon from './Icon.astro';
             // Close modal first
             closeModal();
             
-            // Use Swup for navigation if available
-            if ((window as any).swup) {
-              // Ensure local graph is reset before navigation
-              if ((window as any).resetLocalGraph) {
-                (window as any).resetLocalGraph();
-              }
-              (window as any).swup.navigate(`/posts/${d.slug}`);
-            } else {
-              window.location.href = `/posts/${d.slug}`;
-            }
+            // Standard navigation
+            window.location.href = `/posts/${d.slug}`;
           }
         });
         
@@ -765,20 +757,6 @@ import Icon from './Icon.astro';
   }
 
   // Swup integration - reinitialize after page transitions
-  if ((window as any).swup) {
-    (window as any).swup.hooks.on('page:view', () => {
-      // Always try to reinitialize to ensure it's available
-      initializeGraphModal();
-    });
-    
-    (window as any).swup.hooks.on('visit:end', () => {
-      // Ensure the global function is available after page transitions
-      if (!(window as any).openGraphModal) {
-        initializeGraphModal();
-      }
-    });
-  }
-
   // Listen for theme changes to update graph colors
   window.addEventListener('themechange', () => {
     // Re-render the graph with new colors if it's currently open
