@@ -23,6 +23,7 @@ export interface Props {
 }
 
 const { post } = Astro.props;
+const id = post.id;
 
 // Check if we're in development mode
 const isDev = import.meta.env.DEV;
@@ -130,7 +131,7 @@ if (siteConfig.postOptions.graphView.enabled && siteConfig.postOptions.graphView
   <div class="py-8 relative">
     <div class="mx-auto px-4 sm:px-6 lg:px-8 relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       <!-- Main content -->
-      <article class={`bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm ${siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true ? 'overflow-hidden' : ''}`}>
+      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm ${siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true ? 'overflow-hidden' : ''}`}>
         {/* Cover image - shown if global config allows and not hidden by frontmatter */}
         {siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true && (() => {
           // Process image path similar to PostCard
@@ -205,7 +206,7 @@ if (siteConfig.postOptions.graphView.enabled && siteConfig.postOptions.graphView
         <div class={`p-6 ${siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true ? 'rounded-b-lg' : 'rounded-lg'}`}>
           <!-- Post header -->
           <header class="mb-4">
-          <h1 class="text-xl font-bold text-primary-900 dark:text-primary-50 mb-6 leading-tight">
+            <h1 class="text-xl font-bold text-primary-900 dark:text-primary-50 mb-6 leading-tight">
             {post.data.title}
           </h1>
 

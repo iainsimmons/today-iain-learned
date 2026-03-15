@@ -19,6 +19,7 @@ const { excerpt, wordCount } = processMarkdown(post.body || '');
 const readingTime = calculateReadingTime(post.body || '');
 
 const { title, description, date, tags, image: rawImage, imageAlt } = post.data;
+const id = post.id;
 
 // Process Obsidian bracket syntax in image field
 const image = (() => {
@@ -75,7 +76,7 @@ const shouldShowCoverImage = (() => {
 // No need for dynamic image import - ImageWrapper handles this
 ---
 
-<article class={`group ${featured ? 'featured-post' : 'post-card'}`} role="article" aria-labelledby={`post-title-${post.id}`}>
+<article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`group ${featured ? 'featured-post' : 'post-card'}`} role="article" aria-labelledby={`post-title-${post.id}`}>
 <div class="block">
     {image && shouldShowCoverImage && (
       <div class="overflow-hidden rounded-t-lg bg-primary-100 dark:bg-primary-800" style={`aspect-ratio: ${getPostCardAspectRatio()};`}>
@@ -181,10 +182,10 @@ const shouldShowCoverImage = (() => {
         )}
       </div>
 
-      <h3 id={`post-title-${post.id}`} >
-  <a href={`/posts/${post.id}`} class={`post-title-link font-medium text-primary-900 dark:text-primary-100 leading-relaxed hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors ${
-        featured ? 'text-lg' : 'text-base'
-      }`}>
+      <h3>
+        <a href={`/posts/${post.id}`} class={`post-title-link font-medium text-primary-900 dark:text-primary-100 leading-relaxed hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors ${
+            featured ? 'text-lg' : 'text-base'
+          }`}>
           {title}
         </a>
       </h3>
