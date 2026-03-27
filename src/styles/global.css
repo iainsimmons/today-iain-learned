@@ -1,9 +1,6 @@
 /* KaTeX Math Rendering - Must be first */
 @import "katex/dist/katex.css";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* KaTeX Theme Integration */
 .katex {

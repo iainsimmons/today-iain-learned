@@ -1,5 +1,4 @@
 import { defineConfig, fontProviders } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import {
@@ -27,6 +26,7 @@ import { siteConfig } from "./src/config.ts";
 import { fileURLToPath } from "url";
 
 import expressiveCode from "astro-expressive-code";
+import tailwindcss from "@tailwindcss/vite";
 
 // Deployment platform configuration
 const DEPLOYMENT_PLATFORM =
@@ -60,7 +60,6 @@ export default defineConfig({
     ],
   },
   integrations: [
-    tailwind(),
     sitemap(),
     expressiveCode({
       themes: ["tokyo-night"],
@@ -165,6 +164,7 @@ export default defineConfig({
       exclude: ["astro:content"],
     },
     exclude: ["**/_redirects"],
+    plugins: [tailwindcss()],
   },
   build: {
     assets: "_assets",
@@ -176,4 +176,3 @@ export default defineConfig({
     },
   },
 });
-
