@@ -1,5 +1,4 @@
 import { defineConfig, fontProviders } from "astro/config";
-
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
@@ -45,10 +44,6 @@ export default defineConfig({
       fallbacks: ["monospace"],
     },
   ],
-  security: { csp: true },
-  devToolbar: {
-    enabled: true,
-  },
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",
@@ -159,5 +154,11 @@ export default defineConfig({
   },
   build: {
     assets: "_assets",
+  },
+  experimental: {
+    rustCompiler: true,
+    queuedRendering: {
+      enabled: true,
+    },
   },
 });
