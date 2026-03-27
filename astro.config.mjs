@@ -1,4 +1,5 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
+
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
@@ -35,6 +36,13 @@ export default defineConfig({
   deployment: {
     platform: DEPLOYMENT_PLATFORM,
   },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "JetBrains Mono",
+      cssVariable: "--font-jetbrains-mono",
+    },
+  ],
   csp: {
     scriptDirective: {
       resources: [
@@ -94,11 +102,7 @@ export default defineConfig({
       },
     ],
   },
-  integrations: [
-    tailwind(),
-    sitemap(),
-    mdx(),
-  ],
+  integrations: [tailwind(), sitemap(), mdx()],
   markdown: {
     remarkPlugins: [
       remarkInternalLinks,
