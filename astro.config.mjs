@@ -45,49 +45,7 @@ export default defineConfig({
       fallbacks: ["monospace"],
     },
   ],
-  csp: {
-    scriptDirective: {
-      resources: [
-        "'self'",
-        "'unsafe-inline'",
-        "https://unpkg.com",
-        "https://cdnjs.cloudflare.com",
-        "https://cdn.jsdelivr.net",
-        "https://giscus.app",
-        "https://platform.twitter.com",
-      ],
-    },
-    styleDirective: {
-      resources: [
-        "'self'",
-        "'unsafe-inline'",
-        "https://fonts.googleapis.com",
-        "https://cdnjs.cloudflare.com",
-      ],
-    },
-    fontDirective: {
-      resources: [
-        "'self'",
-        "data:",
-        "https://fonts.gstatic.com",
-        "https://cdnjs.cloudflare.com",
-      ],
-    },
-    imgDirective: {
-      resources: ["'self'", "data:", "https:"],
-    },
-    connectDirective: {
-      resources: ["'self'", "https://giscus.app"],
-    },
-    frameDirective: {
-      resources: [
-        "'self'",
-        "https://www.youtube.com",
-        "https://giscus.app",
-        "https://platform.twitter.com",
-      ],
-    },
-  },
+  security: { csp: true },
   devToolbar: {
     enabled: true,
   },
