@@ -1,14 +1,10 @@
 ---
-import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
-import { isValidDate } from '@/utils/markdown';
+import { getCollection, getEntry, render } from 'astro:content';
 import { siteConfig } from '@/config';
 import { generateHomeSEO } from '@/utils/seo';
-import { shouldShowPost, shouldShowContent, sortPostsByDate, processPost } from '@/utils/markdown';
-import { hasProjectCategories } from '@/utils/categories';
+import { shouldShowPost,  sortPostsByDate, processPost } from '@/utils/markdown';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
-import ProjectCard from '@/components/ProjectCard.astro';
-import DocumentationCard from '@/components/DocumentationCard.astro';
 import Icon from '@/components/Icon.astro';
 import { optimizePostImagePath } from '@/utils/images';
 
@@ -39,73 +35,6 @@ const previewPosts = featuredPost
   ? processedPosts.slice(1, siteConfig.homeOptions.recentPosts.count + 1)
   : processedPosts.slice(0, siteConfig.homeOptions.recentPosts.count);
 
-// Get featured projects if enabled
-let featuredProjects: any[] = [];
-let projectsHaveCategories = false;
-if (siteConfig.homeOptions.projects.enabled && siteConfig.optionalContentTypes.projects) {
-  const allProjects = await getCollection('projects');
-  const visibleProjects = allProjects.filter(project => shouldShowContent(project, isDev));
-
-  // Check if any projects have categories
-  projectsHaveCategories = hasProjectCategories(visibleProjects);
-
-  // First try to get featured projects
-  const featuredOnly = visibleProjects.filter(project => project.data.featured);
-
-  if (featuredOnly.length > 0) {
-    // Show up to configured count of featured projects
-            featuredProjects = featuredOnly
-              .sort((a, b) => {
-                const dateA = isValidDate(a.data.date) ? a.data.date : new Date(0);
-                const dateB = isValidDate(b.data.date) ? b.data.date : new Date(0);
-                return dateB.getTime() - dateA.getTime();
-              })
-              .slice(0, siteConfig.homeOptions.projects.count);
-  } else if (visibleProjects.length > 0) {
-    // Fallback to most recent projects if no featured ones
-    featuredProjects = visibleProjects
-      .sort((a, b) => {
-        const dateA = isValidDate(a.data.date) ? a.data.date : new Date(0);
-        const dateB = isValidDate(b.data.date) ? b.data.date : new Date(0);
-        return dateB.getTime() - dateA.getTime();
-      })
-      .slice(0, siteConfig.homeOptions.projects.count);
-  }
-
-}
-
-// Get featured docs if enabled
-let featuredDocs: any[] = [];
-if (siteConfig.homeOptions.docs.enabled && siteConfig.optionalContentTypes.docs) {
-  const allDocs = await getCollection('docs');
-  const visibleDocs = allDocs.filter(doc => shouldShowContent(doc, isDev));
-
-  // First try to get featured docs
-  const featuredOnly = visibleDocs.filter(doc => doc.data.featured);
-
-  if (featuredOnly.length > 0) {
-    // Show up to configured count of featured docs
-    featuredDocs = featuredOnly
-      .sort((a, b) => {
-        // Use lastModified if available, otherwise use epoch (invisible date for sorting)
-        const dateA = (a.data.lastModified && isValidDate(a.data.lastModified)) ? a.data.lastModified : new Date(0);
-        const dateB = (b.data.lastModified && isValidDate(b.data.lastModified)) ? b.data.lastModified : new Date(0);
-        return dateB.getTime() - dateA.getTime();
-      })
-      .slice(0, siteConfig.homeOptions.docs.count);
-  } else if (visibleDocs.length > 0) {
-    // Fallback to most recent docs if no featured ones
-    featuredDocs = visibleDocs
-      .sort((a, b) => {
-        // Use lastModified if available, otherwise use epoch (invisible date for sorting)
-        const dateA = (a.data.lastModified && isValidDate(a.data.lastModified)) ? a.data.lastModified : new Date(0);
-        const dateB = (b.data.lastModified && isValidDate(b.data.lastModified)) ? b.data.lastModified : new Date(0);
-        return dateB.getTime() - dateA.getTime();
-      })
-      .slice(0, siteConfig.homeOptions.docs.count);
-  }
-}
-
 // Get home blurb content from special collection
 let homeBlurbContent = null;
 let HomeBlurbContent = null;
@@ -124,11 +53,9 @@ if (siteConfig.homeOptions.blurb.placement !== 'none') {
 // Determine which content types are being displayed
 const hasFeaturedPost = siteConfig.homeOptions.featuredPost.enabled && featuredPost;
 const hasRecentPosts = siteConfig.homeOptions.recentPosts.enabled && previewPosts.length > 0;
-const hasProjects = siteConfig.homeOptions.projects.enabled && featuredProjects.length > 0;
-const hasDocs = siteConfig.homeOptions.docs.enabled && featuredDocs.length > 0;
 
 // Count how many content types are being displayed
-const contentTypesCount = [hasFeaturedPost, hasRecentPosts, hasProjects, hasDocs].filter(Boolean).length;
+const contentTypesCount = [hasFeaturedPost, hasRecentPosts].filter(Boolean).length;
 
 // Determine if we should use special treatment (only one content type is displayed)
 const useSpecialTreatment = contentTypesCount === 1;
@@ -174,7 +101,7 @@ const structuredData = {
     )}
   </Fragment>
 
-  <div class="py-8 relative">
+  <main class="py-8 relative">
     <div class="mx-auto px-4 sm:px-6 lg:px-8" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       {onlyBlurbContent ? (
         <!-- Blurb-only homepage with page-like layout -->
@@ -253,77 +180,6 @@ const structuredData = {
             </section>
           )}
 
-          <!-- Featured Projects -->
-          {siteConfig.homeOptions.projects.enabled && featuredProjects.length > 0 && (
-            <section class="mb-12">
-              {!useSpecialTreatment && (
-                <div class="flex items-center justify-between mb-6">
-                  <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-50">
-                    Projects
-                  </h2>
-                  <a
-                    href="/projects"
-                    class="text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 font-medium transition-colors"
-                  >
-                    View all projects →
-                  </a>
-                </div>
-              )}
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {featuredProjects.map((project, index) => (
-                  <ProjectCard project={project} eager={false} context="home" showCategories={projectsHaveCategories} />
-                ))}
-              </div>
-
-              {useSpecialTreatment && (
-                <div class="mt-8 text-center">
-                  <a
-                    href="/projects"
-                    class="text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 font-medium transition-colors"
-                  >
-                    View all projects →
-                  </a>
-                </div>
-              )}
-            </section>
-          )}
-
-          <!-- Featured Documentation -->
-          {siteConfig.homeOptions.docs.enabled && featuredDocs.length > 0 && (
-            <section class="mb-12">
-              {!useSpecialTreatment && (
-                <div class="flex items-center justify-between mb-6">
-                  <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-50">
-                    Documentation
-                  </h2>
-                  <a
-                    href="/docs"
-                    class="text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 font-medium transition-colors"
-                  >
-                    View all docs →
-                  </a>
-                </div>
-              )}
-
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {featuredDocs.map((doc, index) => (
-                  <DocumentationCard documentation={doc} eager={index === 0} context="home" />
-                ))}
-              </div>
-
-              {useSpecialTreatment && (
-                <div class="mt-8 text-center">
-                  <a
-                    href="/docs"
-                    class="text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 font-medium transition-colors"
-                  >
-                    View all docs →
-                  </a>
-                </div>
-              )}
-            </section>
-          )}
 
           <!-- Home blurb below posts -->
           {siteConfig.homeOptions.blurb.placement === 'below' && HomeBlurbContent && (
