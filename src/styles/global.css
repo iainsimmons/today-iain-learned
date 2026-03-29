@@ -349,7 +349,7 @@ code:not(pre code),
 .prose code:not(pre code) {
   font-size: 0.875em !important;
   padding: 0.125rem 0.25rem !important;
-  @apply bg-primary-100 dark:bg-primary-800 text-primary-900 dark:text-primary-100;
+  @apply bg-primary-100 dark:bg-primary-700 text-primary-900 dark:text-primary-50 font-semibold;
   border-radius: 0.25rem !important;
 }
 
@@ -887,7 +887,7 @@ textarea {
 }
 
 .prose a {
-  @apply text-highlight-600 dark:text-highlight-400 font-medium no-underline transition-colors duration-200;
+  @apply text-highlight-600 dark:text-highlight-400 font-medium underline underline-offset-2 decoration-1 transition-colors duration-200;
 }
 
 .prose a:hover {
