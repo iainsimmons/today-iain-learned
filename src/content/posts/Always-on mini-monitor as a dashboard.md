@@ -34,9 +34,7 @@ So it was clear my mini PC running Arch Linux and [Hyprland](https://hypr.land/)
 
 First up, I needed the touchscreen to only detect input for the monitor it was on (I originally had the mini-monitor connected to my second HDMI port but then it didn't run as well as the only connected monitor when I wanted that):
 
-`~/.config/hypr/input.conf` or `~/.config/hypr/hyprland.conf`
-
-```conf
+```txt title="~/.config/hypr/hyprland.conf"
 input {
   touchdevice {
     output = HDMI-A-1
@@ -49,7 +47,7 @@ Next, in the auto-positioning from Hyprland, the mini-monitor was positioned to 
 
 `~/.config/hypr/monitors.conf` or `~/.config/hypr/hyprland.conf`
 
-```conf
+```txt title="~/.config/hypr/hyprland.conf"
 # See https://wiki.hyprland.org/Configuring/Monitors/
 # List current monitors and resolutions possible: hyprctl monitors
 # Format: monitor = [port], resolution, position, scale
@@ -60,9 +58,7 @@ monitor = HDMI-A-2, preferred, 0x0, 1
 
 I then needed to configure the mini-monitor to use its own workspace, and also force the web app version of TickTick to always open in that workspace:
 
-`~/.config/hypr/workspaces.conf` or `~/.config/hypr/hyprland.conf`
-
-```conf
+```txt title="~/.config/hypr/hyprland.conf"
 workspace = 1, monitor:HDMI-A-2, default:true
 workspace = 2, monitor:HDMI-A-2
 workspace = 3, monitor:HDMI-A-2
@@ -77,7 +73,7 @@ workspace = 10, monitor:HDMI-A-1, default:true
 
 In that same file, I also configured TickTick to open fullscreen, to stay on (i.e. not show the screensaver or go idle) while in fullscreen mode (so I could still exit fullscreen if I _wanted_ Arch/Hyprland to go idle). Basically, running like a "kiosk" device, always ready to help:
 
-```conf
+```txt title="~/.config/hypr/hyprland.conf"
 # workspace-10 = Tick Tick (tasks)
 windowrule {
     name = tick-tick
@@ -93,9 +89,7 @@ windowrule {
 
 With the assumption that I always wanted this available, I set up a shell script (and put it in my `PATH`) that would check if the mini-monitor was connected, and if so, launch TickTick immediately.
 
-`launch-tick-tick-on-mini-monitor.sh`
-
-```sh
+```sh title="launch-tick-tick-on-mini-monitor.sh"
 #!/bin/sh
 
 MONITOR_MODEL="CL07-HDMI"
@@ -113,17 +107,13 @@ fi
 
 I then added this so it would run on startup:
 
-`~/.config/hypr/autostart.conf` or `~/.config/hypr/hyprland.conf`
-
-```conf
+```txt title="~/.config/hypr/hyprland.conf"
 exec-once = launch-tick-tick-on-mini-monitor
 ```
 
 And the final piece of the puzzle was another shell script to cycle active workspaces _**without**_ going through the workspace shown on the mini-monitor. (I do confess, I needed a bit of assistance from Gemini to get this started, as I'm not that good with bash scripts):
 
-`cycle-active-workspaces.sh`
-
-```bash
+```bash title="cycle-active-workspaces.sh"
 #!/bin/bash
 
 # Configuration: mini monitor's workspace ID to exclude
@@ -170,7 +160,7 @@ And of course update my Hyprland bindings to use this:
 
 `~/.config/hypr/tiling.conf` or `~/.config/hypr/hyprland.conf`
 
-```conf
+```txt title="~/.config/hypr/hyprland.conf"
 # Unbind Omarchy defaults
 unbind = SUPER, TAB
 unbind = SUPER SHIFT, TAB
@@ -186,4 +176,3 @@ bind = SUPER SHIFT, TAB, exec, cycle-active-workspaces prev
 And here's what it looks like (taken at night to hide all the mess on my desk 😉):
 
 ![[attachments/mini-monitor-below-main-monitor.jpg|Mini-monitor below main monitor]]
-

@@ -36,19 +36,20 @@ mlr --csv filter '$url =~ "www\.example\.com"' input.csv > output.csv
 ```
 
 Where:
+
 - `mlr` is the CLI command
 - `--csv` is the flag, indicating to use the CSV format for both input and output
 - `filter` is the verb
 - `'$url =~ "www\.example\.com"'` is the expression in Miller's [DSL](https://miller.readthedocs.io/en/6.17.0/reference-dsl/), where:
-	- `$url` means the column with header `url`
-	- `=~` means contains a string
-	- `"www\.example\.com"` is the regex to match (hence, escaped period `\.`)
+ 	- `$url` means the column with header `url`
+ 	- `=~` means contains a string
+ 	- `"www\.example\.com"` is the regex to match (hence, escaped period `\.`)
 - `input.csv` is the file to operate on
 - `> output.csv` is redirecting the output to another file
 
 So if `input.csv` looked like this:
 
-```csv
+```csv title="input.csv"
 id,url,referrer
 1,https://www.example.com,https://www.other.com
 2,https://www.example.com/posts,https://www.example.com
@@ -58,7 +59,7 @@ id,url,referrer
 
 Then `output.csv` would look like this:
 
-```csv
+```csv title="output.csv"
 id,url,referrer
 1,https://www.example.com,https://www.other.com
 2,https://www.example.com/posts,https://www.example.com
@@ -75,7 +76,7 @@ Again, with the same pieces: the command, flag, verb, expression (with column re
 
 Resulting in the following `output.csv` (from the same previous `input.csv`), noting that it is leaving the `referrer` column alone:
 
-```csv
+```csv title="output.csv"
 id,url,referrer
 1,https://til.iainsimmons.com,https://www.other.com
 2,https://til.iainsimmons.com/posts,https://www.example.com
@@ -91,7 +92,7 @@ mlr --csv filter '$url =~ "www\.example\.com"' then put '$url = gsub($url, "www\
 
 And getting the final `output.csv`:
 
-```csv
+```csv title="output.csv"
 id,url,referrer
 1,https://til.iainsimmons.com,https://www.other.com
 2,https://til.iainsimmons.com/posts,https://www.example.com
@@ -105,6 +106,7 @@ mlr --csv filter '$url =~ "www\.example\.com"' then put 'for (k,v in $*) { if (i
 ```
 
 Where:
+
 - [`for`](https://miller.readthedocs.io/en/6.17.0/reference-dsl-control-structures/#key-value-for-loops) is basically a for-each loop
 - `k,v in` is getting the key (column) and value for each iteration of the loop
 - `$*` is all columns
@@ -113,7 +115,7 @@ Where:
 
 This would produce the following in `output.csv`:
 
-```csv
+```csv title="output.csv"
 id,url,referrer
 1,https://til.iainsimmons.com,https://www.other.com
 2,https://til.iainsimmons.com/posts,https://til.iainsimmons.com
@@ -121,3 +123,4 @@ id,url,referrer
 ```
 
 There's a ton more it can do, so I'd encourage you to try it out (only takes [10 mins to learn!](https://miller.readthedocs.io/en/6.17.0/10min/)) if you ever find yourself having to work with CSV files.
+
