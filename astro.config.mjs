@@ -26,6 +26,8 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { siteConfig } from "./src/config.ts";
 import { fileURLToPath } from "url";
 
+import expressiveCode from "astro-expressive-code";
+
 // Deployment platform configuration
 const DEPLOYMENT_PLATFORM =
   process.env.DEPLOYMENT_PLATFORM || "cloudflare-workers";
@@ -57,7 +59,19 @@ export default defineConfig({
       },
     ],
   },
-  integrations: [tailwind(), sitemap(), mdx()],
+  integrations: [
+    tailwind(),
+    sitemap(),
+    expressiveCode({
+      themes: ["tokyo-night"],
+      styleOverrides: {
+        codeBackground: "#1a1b26",
+        codeFontFamily: "var(--font-jetbrains-mono)",
+        uiFontFamily: "var(--font-jetbrains-mono)",
+      },
+    }),
+    mdx(),
+  ],
   markdown: {
     remarkPlugins: [
       remarkInternalLinks,
@@ -162,3 +176,4 @@ export default defineConfig({
     },
   },
 });
+

@@ -245,19 +245,6 @@ html.show-scrollbars {
   color: inherit;
 }
 
-/* Code block selection - theme independent */
-pre ::selection,
-code ::selection,
-.prose pre ::selection,
-.prose code ::selection,
-pre ::-moz-selection,
-code ::-moz-selection,
-.prose pre ::-moz-selection,
-.prose code ::-moz-selection {
-  background-color: rgba(100, 116, 139, 0.3) !important;
-  color: inherit !important;
-}
-
 /* Focus Styles */
 :focus-visible {
   @apply outline-2 outline-highlight-500 dark:outline-highlight-400 outline-offset-2;
@@ -354,23 +341,23 @@ code:not(pre code),
 }
 
 /* Syntax highlighting (astro-code) */
-.astro-code,
-pre.astro-code {
-  background-color: rgb(var(--code-bg)) !important;
-  color: rgb(var(--code-text)) !important;
-  padding: 1rem !important;
-  border-radius: 0.5rem !important;
-  overflow-x: auto !important;
-  font-size: 0.875rem !important;
-}
-
-.astro-code code,
-pre.astro-code code {
-  background-color: transparent !important;
-  color: inherit !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-}
+/* .astro-code, */
+/* pre.astro-code { */
+/*   background-color: rgb(var(--code-bg)) !important; */
+/*   color: rgb(var(--code-text)) !important; */
+/*   padding: 1rem !important; */
+/*   border-radius: 0.5rem !important; */
+/*   overflow-x: auto !important; */
+/*   font-size: 0.875rem !important; */
+/* } */
+/**/
+/* .astro-code code, */
+/* pre.astro-code code { */
+/*   background-color: transparent !important; */
+/*   color: inherit !important; */
+/*   padding: 0 !important; */
+/*   border-radius: 0 !important; */
+/* } */
 
 /* Enhanced code block scrolling */
 pre,
@@ -1598,26 +1585,6 @@ figure img {
   margin-inline: auto;
 }
 
-.astro-code,
-pre.astro-code {
-  border-color: cyan;
-  border-width: 1px;
-
-  &:not([data-language="plaintext"]) {
-    /* Damn you !important, making me override with more !important */
-    padding: 1.5rem 1.5rem 1rem 1rem !important;
-    position: relative;
-
-    &::after {
-      content: attr(data-language);
-      position: absolute;
-      inset: 0 0.25rem auto auto;
-      z-index: 10;
-      color: gold;
-    }
-  }
-}
-
 .post-card {
   position: relative;
 }
@@ -1636,4 +1603,8 @@ pre.astro-code {
 
 .prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   text-wrap: pretty;
+}
+
+pre code {
+  background-color: unset !important;
 }
