@@ -20,7 +20,7 @@ My initial logo was ~~shamelessly stolen~~ heavily inspired by [Josh Medeski](ht
 
 Here was mine (if you use [LazyVim](https://www.lazyvim.org/) or the [snacks.nvim dashboard](https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md), this will look familiar):
 
-```
+```txt
  
  ██╗ █████╗ ██╗███╗   ██╗██╗   ██╗██╗███╗   ███╗ 
  ██║██╔══██╗██║████╗  ██║██║   ██║██║████╗ ████║ 
@@ -33,7 +33,7 @@ Here was mine (if you use [LazyVim](https://www.lazyvim.org/) or the [snacks.nvi
 
 Back then I used [dashboard-nvim](https://github.com/nvimdev/dashboard-nvim) and here is what that code looked like:
 
-```lua
+```lua title="dashboard.lua"
 return {
   "nvimdev/dashboard-nvim",
     event = "VimEnter",
@@ -67,7 +67,7 @@ I later moved to using [the snacks.nvim dashboard](https://github.com/folke/snac
 
 And it looked a bit like this:
 
-```
+```txt
 
   ▀▀▀             ▀▀▀                        ▀▀▀               
  ████   ██████▄  ████  ███▄████▄ ███   ███  ████  █████▄█████▄ 
@@ -86,7 +86,7 @@ The `bit` TUI can be used to generate a bash script that uses ANSI escape sequen
 
 The generated script, saved as `iainvim_logo` and included in the `PATH`, looks like this:
 
-```bash
+```bash title="iainvim_logo"
 #!/bin/bash
 # Generated Bash ANSI Art
 
@@ -107,11 +107,11 @@ display_ansi_art
 
 And ends up producing a logo like this:
 
-![coloured terminal output of iainvim_logo command](attachments/coloured-terminal-output-of-iainvim_logo-command.png)
+![[attachments/coloured-terminal-output-of-iainvim_logo-command.png|coloured terminal output of iainvim_logo command]]
 
 Which can then be used as a terminal section command in the `snacks.nvim` dashboard like so:
 
-```lua
+```lua title="snacks.lua"
 return {
   "folke/snacks.nvim",
   priority = 1000,

@@ -9,16 +9,14 @@ tags:
 ---
 I recently added some [keybinds](https://wiki.hypr.land/Configuring/Binds/) to my Hyprland config so I could get `Super + Left` and `Super + Right` to send the `Home` and `End` keys, respectively.
 
-`~/.config/hypr/bindings.conf` or `~/.config/hypr/hyprland.conf`
-
-```sh
+```txt title="~/.config/hypr/hyprland.conf"
 bind = SUPER, LEFT, sendshortcut, , HOME,
 bind = SUPER, RIGHT, sendshortcut, , END,
 ```
 
 That one was simple enough, as was binding `Super + Backspace` to `Delete`:
 
-```sh
+```txt title="~/.config/hypr/hyprland.conf"
 bind = SUPER, BACKSPACE, sendshortcut, , DELETE,
 ```
 
@@ -26,7 +24,7 @@ You might wonder if those extra commas are required. They are, the blank space a
 
 Here's an example with the modifiers, so I can effectively use `Super + Shift + Left` as `Shift + Home` and `Super + Shift + Right` as `Shift + End`:
 
-```sh
+```txt title="~/.config/hypr/hyprland.conf"
 bind = SUPER SHIFT, LEFT, sendshortcut, SHIFT, HOME,
 bind = SUPER SHIFT, RIGHT, sendshortcut, SHIFT, END,
 ```
@@ -40,7 +38,7 @@ The [Hyprland docs](https://wiki.hypr.land/Configuring/Binds/) give the helpful 
 
 So I installed `wev`, ran it, and hit my `Page Up` and `Page Down` keys and was presented with the following (amongst a bunch of other stuff that means nothing to me right now):
 
-```sh
+```txt
 [        16:     wl_keyboard] key: serial: 11117; time: 1409027; key: 112; state: 1 (pressed)
                       sym: Prior        (65365), utf8: ''
 [        16:     wl_keyboard] key: serial: 11118; time: 1409093; key: 112; state: 0 (released)
@@ -55,7 +53,7 @@ The **_key_** part (pun intended!) being the `sym: Prior` and `sym: Next`. I adm
 
 Then it was just a matter of mapping those the same as the others:
 
-```sh
+```txt title="~/.config/hypr/hyprland.conf"
 bind = SUPER, UP, sendshortcut, , PRIOR,
 bind = SUPER, DOWN, sendshortcut, , NEXT,
 bind = SUPER SHIFT, UP, sendshortcut, SHIFT, PRIOR,

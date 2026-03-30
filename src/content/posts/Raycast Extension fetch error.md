@@ -9,7 +9,7 @@ tags:
 ---
 While trying to use a [custom Raycast extension](https://developers.raycast.com) that I built for work, it kept throwing a fetch error, something like this:
 
-```
+```txt
 FetchError: request to https://path.to.my/api/endpoint failed, reason: self-signed certificate in certificate chain
 ```
 

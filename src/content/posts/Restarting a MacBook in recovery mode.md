@@ -11,4 +11,4 @@ Because I'm going to attempt to install [Omarchy](https://omarchy.org) on an old
 
 ## How?
 
-Press and hold `Command + R` immediately after starting/restarting the MacBook until the loading screen (black with a white Apple logo and progress bar) is visible.
+Press and hold <kbd>Cmd</kbd> + <kbd>R</kbd> immediately after starting/restarting the MacBook until the loading screen (black with a white Apple logo and progress bar) is visible.

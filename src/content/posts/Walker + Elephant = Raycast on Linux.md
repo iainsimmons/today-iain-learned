@@ -7,6 +7,10 @@ tags:
   - tools
   - workflow
 ---
+
+> [!Note]
+> I've since (March 2026) switched to using [Vicinae](https://docs.vicinae.com/), which is very much like Raycast on Linux and really nice!
+
 I'm running [Omarchy](https://omarchy.org) on my personal PC and macOS for work and I was missing Raycast.
 
 I was aware that Omarchy started with [rofi](https://github.com/davatorium/rofi) as the basic app launcher and then later switched to [Walker](https://github.com/abenz1267/walker) and implemented the [menu](https://learn.omacom.io/2/the-omarchy-manual/51/navigation) with it, but today I learned that (together with Elephant) it can do and contains so much more, including (prefixes as defined by Omarchy, use `/` to see all providers):
@@ -21,20 +25,19 @@ I was aware that Omarchy started with [rofi](https://github.com/davatorium/rofi)
 - to-do list
 - web search (like custom search engines in browsers, pass in the search parameter, prefix: `@`)
 
-So I implemented a custom web search for [Phind](https://phind.com) like so (using the Google one as an example):
-`~/.config/elephant/websearch.toml`
+So I implemented a custom web search for [MDN](https://developer.mozilla.org) like so (using the Google one as an example):
 
-```toml
+```toml title="~/.config/elephant/websearch.toml"
 [[entries]]
 default = false
-name = "Phind"
-prefix = "dev"
-url = "https://phind.com/search?q=%TERM%"
+name = "MDN"
+prefix = "mdn"
+url = "https://developer.mozilla.org/en-US/search?q=%TERM%"
 ```
 
 And you could do something similar to search other sites like GitHub:
 
-```toml
+```toml title="~/.config/elephant/websearch.toml"
 [[entries]]
 default = false
 name = "GitHub"

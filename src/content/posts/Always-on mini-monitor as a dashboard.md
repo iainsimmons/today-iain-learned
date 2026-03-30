@@ -45,8 +45,6 @@ input {
 
 Next, in the auto-positioning from Hyprland, the mini-monitor was positioned to one side of my main monitor. So I positioned it and set the specific resolution I wanted (aiming for a scale large enough to quickly glance at and tap to check off tasks, but also still display a decent amount of information):
 
-`~/.config/hypr/monitors.conf` or `~/.config/hypr/hyprland.conf`
-
 ```txt title="~/.config/hypr/hyprland.conf"
 # See https://wiki.hyprland.org/Configuring/Monitors/
 # List current monitors and resolutions possible: hyprctl monitors
@@ -157,8 +155,6 @@ hyprctl dispatch workspace "${active_workspaces[$next_index]}"
 ```
 
 And of course update my Hyprland bindings to use this:
-
-`~/.config/hypr/tiling.conf` or `~/.config/hypr/hyprland.conf`
 
 ```txt title="~/.config/hypr/hyprland.conf"
 # Unbind Omarchy defaults

@@ -10,9 +10,9 @@ tags:
   - wezterm
 ---
 
-I was having issues with opening WezTerm in Hyprland until I added the following to the configuration (`~/.config/wezterm/wezterm.lua`):
+I was having issues with opening WezTerm in Hyprland until I added the following to the configuration:
 
-```lua
+```lua title="~/.config/wezterm/wezterm.lua"
 config.front_end = "WebGpu"
 config.webgpu_power_preference = "HighPerformance"
 ```

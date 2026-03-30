@@ -13,9 +13,7 @@ I wanted to remap my CapsLock key to get this working on an old Macbook Air I've
 
 Following the [instructions from the repo](https://github.com/wez/evremap/blob/master/README.md#configuration), I created a basic config file:
 
-`~/.config/evremap/evremap.toml`
-
-```toml
+```toml title="~/.config/evremap/evremap.toml"
 # https://github.com/wez/evremap
 # The name of the device to remap.
 # Run `sudo evremap list-devices` to see the devices available
@@ -40,14 +38,9 @@ tap = ["KEY_ESC"]
 
 Then created a service, again, following the [instructions for running as a service](https://github.com/wez/evremap/blob/master/README.md#systemd) but tweaking because it somehow needed the full paths to things:
 
-`~/.config/evremap/evremap.service`
-
-```service
+```txt title="~/.config/evremap/evremap.service"
 [Service]
 WorkingDirectory=/
-# For reasons I don't care to troubleshoot, Fedora 31 won't let me start this
-# unless I use `bash -c` around it.  Putting the command line in directly
-# yields a 203 permission denied error with no logs about what it didn't like.
 ExecStart=bash -c "sudo /usr/bin/evremap remap /home/iain/.config/evremap/evremap.toml -d 0"
 Restart=always
 
@@ -57,9 +50,7 @@ WantedBy=multi-user.target
 
 And created a bash script in the config directory to copy the service, enable it and run it:
 
-`~/.config/evremap/setup_evremap.sh`
-
-```bash
+```bash title="~/.config/evremap/setup_evremap.sh"
 #!/bin/bash
 
 sudo cp evremap.service /usr/lib/systemd/system/

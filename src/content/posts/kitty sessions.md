@@ -18,9 +18,7 @@ touch ~/.config/kitty/sessions/dotfiles.kitty-session
 
 And then place kitty commands in them to launch tabs/windows and configure it as needed:
 
-`dotfiles.kitty-session`
-
-```sh
+```sh frame="code" title="~/.config/kitty/sessions/dotfiles.kitty-session"
 # Set the title of the window in your OS
 os_window_title "dotfiles"
 # Set the layout for the current tab
@@ -33,7 +31,7 @@ launch --title "nvim" /usr/bin/nvim
 
 And then set up [keymaps](https://sw.kovidgoyal.net/kitty/conf/#keyboard-shortcuts) either directly to a session (this one is `hyper+t`, then `h` for home, as I use `d` for my downloads session):
 
-```conf
+```txt title="~/.config/kitty/kitty.conf"
 map super+ctrl+shift+alt+t>h goto_session ~/.config/kitty/sessions/dotfiles.kitty-session
 ```
 
@@ -42,7 +40,7 @@ Or use the simple session picker available out-of-the-box:
 
 And add a keymap for that, switching to the last session, and closing a session:
 
-```conf
+```txt title="~/.config/kitty/kitty.conf"
 map super+j goto_session
 map super+l goto_session -- -1
 map super+shift+w close_session

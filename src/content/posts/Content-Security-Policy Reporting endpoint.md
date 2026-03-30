@@ -15,14 +15,14 @@ HTTP Header you can have the _user's browser_ log CSP violations!
 
 Here is a minimal example of the headers (from MDN):
 
-```
+```http title="http"
 Reporting-Endpoints: csp-endpoint="https://example.com/csp-reports"
 Content-Security-Policy: default-src 'self'; report-to csp-endpoint
 ```
 
 Where `https://example.com/csp-reports` would be a server endpoint that accepts `POST` requests with a JSON payload and `Content-Type` of `application/reports+json` that looks something like this:
 
-```json
+```json title="json"
 {
   "age": 53531,
   "body": {
@@ -50,13 +50,13 @@ On this very site I implemented the endpoint with a [Cloudflare Worker](https://
 
 Here's the relevant code to handle the CSP reporting requests:
 
-```js
+```js title="js"
 export default {
   async fetch(request, env, ctx) {
     // handle POST requests
     if (request.method === "POST") {
       try {
-	    // Try get and parse the request payload as JSON
+     // Try get and parse the request payload as JSON
         const reports = await request.json();
         
         // log the violation
@@ -74,8 +74,8 @@ export default {
       }
     }
 
-	// otherwise for GET requests or anything else
-	// just return an OK response and message
+ // otherwise for GET requests or anything else
+ // just return an OK response and message
     return new Response("Endpoint active. Send CSP reports here.", { status: 200 });
   },
 };
@@ -90,3 +90,4 @@ And here's what the received report looks like in the Cloudflare logs:
 ![[csp-violation-report-in-cloudflare-worker-logs.png|CSP violation report in Cloudflare Worker logs]]
 
 Again, you could instead store these in a database and generate a report at some other time, or send emails when they occur (though I'd be very careful that you don't get spammed by sending/receiving too many of these).
+
