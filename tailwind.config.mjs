@@ -50,7 +50,7 @@ export default {
               marginBottom: "1.25em",
             },
             "h1, h2, h3, h4, h5, h6": {
-              fontFamily: ["var(--font-jetbrains-mono)"],
+              "font-family": ["var(--font-jetbrains-mono)"],
               fontWeight: "600",
               scrollMarginTop: "2rem",
             },
