@@ -152,6 +152,10 @@
   html {
     scroll-behavior: auto;
     scroll-padding-top: 2rem;
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {

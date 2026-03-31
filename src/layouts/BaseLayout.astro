@@ -80,10 +80,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     </>
   )}
 
-  <!-- Twitter Widget Theme Configuration -->
-  <meta name="twitter:widgets:theme" content="preferred_color_scheme">
-  <meta name="twitter:widgets:border-color" content="rgb(var(--color-primary-200))">
-
   <!-- Article specific meta tags -->
   {seoData.ogType === 'article' && (
     <>
@@ -162,66 +158,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
       // Check if theme is in availableThemes
       return availableThemes === 'default' || (Array.isArray(availableThemes) && availableThemes.includes(theme));
     }
-
-    // Initialize Twitter theme immediately (before Twitter script loads)
-    function initializeTwitterThemeImmediately() {
-      // Wait for theme to be applied, then initialize Twitter theme
-      const checkThemeAndInit = () => {
-        const isDark = document.documentElement.classList.contains('dark');
-        const newTheme = isDark ? 'dark' : 'light';
-        
-        // Update the meta tag immediately
-        const themeMeta = document.querySelector('meta[name="twitter:widgets:theme"]');
-        if (themeMeta) {
-          themeMeta.setAttribute('content', newTheme);
-        }
-        
-        // Update data-theme attributes on any existing blockquotes
-        const twitterEmbeds = document.querySelectorAll('.twitter-tweet');
-        twitterEmbeds.forEach(embed => {
-          embed.setAttribute('data-theme', newTheme);
-        });
-      };
-
-      // Try immediately
-      checkThemeAndInit();
-      
-      // Also try after theme is applied (when deferred script runs)
-      setTimeout(checkThemeAndInit, 500);
-      setTimeout(checkThemeAndInit, 1000);
-    }
-
-    // Initialize Twitter theme immediately
-    initializeTwitterThemeImmediately();
-
-    // Twitter theme change handling - force iframe update
-    function handleTwitterThemeChange(isDark) {
-      const newTheme = isDark ? 'dark' : 'light';
-      
-      // Update the meta tag
-      const themeMeta = document.querySelector('meta[name="twitter:widgets:theme"]');
-      if (themeMeta) {
-        themeMeta.setAttribute('content', newTheme);
-      }
-      
-      // Force update all Twitter iframes by updating their src URLs
-      const twitterIframes = document.querySelectorAll('iframe[src*="platform.twitter.com/embed/Tweet.html"]');
-      twitterIframes.forEach(iframe => {
-        const currentSrc = iframe.src;
-        // Replace theme parameter in URL
-        const updatedSrc = currentSrc.replace(/theme=[^&]+/, `theme=${newTheme}`);
-        if (updatedSrc !== currentSrc) {
-          iframe.src = updatedSrc;
-        }
-      });
-    }
-
-    // Giscus theme change handling
-    function handleGiscusThemeChange(isDark) {
-      // Giscus theme changes are handled by the Giscus client script
-      // This is just a placeholder to prevent the error
-    }
-
 
     // Reset theme to default and clear user preferences
     function resetThemeToDefault() {
@@ -814,133 +750,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     // Make restoreScroll globally accessible
     window.restoreScroll = restoreScroll;
 
-    // Global comments initialization function - Swup compatible
-    function initializeGiscusComments() {
-
-      // Check if comments are enabled in config
-      if (!window.commentsEnabled) {
-        return;
-      }
-
-      // Check if comments container exists
-      const commentsContainer = document.querySelector('#giscus-comments');
-      if (!commentsContainer) {
-        return;
-      }
-
-      // CRITICAL: Clear the entire container content first
-      commentsContainer.innerHTML = '';
-
-      // Remove any existing Giscus scripts from the entire document
-      const existingScripts = document.querySelectorAll('script[src*="giscus.app"]');
-      existingScripts.forEach(script => {
-        script.remove();
-      });
-
-      // Remove any existing Giscus iframes from the entire document
-      const existingIframes = document.querySelectorAll('iframe[src*="giscus"]');
-      existingIframes.forEach(iframe => {
-        iframe.remove();
-      });
-
-
-      // Clear any error state
-      commentsContainer.removeAttribute('data-error');
-
-      // Create a fresh Giscus script
-      const script = document.createElement('script');
-      script.src = 'https://giscus.app/client.js';
-      script.async = true;
-      script.crossOrigin = 'anonymous';
-
-      // Get configuration from data attributes
-      const containerElement = commentsContainer;
-      const repo = containerElement.dataset.repo || '';
-      const repoId = containerElement.dataset.repoId || '';
-      const category = containerElement.dataset.category || '';
-      const categoryId = containerElement.dataset.categoryId || '';
-      const mapping = containerElement.dataset.mapping || 'pathname';
-      const strict = containerElement.dataset.strict || '0';
-      const reactionsEnabled = containerElement.dataset.reactionsEnabled || '1';
-      const metadata = containerElement.dataset.metadata || '0';
-      const inputPosition = containerElement.dataset.inputPosition || 'bottom';
-      const lang = containerElement.dataset.lang || 'en';
-      const loading = containerElement.dataset.loading || 'lazy';
-
-      // Determine the actual theme to use - convert 'preferred_color_scheme' to 'dark' or 'light'
-      let theme = containerElement.dataset.theme || 'preferred_color_scheme';
-      if (theme === 'preferred_color_scheme') {
-        // Get current theme from document
-        const isDark = document.documentElement.classList.contains('dark');
-        theme = isDark ? 'dark' : 'light';
-      }
-
-      script.setAttribute('data-repo', repo);
-      script.setAttribute('data-repo-id', repoId);
-      script.setAttribute('data-category', category);
-      script.setAttribute('data-category-id', categoryId);
-      script.setAttribute('data-mapping', mapping);
-      script.setAttribute('data-strict', strict);
-      script.setAttribute('data-reactions-enabled', reactionsEnabled);
-      script.setAttribute('data-emit-metadata', metadata);
-      script.setAttribute('data-input-position', inputPosition);
-      script.setAttribute('data-theme', theme);
-      script.setAttribute('data-lang', lang);
-      script.setAttribute('data-loading', loading);
-
-      script.onload = function() {
-
-        // Auto-scroll to comments section after GitHub sign-in
-        // This helps users find the comments after authentication
-        setTimeout(() => {
-          const commentsContainer = document.querySelector('#giscus-comments');
-          if (commentsContainer) {
-            // Check if we're returning from GitHub OAuth (common pattern)
-            const urlParams = new URLSearchParams(window.location.search);
-            const isOAuthReturn = urlParams.has('code') || urlParams.has('state') ||
-                                 window.location.hash.includes('giscus') ||
-                                 document.referrer.includes('github.com') ||
-                                 document.referrer.includes('giscus.app');
-
-            if (isOAuthReturn) {
-              commentsContainer.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-          }
-        }, 1000); // Delay to allow Giscus to fully load
-
-        // Simple iframe load detection and theme initialization
-        const checkForGiscusIframe = () => {
-          const giscusIframe = document.querySelector('iframe[src*="giscus"]');
-          if (giscusIframe) {
-            giscusIframe.addEventListener('load', () => {
-              // Initialize theme after iframe loads
-              setTimeout(() => {
-                handleGiscusThemeChange();
-              }, 500);
-            });
-          } else {
-            // If iframe not ready yet, check again in a bit
-            setTimeout(checkForGiscusIframe, 500);
-          }
-        };
-
-        checkForGiscusIframe();
-      };
-
-      script.onerror = function() {
-        commentsContainer.setAttribute('data-error', 'true');
-      };
-
-      // Append to the container
-      commentsContainer.appendChild(script);
-    };
-
-    // Make the function globally accessible
-    window.initializeGiscusComments = initializeGiscusComments;
-
     // Collapsible callouts functionality
     function initializeCollapsibleCallouts() {
       const collapsibleCallouts = document.querySelectorAll('.callout-collapsible');
@@ -1032,10 +841,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
   <!-- Additional head content -->
   <slot name="head" />
-
-
-  <!-- Twitter Widgets Script -->
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 </head>
 
@@ -1206,11 +1011,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     document.addEventListener('DOMContentLoaded', () => {
       if (isDev) {
       }
-      if (document.querySelector('#giscus-comments')) {
-        if (isDev) {
-        }
-        window.initializeGiscusComments();
-      }
       // Initialize base embeds on initial page load (before table wrappers)
       if (window.initializeBaseEmbeds) {
         window.initializeBaseEmbeds();
@@ -1348,303 +1148,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     // Initialize global preloader
     window.imagePreloader = new ImagePreloader();
 
-    // Handle smooth scrolling for anchor links (same-page only)
-    function setupSmoothScrolling() {
-      // Remove any existing event listeners to avoid duplicates
-      // Select all anchor links (starting with #) but exclude root anchor (# only)
-      const existingLinks = document.querySelectorAll('a[href^="#"]');
-      existingLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        // Only process links that have a hash with content (not just #)
-        if (href && href.length > 1) {
-          link.removeEventListener('click', handleAnchorClick);
-        }
-      });
-
-      // Only handle anchor links that have content after #
-      const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-      anchorLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        // Only attach handler to links with actual anchor (not just #)
-        if (href && href.length > 1) {
-          link.addEventListener('click', handleAnchorClick);
-        }
-      });
-
-      // Also handle same-page links with paths (e.g., /posts/getting-started#heading)
-      // These aren't handled by Swup (same-page), so browser jumps - we smooth scroll instead
-      const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
-      const allLinks = document.querySelectorAll('a[href]');
-      
-      allLinks.forEach(link => {
-        const hrefAttr = link.getAttribute('href');
-        if (!hrefAttr) return;
-        
-        // Skip links already handled above (starting with #)
-        if (hrefAttr.startsWith('#')) return;
-        
-        // Skip external links
-        if (hrefAttr.startsWith('http') || hrefAttr.startsWith('mailto:') || hrefAttr.startsWith('tel:')) return;
-        
-        const hashIndex = hrefAttr.indexOf('#');
-        if (hashIndex === -1) return; // No hash
-
-        // Use resolved href (after markdown processing) for path comparison
-        const href = link.href;
-        if (!href) return;
-
-        // Parse the link URL
-        let linkUrl;
-        try {
-          linkUrl = new URL(href);
-        } catch {
-          return;
-        }
-
-        // Only handle same origin
-        if (linkUrl.origin !== window.location.origin) return;
-
-        // Normalize paths - remove trailing slashes and .md extensions for comparison
-        const linkPath = linkUrl.pathname.replace(/\/$/, '').replace(/\.md$/, '') || '/';
-        const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
-        
-        // Only attach handler if same page
-        if (linkPath === currentPath) {
-          link.removeEventListener('click', handleSamePagePathAnchorClick);
-          link.addEventListener('click', handleSamePagePathAnchorClick, true); // Capture phase - run before Swup
-        }
-      });
-    }
-
-    // Handler for same-page path anchors - uses same smooth scroll as handleAnchorClick
-    function handleSamePagePathAnchorClick(e) {
-      const target = e.target;
-      const link = target.closest('a[href]');
-      if (!link) return;
-
-      // Use resolved href (after markdown processing) instead of raw attribute
-      const href = link.href;
-      if (!href) return;
-
-      // Parse the link URL
-      let linkUrl;
-      try {
-        linkUrl = new URL(href);
-      } catch {
-        return;
-      }
-
-      // Only handle same origin
-      if (linkUrl.origin !== window.location.origin) return;
-
-      const linkPath = linkUrl.pathname.replace(/\/$/, '').replace(/\.md$/, '') || '/';
-      const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
-      const hash = linkUrl.hash;
-
-      // Only handle if same page AND has hash
-      if (linkPath === currentPath && hash && hash.length > 1) {
-        e.preventDefault();
-        e.stopPropagation(); // Stop Swup from intercepting
-        e.stopImmediatePropagation(); // Stop all other handlers
-
-        const targetElement = document.querySelector(hash);
-        
-        if (targetElement) {
-          // Update URL without triggering Swup
-          const currentUrl = window.location.pathname + window.location.search;
-          window.history.pushState(null, '', currentUrl + hash);
-
-          // Same smooth scroll as handleAnchorClick
-          const targetPosition = targetElement.offsetTop - 100;
-          const startPosition = window.pageYOffset;
-          const distance = targetPosition - startPosition;
-          const duration = 800;
-          let start = null;
-
-          function step(timestamp) {
-            if (!start) start = timestamp;
-            const progress = timestamp - start;
-            const percentage = Math.min(progress / duration, 1);
-
-            const easeInOut = percentage < 0.5
-              ? 2 * percentage * percentage
-              : 1 - Math.pow(-2 * percentage + 2, 2) / 2;
-
-            window.scrollTo(0, startPosition + distance * easeInOut);
-
-            if (progress < duration) {
-              requestAnimationFrame(step);
-            }
-          }
-
-          requestAnimationFrame(step);
-        }
-      }
-    }
-
-    // Handle anchor link clicks with smooth scrolling
-    function handleAnchorClick(e) {
-      const target = e.target;
-      const link = target.closest('a[href]');
-      if (!link) return;
-
-      const href = link.getAttribute('href');
-      if (href && href.startsWith('#') && href.length > 1) {
-        const targetElement = document.querySelector(href);
-        if (targetElement) {
-          e.preventDefault();
-
-          // DON'T update URL - let the browser handle it naturally
-          // This prevents interfering with browser history
-
-          // Custom smooth scroll animation
-          const targetPosition = targetElement.offsetTop - 100; // Account for header
-          const startPosition = window.pageYOffset;
-          const distance = targetPosition - startPosition;
-          const duration = 800; // 800ms duration
-          let start = null;
-
-          function step(timestamp) {
-            if (!start) start = timestamp;
-            const progress = timestamp - start;
-            const percentage = Math.min(progress / duration, 1);
-
-            // Easing function (ease-in-out)
-            const easeInOut = percentage < 0.5
-              ? 2 * percentage * percentage
-              : 1 - Math.pow(-2 * percentage + 2, 2) / 2;
-
-            window.scrollTo(0, startPosition + distance * easeInOut);
-
-            if (progress < duration) {
-              requestAnimationFrame(step);
-            }
-          }
-
-          requestAnimationFrame(step);
-        }
-      }
-    }
-
-    // Handle URL hash scrolling on page load (start at top, then smooth scroll)
-    function handleInitialHashScroll() {
-      const hash = window.location.hash;
-      if (hash && hash.length > 1) {
-        // First, scroll to top instantly
-        window.scrollTo(0, 0);
-
-        // Then wait a bit and smooth scroll to target
-        setTimeout(() => {
-          const targetElement = document.querySelector(hash);
-          if (targetElement) {
-            // Custom smooth scroll animation
-            const targetPosition = targetElement.offsetTop - 100; // Account for header
-            const startPosition = window.pageYOffset;
-            const distance = targetPosition - startPosition;
-            const duration = 800; // 800ms duration
-            let start = null;
-
-            function step(timestamp) {
-              if (!start) start = timestamp;
-              const progress = timestamp - start;
-              const percentage = Math.min(progress / duration, 1);
-
-              // Easing function (ease-in-out)
-              const easeInOut = percentage < 0.5
-                ? 2 * percentage * percentage
-                : 1 - Math.pow(-2 * percentage + 2, 2) / 2;
-
-              window.scrollTo(0, startPosition + distance * easeInOut);
-
-              if (progress < duration) {
-                requestAnimationFrame(step);
-              }
-            }
-
-            requestAnimationFrame(step);
-          }
-        }, 100);
-      }
-    }
-
-
-    // Handle browser back/forward button - restore scroll position naturally
-    function handlePopState() {
-      // Small delay to ensure content is loaded
-      setTimeout(() => {
-        // Let the browser handle scroll position restoration naturally
-        // Don't force scroll to top - this preserves user's previous scroll position
-
-        // Reinitialize components after back/forward navigation
-        if (window.initializeImageGrids) {
-          window.initializeImageGrids();
-        }
-        if (window.initializeTableWrappers) {
-          window.initializeTableWrappers();
-        }
-        // Don't call setupSmoothScrolling() here - let browser handle scroll naturally
-      }, 50);
-    }
-
-    // Listen for browser back/forward button
-    window.addEventListener('popstate', handlePopState);
-
-    // Twitter widget initialization
-    function initializeTwitterWidgets() {
-      if (typeof window.twttr !== 'undefined' && window.twttr.widgets) {
-        // Load Twitter widgets for all tweets on page
-        window.twttr.widgets.load();
-      } else {
-        // If Twitter script hasn't loaded yet, wait for it
-        setTimeout(initializeTwitterWidgets, 500);
-      }
-    }
-
-    // Make Twitter widget function globally available
-    if (typeof window !== 'undefined') {
-      window.initializeTwitterWidgets = initializeTwitterWidgets;
-    }
-
-
-    // Initialize Twitter theme immediately on page load (before widgets render)
-    function initializeTwitterThemeImmediately() {
-      const isDark = document.documentElement.classList.contains('dark');
-      const newTheme = isDark ? 'dark' : 'light';
-      
-      // Update the meta tag immediately
-      const themeMeta = document.querySelector('meta[name="twitter:widgets:theme"]');
-      if (themeMeta) {
-        themeMeta.setAttribute('content', newTheme);
-      }
-      
-      // Update data-theme attributes on any existing blockquotes
-      const twitterEmbeds = document.querySelectorAll('.twitter-tweet');
-      twitterEmbeds.forEach(embed => {
-        embed.setAttribute('data-theme', newTheme);
-      });
-    }
-
-    // Initialize Twitter theme immediately (before widgets load)
-    initializeTwitterThemeImmediately();
-
-    // Initialize Twitter widgets when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        initializeTwitterWidgets();
-        // Also initialize theme again after widgets load (as backup)
-        setTimeout(initializeTwitterTheme, 1000);
-        // Initialize Giscus theme after widgets load
-        setTimeout(initializeGiscusTheme, 1500);
-      });
-    } else {
-      initializeTwitterWidgets();
-      // Also initialize theme again after widgets load (as backup)
-      setTimeout(initializeTwitterTheme, 1000);
-      // Initialize Giscus theme after widgets load
-      setTimeout(initializeGiscusTheme, 1500);
-    }
-
     // Mermaid theme change handling
     function handleMermaidThemeChange() {
       // Use the utility's theme change handler
@@ -1653,55 +1156,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
       }
     }
 
-
-    // Giscus theme change handling - use postMessage API for dynamic theme switching
-    function handleGiscusThemeChange(isDarkParam) {
-      // Only change theme if comments are enabled and Giscus iframe exists
-      if (window.commentsEnabled) {
-        const giscusIframe = document.querySelector('iframe.giscus-frame');
-        if (giscusIframe) {
-          // Get current theme from document or use provided parameter
-          const isDark = isDarkParam !== undefined 
-            ? isDarkParam 
-            : document.documentElement.classList.contains('dark');
-          const newTheme = isDark ? 'dark' : 'light';
-
-          // Send message to Giscus iframe to change theme
-          giscusIframe.contentWindow.postMessage(
-            { giscus: { setConfig: { theme: newTheme } } },
-            'https://giscus.app'
-          );
-        }
-      }
-    }
-
-    // Initialize Twitter theme on page load
-    function initializeTwitterTheme() {
-      const isDark = document.documentElement.classList.contains('dark');
-      handleTwitterThemeChange(isDark);
-    }
-
-    // Initialize Giscus theme on page load
-    function initializeGiscusTheme() {
-      // Wait for Giscus iframe to load, then set initial theme
-      const checkForGiscusIframe = () => {
-        const giscusIframe = document.querySelector('iframe.giscus-frame');
-        if (giscusIframe) {
-          // Small delay to ensure iframe is fully loaded
-          setTimeout(() => {
-            handleGiscusThemeChange();
-          }, 500);
-        } else {
-          // If iframe not ready yet, check again in a bit
-          setTimeout(checkForGiscusIframe, 500);
-        }
-      };
-
-      // Only check if comments are enabled
-      if (window.commentsEnabled) {
-        checkForGiscusIframe();
-      }
-    }
 
     // Listen for theme changes
     if (typeof window !== 'undefined') {
@@ -1715,8 +1169,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
             // Only re-render if theme actually changed
             if (isDark !== wasDark) {
               handleMermaidThemeChange();
-              handleTwitterThemeChange(isDark);
-              handleGiscusThemeChange(isDark);
             }
           }
         });
@@ -1726,19 +1178,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
         attributes: true,
         attributeOldValue: true,
         attributeFilter: ['class']
-      });
-
-      // Also listen for themechange events (for dark/light mode toggles)
-      window.addEventListener('themechange', (event) => {
-        // Check if this is a dark/light mode change (has mode property)
-        if (event.detail && event.detail.mode) {
-          const isDark = event.detail.mode === 'dark';
-          handleGiscusThemeChange(isDark);
-        } else {
-          // Otherwise, check current state
-          const isDark = document.documentElement.classList.contains('dark');
-          handleGiscusThemeChange(isDark);
-        }
       });
     }
 
@@ -1754,8 +1193,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
             // Only re-render if theme actually changed
             if (isDark !== wasDark) {
               handleMermaidThemeChange();
-              handleTwitterThemeChange(isDark);
-              handleGiscusThemeChange(isDark);
             }
           }
         });
