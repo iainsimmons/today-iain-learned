@@ -1,4 +1,6 @@
 import { defineConfig, fontProviders } from "astro/config";
+import expressiveCode from "astro-expressive-code";
+import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import {
@@ -24,9 +26,6 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { siteConfig } from "./src/config.ts";
 import { fileURLToPath } from "url";
-
-import expressiveCode from "astro-expressive-code";
-import tailwindcss from "@tailwindcss/vite";
 
 // Deployment platform configuration
 const DEPLOYMENT_PLATFORM =

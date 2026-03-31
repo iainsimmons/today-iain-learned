@@ -1,6 +1,7 @@
 /* KaTeX Math Rendering - Must be first */
 @import "katex/dist/katex.css";
 @import "tailwindcss";
+@config "../../tailwind.config.mjs";
 
 /* KaTeX Theme Integration */
 .katex {
@@ -287,11 +288,19 @@ a:hover {
 
 /* Ensure wikilink styling applies even inside .prose */
 .prose a.wikilink {
-  @apply text-highlight-600 dark:text-highlight-400 font-medium no-underline border-b border-dashed border-highlight-500/50 transition-all duration-200 !important;
+  color: rgb(var(--color-highlight-600)) !important;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(var(--color-highlight-500), 0.5);
+  transition: all 0.2s;
 }
 
 .prose a.wikilink:hover {
-  @apply text-highlight-700 dark:text-highlight-300 opacity-80 underline underline-offset-2 decoration-2 !important;
+  color: rgb(var(--color-highlight-700)) !important;
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
 }
 
 /* EXCLUDE heading links from wikilink styling */
@@ -307,7 +316,8 @@ a:hover {
 .prose h4 a.anchor-link,
 .prose h5 a.anchor-link,
 .prose h6 a.anchor-link {
-  @apply border-none no-underline !important;
+  border: none !important;
+  text-decoration: none !important;
 }
 
 .wikilink-broken {
@@ -984,20 +994,20 @@ textarea {
 
 /* Alternating rows using dynamic theme colors */
 .prose .table-wrapper table tr:nth-child(even) {
-  @apply bg-primary-50 !important;
+  background-color: rgb(var(--color-primary-50)) !important;
 }
 
 .dark .prose .table-wrapper table tr:nth-child(even) {
-  @apply bg-primary-800 !important;
+  background-color: rgb(var(--color-primary-800)) !important;
 }
 
 /* Hover using dynamic theme colors */
 .prose .table-wrapper table tr:hover {
-  @apply bg-primary-100 !important;
+  background-color: rgb(var(--color-primary-100)) !important;
 }
 
 .dark .prose .table-wrapper table tr:hover {
-  @apply bg-primary-700 !important;
+  background-color: rgb(var(--color-primary-700)) !important;
 }
 
 @media (min-width: 768px) {
