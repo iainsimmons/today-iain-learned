@@ -19,49 +19,82 @@ const { id, source, class: className = '' } = Astro.props;
 
 <style>
   .mermaid-diagram {
-    @apply my-6 mx-auto max-w-full overflow-hidden;
+    margin: 1.5rem auto;
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .mermaid-diagram-content {
-    @apply relative;
+    position: relative;
   }
 
   .mermaid-diagram-source {
-    @apply hidden;
+    display: none;
   }
 
   /* Mermaid diagram styling */
   .mermaid-diagram :global(.mermaid) {
-    @apply text-center;
+    text-align: center;
   }
 
   /* Error state styling */
   .mermaid-diagram.error {
-    @apply border border-red-200 dark:border-red-800 rounded-lg p-4 bg-red-50 dark:bg-red-900/20;
+    border: 1px solid rgb(254, 202, 202);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: rgb(254, 242, 242);
+  }
+
+  :global(.dark) .mermaid-diagram.error {
+    border-color: rgb(127, 29, 29);
+    background-color: rgba(127, 29, 29, 0.2);
   }
 
   .mermaid-diagram.error .mermaid-diagram-content {
-    @apply text-red-700 dark:text-red-300;
+    color: rgb(185, 28, 28);
+  }
+
+  :global(.dark) .mermaid-diagram.error .mermaid-diagram-content {
+    color: rgb(252, 165, 165);
   }
 
   /* Loading state styling */
   .mermaid-diagram.loading {
-    @apply border border-primary-200 dark:border-primary-600 rounded-lg p-4 bg-primary-50 dark:bg-primary-800/20;
+    border: 1px solid rgb(var(--color-primary-200));
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: rgb(var(--color-primary-50));
+  }
+
+  :global(.dark) .mermaid-diagram.loading {
+    border-color: rgb(var(--color-primary-600));
+    background-color: rgba(var(--color-primary-800), 0.2);
   }
 
   .mermaid-diagram.loading .mermaid-diagram-content {
-    @apply text-primary-600 dark:text-primary-400;
+    color: rgb(var(--color-primary-600));
+  }
+
+  :global(.dark) .mermaid-diagram.loading .mermaid-diagram-content {
+    color: rgb(var(--color-primary-400));
   }
 
   /* Loading skeleton styling */
   .mermaid-loading-skeleton {
-    @apply relative overflow-hidden;
+    position: relative;
+    overflow: hidden;
   }
 
   .mermaid-loading-skeleton::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-transparent via-primary-200/50 dark:via-primary-700/50 to-transparent;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(var(--color-primary-200), 0.5), transparent);
     animation: shimmer 2s infinite;
+  }
+
+  :global(.dark) .mermaid-loading-skeleton::before {
+    background: linear-gradient(90deg, transparent, rgba(var(--color-primary-700), 0.5), transparent);
   }
 
   @keyframes shimmer {
@@ -71,7 +104,7 @@ const { id, source, class: className = '' } = Astro.props;
 
   /* Smooth transitions for rendered diagrams */
   .mermaid-diagram svg {
-    @apply transition-opacity duration-300 ease-in-out;
+    transition: opacity 0.3s ease-in-out;
     opacity: 0;
     animation: fadeIn 0.3s ease-in-out forwards;
   }
@@ -107,11 +140,13 @@ const { id, source, class: className = '' } = Astro.props;
   /* Responsive design */
   @media (max-width: 768px) {
     .mermaid-diagram {
-      @apply mx-0;
+      margin-left: 0;
+      margin-right: 0;
     }
     
     .mermaid-diagram svg {
-      @apply max-w-full h-auto;
+      max-width: 100%;
+      height: auto;
     }
   }
 </style>

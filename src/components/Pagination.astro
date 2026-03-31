@@ -125,27 +125,29 @@ const prevUrl = hasPrev
 <style>
   /* Enhanced pagination styles */
   nav[aria-label="Pagination"] {
-    @apply select-none;
+    user-select: none;
   }
 
   /* Smooth transitions for all interactive elements */
   nav[aria-label="Pagination"] a,
   nav[aria-label="Pagination"] span {
-    @apply transition-all duration-200;
+    transition: all 0.2s;
   }
 
   /* Focus styles */
   nav[aria-label="Pagination"] a:focus-visible {
-    @apply outline-none ring-2 ring-highlight-500 ring-offset-2;
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-highlight-500));
+    outline-offset: 2px;
   }
 
   /* Active page enhancement */
   nav[aria-label="Pagination"] [aria-current="page"] {
-    @apply shadow-lg;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   }
 
   /* Hover effects */
   nav[aria-label="Pagination"] a:hover {
-    @apply transform scale-105;
+    transform: scale(1.05);
   }
 </style>

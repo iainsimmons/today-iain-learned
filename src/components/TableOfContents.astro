@@ -144,27 +144,32 @@ const shouldShowTOC = filteredHeadings.length > 1;
 
 <style>
   .toc-level-2 {
-    @apply ml-0;
+    margin-left: 0;
   }
   
   .toc-level-3 {
-    @apply ml-4;
+    margin-left: 1rem;
   }
   
   .toc-level-4 {
-    @apply ml-8;
+    margin-left: 2rem;
   }
   
   .toc-level-5 {
-    @apply ml-12;
+    margin-left: 3rem;
   }
   
   .toc-level-6 {
-    @apply ml-16;
+    margin-left: 4rem;
   }
   
   .toc-link.active {
-    @apply text-highlight-600 dark:text-highlight-400 font-medium;
+    color: rgb(var(--color-highlight-600));
+    font-weight: 500;
+  }
+
+  :global(.dark) .toc-link.active {
+    color: rgb(var(--color-highlight-400));
   }
   
   /* Ensure proper transform origin for chevron rotation */
@@ -174,11 +179,48 @@ const shouldShowTOC = filteredHeadings.length > 1;
   
   .toc-link.active::before {
     content: '';
-    @apply absolute left-0 top-1/2 transform -translate-y-1/2 w-0.5 h-4 bg-highlight-600 dark:bg-highlight-400 rounded-full;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 1rem;
+    background-color: rgb(var(--color-highlight-600));
+    border-radius: 9999px;
+  }
+
+  :global(.dark) .toc-link.active::before {
+    background-color: rgb(var(--color-highlight-400));
   }
   
   .toc-item {
-    @apply relative;
+    position: relative;
+  }
+  
+  .toc-nav {
+    /* No height restrictions - let it flow naturally */
+  }
+  
+  .toc-content {
+    /* No scrolling needed - content flows naturally */
+    overflow-x: hidden;
+    overflow-y: visible;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .toc-link {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    line-height: 1.5;
+    display: block;
+  
+  .toc-item {
+    position: relative;
   }
   
   .toc-nav {
@@ -268,6 +310,6 @@ const shouldShowTOC = filteredHeadings.length > 1;
   
   
   .toc-chevron {
-    @apply transition-transform duration-200;
+    transition: transform 0.2s;
   }
 </style>

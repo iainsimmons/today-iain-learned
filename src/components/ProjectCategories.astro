@@ -46,31 +46,91 @@ const sortedCategories = [...categories].sort();
 
 <style>
   .category-item {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    transition: all 0.2s;
   }
 
   .category-default {
-    @apply bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-700 hover:text-primary-900 dark:hover:text-primary-100;
+    background-color: rgb(var(--color-primary-100));
+    color: rgb(var(--color-primary-800));
+  }
+
+  :global(.dark) .category-default {
+    background-color: rgb(var(--color-primary-800));
+    color: rgb(var(--color-primary-200));
+  }
+
+  .category-default:hover {
+    background-color: rgb(var(--color-primary-200));
+    color: rgb(var(--color-primary-900));
+  }
+
+  :global(.dark) .category-default:hover {
+    background-color: rgb(var(--color-primary-700));
+    color: rgb(var(--color-primary-100));
   }
 
   .category-outline {
-    @apply border border-primary-300 dark:border-primary-600 text-primary-600 dark:text-primary-300 hover:border-highlight-500 hover:text-highlight-600 dark:hover:text-highlight-400 hover:bg-highlight-50 dark:hover:bg-highlight-900/20;
+    border: 1px solid rgb(var(--color-primary-300));
+    color: rgb(var(--color-primary-600));
+  }
+
+  :global(.dark) .category-outline {
+    border-color: rgb(var(--color-primary-600));
+    color: rgb(var(--color-primary-300));
+  }
+
+  .category-outline:hover {
+    border-color: rgb(var(--color-highlight-500));
+    color: rgb(var(--color-highlight-600));
+    background-color: rgb(var(--color-highlight-50));
+  }
+
+  :global(.dark) .category-outline:hover {
+    color: rgb(var(--color-highlight-400));
+    background-color: rgba(var(--color-highlight-900), 0.2);
   }
 
   .category-minimal {
-    @apply text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 hover:bg-primary-100 dark:hover:bg-primary-800;
+    color: rgb(var(--color-primary-600));
+  }
+
+  :global(.dark) .category-minimal {
+    color: rgb(var(--color-primary-300));
+  }
+
+  .category-minimal:hover {
+    color: rgb(var(--color-highlight-600));
+    background-color: rgb(var(--color-primary-100));
+  }
+
+  :global(.dark) .category-minimal:hover {
+    color: rgb(var(--color-highlight-400));
+    background-color: rgb(var(--color-primary-800));
   }
 
   .category-active {
-    @apply bg-highlight-600 text-white shadow-lg;
+    background-color: rgb(var(--color-highlight-600));
+    color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   }
 
   .category-active:hover {
-    @apply bg-highlight-700;
+    background-color: rgb(var(--color-highlight-700));
   }
 
   .category-count {
-    @apply text-xs opacity-75 bg-white/20 px-1.5 py-0.5 rounded-full;
+    font-size: 0.75rem;
+    opacity: 0.75;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
   }
 
   .category-item:hover {
@@ -78,7 +138,10 @@ const sortedCategories = [...categories].sort();
   }
 
   .category-text {
-    @apply truncate max-w-32;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 8rem;
   }
 
   /* Hide project cards - display: none works fine with CSS Grid */
@@ -90,13 +153,14 @@ const sortedCategories = [...categories].sort();
   /* Responsive adjustments */
   @media (max-width: 640px) {
     .category-item {
-      @apply text-xs px-2 py-1;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
     }
 
-  .category-text {
-    @apply max-w-24;
+    .category-text {
+      max-width: 6rem;
+    }
   }
-}
 </style>
 
 <script>

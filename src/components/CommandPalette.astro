@@ -42,7 +42,7 @@ import Icon from './Icon.astro';
             id="command-palette-input"
             type="text"
             placeholder={siteConfig.commandPalette.placeholder}
-            class="w-full pl-4 pr-10 py-3 bg-primary-50 dark:bg-primary-800 border border-primary-200 dark:border-primary-600 rounded-lg text-primary-900 dark:text-primary-50 placeholder-primary-500 dark:placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-highlight-500 focus:border-transparent"
+            class="w-full pr-10 bg-primary-50 dark:bg-primary-800 border border-primary-200 dark:border-primary-600 rounded-lg text-primary-900 dark:text-primary-50 placeholder-primary-500 dark:placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-highlight-500 focus:border-transparent"
             autocomplete="off"
             spellcheck="false"
           >
@@ -88,7 +88,7 @@ import Icon from './Icon.astro';
               {siteConfig.commandPalette.quickActions.toggleMode && (
                 <button 
                   data-action="toggle-theme"
-                  class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
+                  class="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
                 >
                   <Icon name="sun-moon" class="w-4 h-4 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500" />
                   <span class="text-primary-900 dark:text-primary-50">Toggle Light/Dark Mode</span>
@@ -98,7 +98,7 @@ import Icon from './Icon.astro';
               {siteConfig.commandPalette.quickActions.graphView && siteConfig.postOptions.graphView.enabled && (
                 <button 
                   data-action="open-graph"
-                  class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
+                  class="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
                 >
                   <Icon name="git-fork" class="w-4 h-4 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500" />
                   <span class="text-primary-900 dark:text-primary-50">Graph View</span>
@@ -108,7 +108,7 @@ import Icon from './Icon.astro';
               {siteConfig.commandPalette.quickActions.changeTheme && (
                 <button 
                   data-action="change-theme"
-                  class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
+                  class="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
                 >
                   <Icon name="palette" class="w-4 h-4 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500" />
                   <span class="text-primary-900 dark:text-primary-50">Change Theme</span>
@@ -135,17 +135,17 @@ import Icon from './Icon.astro';
                       {hasUrl ? (
                         <a 
                           href={page.url}
-                          class="w-full flex items-center space-x-3 px-3 py-2 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
+                          class="w-full flex items-center gap-3 px-3 py-2 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
                           target={page.url.startsWith('http') ? '_blank' : undefined}
                         >
                           <Icon name="file-text" class="w-4 h-4 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500" />
                           <span class="text-primary-900 dark:text-primary-50 font-medium">{page.title}</span>
                           {page.url.startsWith('http') && (
-                            <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500 ml-auto" />
+                            <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
                           )}
                         </a>
                       ) : (
-                        <div class="w-full flex items-center space-x-3 px-3 py-2 text-primary-700 dark:text-primary-300">
+                        <div class="w-full flex items-center gap-3 px-3 py-2 text-primary-700 dark:text-primary-300">
                           <Icon name="folder" class="w-4 h-4 text-primary-500 dark:text-primary-400" />
                           <span class="text-primary-900 dark:text-primary-50 font-medium">{page.title}</span>
                         </div>
@@ -154,13 +154,13 @@ import Icon from './Icon.astro';
                       {page.children.map(child => (
                         <a 
                           href={child.url || '#'}
-                          class="w-full flex items-center space-x-3 px-3 py-2 pl-8 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
+                          class="w-full flex items-center gap-3 px-3 py-2 pl-8 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
                           target={child.url?.startsWith('http') ? '_blank' : undefined}
                         >
                           <Icon name="file-text" class="w-4 h-4 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500" />
                           <span class="text-primary-900 dark:text-primary-50">{child.title}</span>
                           {child.url?.startsWith('http') && (
-                            <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500 ml-auto" />
+                            <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
                           )}
                         </a>
                       ))}
@@ -171,13 +171,13 @@ import Icon from './Icon.astro';
                   return (
                     <a 
                       href={page.url || '#'}
-                      class="w-full flex items-center space-x-3 px-3 py-2 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
+                      class="w-full flex items-center gap-3 px-3 py-2 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
                       target={page.url?.startsWith('http') ? '_blank' : undefined}
                     >
                       <Icon name="file-text" class="w-4 h-4 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500" />
                       <span class="text-primary-900 dark:text-primary-50">{page.title}</span>
                       {page.url?.startsWith('http') && (
-                        <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500 ml-auto" />
+                        <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
                       )}
                     </a>
                   );
@@ -196,11 +196,11 @@ import Icon from './Icon.astro';
                 <a 
                   href={social.url}
                   target="_blank"
-                  class="w-full flex items-center space-x-3 px-3 py-2 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
+                  class="w-full flex items-center gap-3 px-3 py-2 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group"
                 >
                   <Icon name={social.icon} class="w-4 h-4 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500" />
                   <span class="text-primary-900 dark:text-primary-50">{social.title}</span>
-                  <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500 ml-auto" />
+                  <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
                 </a>
               ))}
             </div>

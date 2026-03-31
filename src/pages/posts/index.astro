@@ -211,7 +211,7 @@ const pagination = {
 
         <!-- Desktop sidebar - floats to the right of the content container -->
         <div class="hidden xl:block absolute top-0 left-full ml-8 w-64">
-          <div class="sticky top-24 space-y-3 max-h-[calc(100vh-12rem)] overflow-y-auto pb-6">
+          <div class="sticky top-24 space-y-3 pb-6">
             <!-- Tags -->
             {siteConfig.postOptions.tags && allTags.length > 0 && (
               <Tags tags={allTags} />
@@ -238,6 +238,7 @@ const pagination = {
 
   /* Tag highlight in header */
   .tag-highlight {
-    @apply bg-gradient-to-r from-highlight-500 to-highlight-600 text-white;
+    background: linear-gradient(90deg, rgb(var(--color-highlight-500)), rgb(var(--color-highlight-600)));
+    color: white;
   }
 </style>

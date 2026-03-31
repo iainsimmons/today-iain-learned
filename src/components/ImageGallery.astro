@@ -48,54 +48,76 @@ const { layout: finalLayout, images: finalImages } = processedLayout;
 
 <style>
   .image-gallery {
-    @apply grid gap-4;
+    display: grid;
+    gap: 1rem;
   }
   
   .image-gallery.single {
-    @apply grid-cols-1;
+    grid-template-columns: 1fr;
   }
   
   .image-gallery.grid-2 {
-    @apply grid-cols-2;
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .image-gallery.grid-3 {
-    @apply grid-cols-2 sm:grid-cols-3;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .image-gallery.grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
   
   .image-gallery.grid-4 {
-    @apply grid-cols-2 sm:grid-cols-3 lg:grid-cols-4;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .image-gallery.grid-4 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .image-gallery.grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
   
   .image-item {
-    @apply relative overflow-hidden aspect-video;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
   }
   
   .image-button {
-    @apply relative block;
+    position: relative;
+    display: block;
   }
   
   /* Responsive adjustments - maintain side-by-side layout on mobile */
   
   /* Mixed aspect ratios for better layouts */
   .image-gallery.grid-3 .image-item:first-child {
-    @apply sm:col-span-2;
+    grid-column: span 2;
   }
   
   .image-gallery.grid-4 .image-item:nth-child(4n+1) {
-    @apply aspect-square;
+    aspect-ratio: 1 / 1;
   }
   
   .image-gallery.grid-4 .image-item:nth-child(4n+2) {
-    @apply aspect-[4/3];
+    aspect-ratio: 4 / 3;
   }
   
   .image-gallery.grid-4 .image-item:nth-child(4n+3) {
-    @apply aspect-video;
+    aspect-ratio: 16 / 9;
   }
   
   .image-gallery.grid-4 .image-item:nth-child(4n) {
-    @apply aspect-[3/4];
+    aspect-ratio: 3 / 4;
   }
 </style>
 

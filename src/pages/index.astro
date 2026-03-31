@@ -232,10 +232,22 @@ const structuredData = {
 <style>
   /* Enhanced homepage styles */
   .btn-primary {
-    @apply inline-flex items-center px-6 py-3 font-medium rounded-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    transform: scale(1.05);
   }
 
   .btn-primary:focus-visible {
-    @apply outline-none ring-2 ring-highlight-500 ring-offset-2;
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-highlight-500));
+    outline-offset: 2px;
   }
 </style>
