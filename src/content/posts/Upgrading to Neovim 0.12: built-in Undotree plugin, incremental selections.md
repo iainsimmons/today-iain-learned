@@ -7,7 +7,6 @@ tags:
   - terminal
   - dotfiles
 hideTOC: false
-draft: true
 aliases:
 ---
 <abbr title="In Case You Missed It">ICYMI</abbr>, [Neovim version 0.12](https://neovim.io/doc/user/news-0.12/) was released at the end of March 2026. There's quite a few roundups or summaries of the various features, so I won't go into a lot of detail, but just wanted to highlight a couple of the small changes I made after upgrading.
