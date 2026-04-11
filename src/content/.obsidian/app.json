@@ -42,5 +42,6 @@
   "mobileQuickRibbonItem": "",
   "vimMode": true,
   "readableLineLength": true,
-  "defaultViewMode": "source"
+  "defaultViewMode": "source",
+  "spellcheck": true
 }
