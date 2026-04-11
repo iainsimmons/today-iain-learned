@@ -7,7 +7,7 @@ tags:
   - dotfiles
   - kitty
 ---
-The [kitty terminal](https://sw.kovidgoyal.net/kitty/) has a relatively new [sessions](https://sw.kovidgoyal.net/kitty/sessions/#sessions) feature, and it is very well implemented and pretty straightforward to set up.
+The [kitty terminal](https://sw.kovidgoyal.net/kitty/) has a relatively new [sessions](https://sw.kovidgoyal.net/kitty/sessions/#sessions) feature, which is very well implemented and pretty straightforward to set up.
 
 Create some `.kitty-session` files somewhere:
 

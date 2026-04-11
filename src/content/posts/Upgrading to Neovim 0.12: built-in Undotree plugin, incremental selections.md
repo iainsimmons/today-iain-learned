@@ -29,7 +29,7 @@ Or you could do that somewhere in your Neovim config to make it available on sta
 vim.cmd.packadd("nvim.undotree")
 ```
 
-Or if you're like me and you don't really use it often, or are used to using to the [lazy.vim concept of lazy-loading for a command](https://lazy.folke.io/spec#spec-lazy-loading), an equivalent would be the following (with bonus check to ensure you're running Neovim 0.12 or higher):
+Or if you're like me and you don't really use it often, or are used to using the [lazy.vim concept of lazy-loading for a command](https://lazy.folke.io/spec#spec-lazy-loading), an equivalent would be the following (with bonus check to ensure you're running Neovim 0.12 or higher):
 
 ```lua title="~/.config/nvim/init.lua"
 -- Load and toggle nvim.undotree if on Neovim v0.12+
@@ -67,7 +67,7 @@ On the `main` branch of `nvim-treesitter`, that's no longer a thing, but luckily
 
 The default mappings aren't bad, though you have to first do  <kbd>v</kbd> <kbd>a</kbd> <kbd>n</kbd> to increment in normal mode, and then switch to just repeating <kbd>a</kbd> <kbd>n</kbd> to further increment in visual mode (and similar with  <kbd>v</kbd> <kbd>i</kbd> <kbd>n</kbd> to decrement from normal mode and then repeat <kbd>i</kbd> <kbd>n</kbd> in visual mode).
 
-I wanted some alternative keymaps (normally I'd go with <kbd>Ctrl</kbd> + <kbd>Space</kbd> to increment and <kbd>Backspace</kbd> to decrement, but these were not working for my in Linux, only in macOS).
+I wanted some alternative keymaps (normally I'd go with <kbd>Ctrl</kbd> + <kbd>Space</kbd> to increment and <kbd>Backspace</kbd> to decrement, but these were not working for me in Linux, only in macOS).
 
 I had to dig around in the Neovim source code to find the implementation. You can find them in [this commit where the new default keymaps were added](https://github.com/neovim/neovim/commit/72d3a57f270fdca5e592dcf2e4b7c3b00549c05e#diff-fcb32cf99107c4b71f964a0949cf50edcf3965c1191152e3d8db1256f5513ba7R458-R472).
 

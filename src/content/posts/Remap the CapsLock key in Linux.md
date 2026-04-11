@@ -9,7 +9,7 @@ tags:
 ---
 Today (or recently) I found out that the awesome Wez Furlong (creator of WezTerm) also made this great key remapping tool for Linux called [evremap](https://github.com/wez/evremap).
 
-I wanted to remap my CapsLock key to get this working on an old Macbook Air I've recently installed Arch Linux on, so that tapping it would map to `Esc`, and holding it would be `Super + Ctrl + Shift + Alt`, just like I have on my mechanical keyboard that I use on my other computers.
+I wanted to remap my CapsLock key on an old Macbook Air I've recently installed Arch Linux on, so that tapping it would map to `Esc`, and holding it would be `Super + Ctrl + Shift + Alt`, just like I have on my mechanical keyboard that I use on my other computers.
 
 Following the [instructions from the repo](https://github.com/wez/evremap/blob/master/README.md#configuration), I created a basic config file:
 

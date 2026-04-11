@@ -24,7 +24,7 @@ But there was one other thing that always bugged me about all of these solutions
 
 I set out to build something mostly with things I already had available, and one new, key piece of hardware: a small touchscreen monitor. I found one on Amazon (AU) for a decent price, the [GeeekPi 7-Inch IPS LCD Touch Screen](https://www.amazon.com.au/dp/B0CJWXWJ6K).
 
-> It would be have been nice to get a e-paper/e-ink screen, but they were fairly expensive for what they were, and even more so for a touch-enabled one. I even considered trying to make my own DIY equivalent of the [TRMNL](https://trmnl.com/)  device, though it is only for viewing information, and not controlling anything. It is also fairly expensive for something that isn't fully open and configurable.
+> It would have been nice to get a e-paper/e-ink screen, but they were fairly expensive for what they were, and even more so for a touch-enabled one. I even considered trying to make my own DIY equivalent of the [TRMNL](https://trmnl.com/)  device, though it is only for viewing information, and not controlling anything. It is also fairly expensive for something that isn't fully open and configurable.
 
 In any case, I first attempted to connect the mini-monitor to an old Raspberry Pi 3B my brother gave me, but it was already not working well, and it seemed to really struggle keeping up, so I quickly abandoned that.
 
@@ -43,7 +43,7 @@ input {
 }
 ```
 
-Next, in the auto-positioning from Hyprland, the mini-monitor was positioned to one side of my main monitor. So I positioned it and set the specific resolution I wanted (aiming for a scale large enough to quickly glance at and tap to check off tasks, but also still display a decent amount of information):
+Next, in the auto-positioning from Hyprland, the mini-monitor was positioned to one side of my main monitor. So I positioned it and set the specific resolution I wanted (aiming for a scale large enough to quickly glance at and tap to check off tasks, but still display a decent amount of information):
 
 ```txt title="~/.config/hypr/hyprland.conf"
 # See https://wiki.hyprland.org/Configuring/Monitors/
