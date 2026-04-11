@@ -1,6 +1,6 @@
 ---
 title: kitty sessions
-description: "today iain learned: kitty sessions"
+description: "today iain learned: How to set up and use sessions in the kitty terminal emulator"
 date: 2025-11-03
 tags:
   - terminal

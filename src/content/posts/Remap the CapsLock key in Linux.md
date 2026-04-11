@@ -1,6 +1,6 @@
 ---
 title: Remap the CapsLock key in Linux
-description: "today iain learned: Remap the CapsLock key in Linux"
+description: "today iain learned: How to remap the CapsLock key with a tap-hold keybind in Linux"
 date: 2025-12-17
 tags:
   - linux

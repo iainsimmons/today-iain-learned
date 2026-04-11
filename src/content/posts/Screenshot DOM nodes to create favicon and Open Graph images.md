@@ -1,7 +1,7 @@
 ---
 title: Screenshot DOM nodes to create favicon and Open Graph images
 date: 2026-01-25
-description: "today iain learned: Screenshot DOM nodes to create favicon and Open Graph images"
+description: "today iain learned: How to screenshot HTML DOM nodes and their CSS styles in the browser to create favicon and Open Graph images"
 tags:
   - CSS
   - browser

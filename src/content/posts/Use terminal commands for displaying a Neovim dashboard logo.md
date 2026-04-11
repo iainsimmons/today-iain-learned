@@ -1,6 +1,6 @@
 ---
 title: Use terminal commands for displaying a Neovim dashboard logo
-description: "today iain learned: Use terminal commands for displaying a Neovim dashboard logo"
+description: "today iain learned: How to use terminal commands for displaying a custom Neovim dashboard logo on startup"
 date: 2025-11-23
 tags:
   - Neovim

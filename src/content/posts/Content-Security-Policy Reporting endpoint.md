@@ -1,6 +1,6 @@
 ---
 title: Content-Security-Policy Reporting endpoint
-description: "today iain learned: Content-Security-Policy Reporting endpoint"
+description: "today iain learned: How to use the Content-Security-Policy Reporting endpoint for automatically logging/receiving CSP violations"
 date: 2026-02-15
 tags:
   - webdev

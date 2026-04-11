@@ -1,6 +1,6 @@
 ---
 title: Walker + Elephant = Raycast on Linux
-description: "today iain learned: Walker + Elephant = Raycast on Linux"
+description: "today iain learned: How to use Walker and Elephant to match Raycast features in Linux"
 date: 2025-10-29
 tags:
   - linux

@@ -1,6 +1,6 @@
 ---
 title: Set custom cursor in Hyprland
-description: "today iain learned: Set custom cursor in Hyprland"
+description: "today iain learned: How to set a custom cursor in Hyprland"
 date: 2025-10-30
 tags:
   - linux

@@ -1,6 +1,6 @@
 ---
 title: Add keybinds or shortcuts for other keys in Hyprland
-description: "today iain learned: Add keybinds or shortcuts for other keys in Hyprland"
+description: "today iain learned: How to use the wev CLI tool to help add keybinds or shortcuts for special keys in Hyprland"
 date: 2025-11-15
 tags:
   - hyprland

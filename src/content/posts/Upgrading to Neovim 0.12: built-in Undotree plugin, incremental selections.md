@@ -1,7 +1,7 @@
 ---
 title: "Upgrading to Neovim 0.12: built-in Undotree plugin, incremental selections"
 date: 2026-04-11
-description: "today iain learned: Upgrading to Neovim 0.12 and the built-in Undotree plugin"
+description: "today iain learned: Some neat features that come with an upgrade to Neovim version 0.12, such as the built-in Undotree plugin and native Treesitter-based incremental selection."
 tags:
   - Neovim
   - terminal

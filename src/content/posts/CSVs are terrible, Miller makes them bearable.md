@@ -1,7 +1,7 @@
 ---
 title: CSVs are terrible, Miller makes them bearable
 date: 2026-03-06
-description: "today iain learned: CSVs are terrible, Miller makes them bearable"
+description: "today iain learned: that working with CSVs in the terminal or text editors is terrible, but the Miller CLI tool makes it bearable!"
 tags:
   - CLI
   - data

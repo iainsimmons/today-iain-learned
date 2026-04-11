@@ -1,6 +1,6 @@
 ---
 title: Acupuncture is great
-description: "today iain learned: Acupuncture is great"
+description: "today iain learned: That acupuncture is actually great"
 date: 2025-10-23
 tags:
   - health

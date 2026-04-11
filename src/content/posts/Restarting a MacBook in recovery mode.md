@@ -1,6 +1,6 @@
 ---
 title: Restarting a MacBook in recovery mode
-description: "today iain learned: Restarting a MacBook in recovery mode"
+description: "today iain learned: How to restart a MacBook in recovery mode"
 date: 2025-10-27
 tags:
   - macos

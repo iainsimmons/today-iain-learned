@@ -1,7 +1,7 @@
 ---
 title: Always-on mini-monitor as a dashboard
 date: 2026-02-22
-description: "today iain learned: Always-on mini-monitor as a dashboard"
+description: "today iain learned: How to build an always-on mini-monitor as a dashboard running on an Arch Linux/Hyprland computer"
 tags:
   - hardware
   - productivity

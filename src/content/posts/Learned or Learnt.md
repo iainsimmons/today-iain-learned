@@ -1,6 +1,6 @@
 ---
 title: Learned or Learnt
-description: "today iain learned: Learned or Learnt"
+description: "today iain learned: The difference between the words Learned and Learnt"
 date: 2025-10-25
 tags:
   - misc

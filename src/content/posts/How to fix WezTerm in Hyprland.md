@@ -1,6 +1,6 @@
 ---
 title: How to fix WezTerm in Hyprland
-description: "today iain learned: How to fix WezTerm in Hyprland"
+description: "today iain learned: How to fix a macOS WezTerm configuration to work in Hyprland"
 date: 2025-11-06
 tags:
   - terminal

@@ -1,7 +1,7 @@
 ---
 title: Better code blocks with the Astro Expressive Code integration
 date: 2026-04-03
-description: "today iain learned: Better code blocks with the Astro Expressive Code integration"
+description: "today iain learned: How to build better and more accessible code blocks with the Astro Expressive Code integration"
 tags:
   - webdev
   - HTML

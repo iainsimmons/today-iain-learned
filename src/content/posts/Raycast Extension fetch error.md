@@ -1,6 +1,6 @@
 ---
 title: Raycast Extension fetch error
-description: "today iain learned: Raycast Extension fetch error"
+description: "today iain learned: How to fix a Raycast Extension fetch error"
 date: 2025-12-02
 tags:
   - Raycast
