@@ -444,6 +444,11 @@
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
 
+  .dark button kbd {
+    background-color: rgb(var(--color-primary-800));
+    border-color: rgb(var(--color-primary-600));
+  }
+
   /* Button Styles - Consolidated */
   .btn {
     display: inline-flex;
