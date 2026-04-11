@@ -444,12 +444,6 @@
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
 
-  .dark kbd {
-    background-color: rgb(var(--color-primary-800));
-    color: rgb(var(--color-primary-200));
-    border-color: rgb(var(--color-primary-600));
-  }
-
   /* Button Styles - Consolidated */
   .btn {
     display: inline-flex;
@@ -1944,7 +1938,7 @@
   }
 
   .video-embed .video-player {
-    width: 100%;
+    max-width: 100%;
     border-radius: 0.75rem;
   }
 
@@ -2156,5 +2150,9 @@
   .dark .prose code:not(pre code) {
     background-color: rgb(var(--color-primary-700));
     color: rgb(var(--color-primary-50));
+  }
+
+  figure .video-player {
+    margin: 0 auto;
   }
 }
