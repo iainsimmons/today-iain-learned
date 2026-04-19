@@ -2140,6 +2140,37 @@
     caret-shape: block;
     caret-color: rgb(var(--color-highlight-500) / 0.7);
   }
+
+  .border-glow-top {
+    --border-glow-color: rgb(var(--color-highlight-500));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .border-glow-top::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: radial-gradient(
+      ellipse 50% 100% at 50% 0%,
+      var(--border-glow-color) 0%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .dark .border-glow-top::before {
+    --border-glow-color: rgb(var(--color-highlight-400));
+  }
+
+  .border-glow-top:hover::before,
+  .border-glow-top:focus-within::before {
+    opacity: 1;
+  }
 }
 
 @layer utilities {
