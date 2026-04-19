@@ -28,8 +28,7 @@ import { siteConfig } from "./src/config.ts";
 import { fileURLToPath } from "url";
 
 // Deployment platform configuration
-const DEPLOYMENT_PLATFORM =
-  process.env.DEPLOYMENT_PLATFORM || "cloudflare-workers";
+const DEPLOYMENT_PLATFORM = process.env.DEPLOYMENT_PLATFORM || "cloudflare-workers";
 
 export default defineConfig({
   site: siteConfig.site,
@@ -127,9 +126,7 @@ export default defineConfig({
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
-        "@/components": fileURLToPath(
-          new URL("./src/components", import.meta.url),
-        ),
+        "@/components": fileURLToPath(new URL("./src/components", import.meta.url)),
         "@/layouts": fileURLToPath(new URL("./src/layouts", import.meta.url)),
         "@/utils": fileURLToPath(new URL("./src/utils", import.meta.url)),
         "@/types": fileURLToPath(new URL("./src/types.ts", import.meta.url)),
@@ -154,9 +151,7 @@ export default defineConfig({
       },
     },
     define: {
-      "process.env.NODE_ENV": JSON.stringify(
-        process.env.NODE_ENV || "development",
-      ),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
       "process.env.ASTRO_CONTENT_COLLECTION_CACHE": "false",
     },
     optimizeDeps: {

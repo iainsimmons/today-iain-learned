@@ -375,9 +375,7 @@
   .astro-code,
   kbd,
   .font-mono {
-    font-family:
-      var(--font-mono, "JetBrains Mono"), "Monaco", "Consolas", "Courier New",
-      monospace;
+    font-family: var(--font-mono, "JetBrains Mono"), "Monaco", "Consolas", "Courier New", monospace;
     font-display: var(--font-display, swap);
   }
 
@@ -2136,6 +2134,11 @@
 
   pre code {
     background-color: unset !important;
+  }
+
+  input {
+    caret-shape: block;
+    caret-color: rgb(var(--color-highlight-500) / 0.7);
   }
 }
 
