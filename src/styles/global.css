@@ -2149,10 +2149,10 @@
   }
 
   @keyframes widen-border-glow {
-    0% {
+    from {
       --border-glow-width: 0%;
     }
-    100% {
+    to {
       --border-glow-width: 50%;
     }
   }
