@@ -328,7 +328,7 @@
 
   /* Ensure wikilink styling applies even inside .prose */
   .prose a.wikilink {
-    color: rgb(var(--color-highlight-600)) !important;
+    color: rgb(var(--color-highlight-600));
     font-weight: 500;
     text-decoration: none;
     border-bottom: 1px dashed rgba(var(--color-highlight-500), 0.5);
@@ -336,11 +336,19 @@
   }
 
   .prose a.wikilink:hover {
-    color: rgb(var(--color-highlight-700)) !important;
+    color: rgb(var(--color-highlight-700));
     opacity: 0.8;
     text-decoration: underline;
     text-underline-offset: 2px;
     text-decoration-thickness: 2px;
+  }
+
+  .dark .prose a.wikilink {
+    color: rgb(var(--color-highlight-400));
+  }
+
+  .dark .prose a.wikilink:hover {
+    color: rgb(var(--color-highlight-300));
   }
 
   /* EXCLUDE heading links from wikilink styling */
@@ -375,7 +383,9 @@
   .astro-code,
   kbd,
   .font-mono {
-    font-family: var(--font-mono, "JetBrains Mono"), "Monaco", "Consolas", "Courier New", monospace;
+    font-family:
+      var(--font-mono, "JetBrains Mono"), "Monaco", "Consolas", "Courier New",
+      monospace;
     font-display: var(--font-display, swap);
   }
 
