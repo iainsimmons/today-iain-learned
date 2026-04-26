@@ -1,7 +1,7 @@
 ---
 title: tmux extended-keys option and Neovim keymaps with modifiers
 date: 2026-04-26
-description: "today iain learned: tmux extended-keys option and Neovim keymaps with modifiers"
+description: "today iain learned: how to enable the tmux extended-keys option and use it to add more Neovim keymaps with modifiers"
 tags:
   - terminal
   - CLI
