@@ -1,6 +1,7 @@
 ---
 title: Uses
 date: 2026-04-27
+description: "A list of the things I'm currently using for work and play"
 noIndex: false
 hideTOC: false
 draft: false
