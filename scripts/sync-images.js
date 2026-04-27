@@ -19,6 +19,7 @@ const IMAGE_SYNC_CONFIGS = [
     target: "public/posts/attachments",
     name: "posts",
   },
+  // NOTE: if using images in pages, this will need to be enabled
   // {
   //   source: "src/content/pages/attachments",
   //   target: "public/pages/attachments",
@@ -67,14 +68,8 @@ async function findImageFiles(dir, relativePath = "") {
         if (item.toLowerCase().endsWith(".webp")) {
           const originalName = item.replace(/\.webp$/i, "");
           const hasOriginal = items.some((i) => {
-            const nameWithoutExt = i.replace(
-              /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i,
-              "",
-            );
-            return (
-              nameWithoutExt === originalName &&
-              /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(i)
-            );
+            const nameWithoutExt = i.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i, "");
+            return nameWithoutExt === originalName && /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(i);
           });
           if (hasOriginal) {
             // Skip WebP if we have the original - we'll generate it
@@ -127,10 +122,7 @@ async function syncFolderBasedImages(contentType) {
             targetRelativePath.startsWith("attachments/") ||
             targetRelativePath.startsWith("attachments\\")
           ) {
-            targetRelativePath = targetRelativePath.replace(
-              /^attachments[/\\]/,
-              "",
-            );
+            targetRelativePath = targetRelativePath.replace(/^attachments[/\\]/, "");
           }
 
           const targetPath = path.join(targetDir, targetRelativePath);
@@ -143,15 +135,10 @@ async function syncFolderBasedImages(contentType) {
           let needsUpdate = true;
 
           // Check if this is an image that would be converted to WebP
-          if (
-            /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(imageFile.relativePath)
-          ) {
+          if (/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(imageFile.relativePath)) {
             const webpPath = path.join(
               targetDir,
-              targetRelativePath.replace(
-                /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i,
-                ".webp",
-              ),
+              targetRelativePath.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i, ".webp"),
             );
             try {
               const sourceStats = await fs.stat(imageFile.sourcePath);
@@ -168,8 +155,7 @@ async function syncFolderBasedImages(contentType) {
               const targetStats = await fs.stat(targetPath);
               // Only update if source is newer or different size
               needsUpdate =
-                sourceStats.mtime > targetStats.mtime ||
-                sourceStats.size !== targetStats.size;
+                sourceStats.mtime > targetStats.mtime || sourceStats.size !== targetStats.size;
             } catch {
               // Target doesn't exist, definitely needs update
               needsUpdate = true;
@@ -178,18 +164,11 @@ async function syncFolderBasedImages(contentType) {
 
           if (needsUpdate) {
             // Optimize image if it's an image format (not audio, video, or PDF)
-            if (
-              /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(imageFile.relativePath)
-            ) {
+            if (/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(imageFile.relativePath)) {
               try {
                 // Convert to WebP and optimize
-                const webpPath = targetPath.replace(
-                  /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i,
-                  ".webp",
-                );
-                await sharp(imageFile.sourcePath)
-                  .webp({ quality: 85 })
-                  .toFile(webpPath);
+                const webpPath = targetPath.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i, ".webp");
+                await sharp(imageFile.sourcePath).webp({ quality: 85 }).toFile(webpPath);
                 totalSynced++;
               } catch (error) {
                 // If Sharp fails, fall back to copying original
@@ -215,8 +194,7 @@ async function syncFolderBasedImages(contentType) {
     if (totalSynced > 0 || totalSkipped > 0) {
       log.info(`📁 Syncing folder-based ${contentType} images...`);
       if (totalSynced > 0) log.info(`   Synced ${totalSynced} files`);
-      if (totalSkipped > 0)
-        log.info(`   Skipped ${totalSkipped} files that were unchanged`);
+      if (totalSkipped > 0) log.info(`   Skipped ${totalSkipped} files that were unchanged`);
     }
 
     return { synced: totalSynced, skipped: totalSkipped };
@@ -268,10 +246,7 @@ async function syncImagesForConfig(config) {
 
       // Check if this is an image that would be converted to WebP
       if (/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(imageFile.relativePath)) {
-        const webpPath = targetPath.replace(
-          /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i,
-          ".webp",
-        );
+        const webpPath = targetPath.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i, ".webp");
         try {
           const sourceStats = await fs.stat(imageFile.sourcePath);
           const webpStats = await fs.stat(webpPath);
@@ -287,8 +262,7 @@ async function syncImagesForConfig(config) {
           const targetStats = await fs.stat(targetPath);
           // Only update if source is newer or different size
           needsUpdate =
-            sourceStats.mtime > targetStats.mtime ||
-            sourceStats.size !== targetStats.size;
+            sourceStats.mtime > targetStats.mtime || sourceStats.size !== targetStats.size;
         } catch {
           // Target doesn't exist, definitely needs update
           needsUpdate = true;
@@ -297,18 +271,11 @@ async function syncImagesForConfig(config) {
 
       if (needsUpdate) {
         // Optimize image if it's an image format (not audio, video, or PDF)
-        if (
-          /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(imageFile.relativePath)
-        ) {
+        if (/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(imageFile.relativePath)) {
           try {
             // Convert to WebP and optimize
-            const webpPath = targetPath.replace(
-              /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i,
-              ".webp",
-            );
-            await sharp(imageFile.sourcePath)
-              .webp({ quality: 85 })
-              .toFile(webpPath);
+            const webpPath = targetPath.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i, ".webp");
+            await sharp(imageFile.sourcePath).webp({ quality: 85 }).toFile(webpPath);
             synced++;
           } catch (error) {
             // If Sharp fails, fall back to copying original
@@ -347,23 +314,14 @@ async function cleanupTargetDirectory(targetDir, sourceImageFiles) {
   sourceImageFiles.forEach((f) => {
     sourceFileSet.add(f.relativePath);
     // Also add the path without attachments/ prefix for cleanup
-    if (
-      f.relativePath.startsWith("attachments/") ||
-      f.relativePath.startsWith("attachments\\")
-    ) {
+    if (f.relativePath.startsWith("attachments/") || f.relativePath.startsWith("attachments\\")) {
       sourceFileSet.add(f.relativePath.replace(/^attachments[/\\]/, ""));
     }
     // Add WebP version of image paths (since we generate WebP from originals)
     if (/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i.test(f.relativePath)) {
-      const webpPath = f.relativePath.replace(
-        /\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i,
-        ".webp",
-      );
+      const webpPath = f.relativePath.replace(/\.(jpg|jpeg|png|gif|bmp|tiff|tif)$/i, ".webp");
       sourceFileSet.add(webpPath);
-      if (
-        f.relativePath.startsWith("attachments/") ||
-        f.relativePath.startsWith("attachments\\")
-      ) {
+      if (f.relativePath.startsWith("attachments/") || f.relativePath.startsWith("attachments\\")) {
         const webpPathNoAttachments = webpPath.replace(/^attachments[/\\]/, "");
         sourceFileSet.add(webpPathNoAttachments);
       }
@@ -380,10 +338,7 @@ async function cleanupTargetDirectory(targetDir, sourceImageFiles) {
 
       if (stat.isDirectory()) {
         // Recursively clean subdirectories
-        const subRemoved = await cleanupTargetDirectory(
-          itemPath,
-          sourceImageFiles,
-        );
+        const subRemoved = await cleanupTargetDirectory(itemPath, sourceImageFiles);
         removed += subRemoved;
 
         // Remove empty directories
@@ -397,9 +352,7 @@ async function cleanupTargetDirectory(targetDir, sourceImageFiles) {
         }
       } else {
         // Check if this file exists in source
-        const relativePath = path
-          .relative(targetDir, itemPath)
-          .replace(/\\/g, "/");
+        const relativePath = path.relative(targetDir, itemPath).replace(/\\/g, "/");
         if (!sourceFileSet.has(relativePath)) {
           await fs.unlink(itemPath);
           removed++;
@@ -409,10 +362,7 @@ async function cleanupTargetDirectory(targetDir, sourceImageFiles) {
   } catch (error) {
     // Directory might not exist or be readable
     if (error.code !== "ENOENT") {
-      log.warn(
-        `Warning: Could not clean directory ${targetDir}:`,
-        error.message,
-      );
+      log.warn(`Warning: Could not clean directory ${targetDir}:`, error.message);
     }
   }
 
@@ -427,8 +377,7 @@ async function syncAllImages() {
     if (result.synced > 0 || result.skipped > 0) {
       log.info(`📁 Syncing ${config.name} images...`);
       if (result.synced > 0) log.info(`   Synced ${result.synced} files`);
-      if (result.skipped > 0)
-        log.info(`   Skipped ${result.skipped} files that were unchanged`);
+      if (result.skipped > 0) log.info(`   Skipped ${result.skipped} files that were unchanged`);
     }
   }
 
@@ -448,4 +397,3 @@ async function syncAllImages() {
 }
 
 syncAllImages();
-

@@ -2,14 +2,7 @@
 import type { NavigationItem } from "./types";
 
 // Aspect ratio options for post cards
-export type AspectRatio =
-  | "16:9"
-  | "4:3"
-  | "3:2"
-  | "og"
-  | "square"
-  | "golden"
-  | "custom";
+export type AspectRatio = "16:9" | "4:3" | "3:2" | "og" | "square" | "golden" | "custom";
 
 export interface SiteConfig {
   // Site Information
@@ -157,13 +150,7 @@ export interface SiteConfig {
       showOrphanedPosts: boolean;
     };
     postNavigation: boolean;
-    showPostCardCoverImages:
-      | "all"
-      | "featured"
-      | "home"
-      | "posts"
-      | "featured-and-posts"
-      | "none";
+    showPostCardCoverImages: "all" | "featured" | "home" | "posts" | "featured-and-posts" | "none";
     postCardAspectRatio: AspectRatio;
     customPostCardAspectRatio?: string;
     comments: {
@@ -281,7 +268,7 @@ export const siteConfig: SiteConfig = {
       // [CONFIG:COMMAND_PALETTE_SEARCH_POSTS]
       posts: true,
       // [CONFIG:COMMAND_PALETTE_SEARCH_PAGES]
-      pages: false,
+      pages: true,
       // [CONFIG:COMMAND_PALETTE_SEARCH_PROJECTS]
       projects: false,
       // [CONFIG:COMMAND_PALETTE_SEARCH_DOCS]
@@ -336,6 +323,7 @@ export const siteConfig: SiteConfig = {
     // [CONFIG:NAVIGATION_PAGES]
     pages: [
       { title: "Posts", url: "/posts/" },
+      { title: "Uses", url: "/uses/" },
       {
         title: "GitHub",
         url: "https://github.com/iainsimmons/today-iain-learned",
@@ -507,8 +495,7 @@ export function getTheme():
 }
 
 export function getPostCardAspectRatio(): string {
-  const { postCardAspectRatio, customPostCardAspectRatio } =
-    siteConfig.postOptions;
+  const { postCardAspectRatio, customPostCardAspectRatio } = siteConfig.postOptions;
 
   switch (postCardAspectRatio) {
     case "16:9":
@@ -549,49 +536,34 @@ export function getTableOfContentsEnabled(): boolean {
 export function getFontFamily(fontName: string): string {
   // Convert font name to CSS font-family with fallbacks
   const fontMap: Record<string, string> = {
-    Inter:
-      "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-    Roboto:
-      "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    "Open Sans":
-      "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    Inter: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    Roboto: "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    "Open Sans": "'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     Lato: "'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    Poppins:
-      "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    Poppins: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     "Source Sans Pro":
       "'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    Nunito:
-      "'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    Montserrat:
-      "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    Nunito: "'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    Montserrat: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     "Playfair Display": "'Playfair Display', Georgia, 'Times New Roman', serif",
     Merriweather: "'Merriweather', Georgia, 'Times New Roman', serif",
     Lora: "'Lora', Georgia, 'Times New Roman', serif",
     "Crimson Text": "'Crimson Text', Georgia, 'Times New Roman', serif",
     "PT Serif": "'PT Serif', Georgia, 'Times New Roman', serif",
-    "Libre Baskerville":
-      "'Libre Baskerville', Georgia, 'Times New Roman', serif",
+    "Libre Baskerville": "'Libre Baskerville', Georgia, 'Times New Roman', serif",
     "Fira Code": "'Fira Code', 'Monaco', 'Consolas', 'Courier New', monospace",
-    "JetBrains Mono":
-      "'JetBrains Mono', 'Monaco', 'Consolas', 'Courier New', monospace",
-    "Source Code Pro":
-      "'Source Code Pro', 'Monaco', 'Consolas', 'Courier New', monospace",
-    "IBM Plex Mono":
-      "'IBM Plex Mono', 'Monaco', 'Consolas', 'Courier New', monospace",
-    "Cascadia Code":
-      "'Cascadia Code', 'Monaco', 'Consolas', 'Courier New', monospace",
+    "JetBrains Mono": "'JetBrains Mono', 'Monaco', 'Consolas', 'Courier New', monospace",
+    "Source Code Pro": "'Source Code Pro', 'Monaco', 'Consolas', 'Courier New', monospace",
+    "IBM Plex Mono": "'IBM Plex Mono', 'Monaco', 'Consolas', 'Courier New', monospace",
+    "Cascadia Code": "'Cascadia Code', 'Monaco', 'Consolas', 'Courier New', monospace",
   };
 
   return (
-    fontMap[fontName] ||
-    `'${fontName}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
+    fontMap[fontName] || `'${fontName}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
   );
 }
 
-export function getGoogleFontsUrl(
-  headingFont: string,
-  bodyFont: string,
-): string {
+export function getGoogleFontsUrl(headingFont: string, bodyFont: string): string {
   // Google Fonts that are commonly used and available
   const googleFonts = [
     "Inter",
@@ -634,9 +606,7 @@ export function getGoogleFontsUrl(
   const fontList = Array.from(fonts)
     .map((font) => {
       // Add common weights for each font
-      const weights = font.includes("Mono")
-        ? "300;400;500;600;700"
-        : "300;400;500;600;700";
+      const weights = font.includes("Mono") ? "300;400;500;600;700" : "300;400;500;600;700";
       return `${font.replace(/\s+/g, "+")}:wght@${weights}`;
     })
     .join("&family=");
@@ -709,9 +679,7 @@ function validateSiteConfig(config: SiteConfig): {
     );
   }
   if (!config.author || config.author.trim() === "") {
-    errors.push(
-      "Author name is required and cannot be empty. Set your name or the blog author.",
-    );
+    errors.push("Author name is required and cannot be empty. Set your name or the blog author.");
   }
 
   // Theme validation
@@ -749,13 +717,8 @@ function validateSiteConfig(config: SiteConfig): {
   }
 
   // Available themes validation
-  if (
-    config.availableThemes !== "default" &&
-    !Array.isArray(config.availableThemes)
-  ) {
-    errors.push(
-      'availableThemes must be either "default" or an array of theme names.',
-    );
+  if (config.availableThemes !== "default" && !Array.isArray(config.availableThemes)) {
+    errors.push('availableThemes must be either "default" or an array of theme names.');
   }
   if (Array.isArray(config.availableThemes)) {
     if (config.availableThemes.length === 0) {
@@ -778,10 +741,7 @@ function validateSiteConfig(config: SiteConfig): {
       'Body font family is required. Set fonts.families.body to a valid font name like "Inter", "Roboto", or "Open Sans".',
     );
   }
-  if (
-    !config.fonts.families.heading ||
-    config.fonts.families.heading.trim() === ""
-  ) {
+  if (!config.fonts.families.heading || config.fonts.families.heading.trim() === "") {
     errors.push(
       'Heading font family is required. Set fonts.families.heading to a valid font name like "Inter", "Roboto", or "Playfair Display".',
     );
@@ -798,10 +758,7 @@ function validateSiteConfig(config: SiteConfig): {
   }
 
   // Numeric validations
-  if (
-    config.postOptions.postsPerPage < 1 ||
-    config.postOptions.postsPerPage > 50
-  ) {
+  if (config.postOptions.postsPerPage < 1 || config.postOptions.postsPerPage > 50) {
     errors.push(
       `Posts per page must be between 1 and 50. Current value is ${config.postOptions.postsPerPage}. Adjust postOptions.postsPerPage.`,
     );
@@ -812,19 +769,13 @@ function validateSiteConfig(config: SiteConfig): {
     );
   }
   if (config.homeOptions.recentPosts.count < 1) {
-    errors.push(
-      "Recent posts count must be at least 1. Adjust homeOptions.recentPosts.count.",
-    );
+    errors.push("Recent posts count must be at least 1. Adjust homeOptions.recentPosts.count.");
   }
   if (config.homeOptions.projects.count < 1) {
-    errors.push(
-      "Projects count must be at least 1. Adjust homeOptions.projects.count.",
-    );
+    errors.push("Projects count must be at least 1. Adjust homeOptions.projects.count.");
   }
   if (config.homeOptions.docs.count < 1) {
-    errors.push(
-      "Documentation count must be at least 1. Adjust homeOptions.docs.count.",
-    );
+    errors.push("Documentation count must be at least 1. Adjust homeOptions.docs.count.");
   }
 
   // Content width validation
@@ -845,32 +796,15 @@ function validateSiteConfig(config: SiteConfig): {
   }
 
   // Cover image options validation
-  const validCoverImageOptions = [
-    "all",
-    "featured",
-    "home",
-    "posts",
-    "featured-and-posts",
-    "none",
-  ];
-  if (
-    !validCoverImageOptions.includes(config.postOptions.showPostCardCoverImages)
-  ) {
+  const validCoverImageOptions = ["all", "featured", "home", "posts", "featured-and-posts", "none"];
+  if (!validCoverImageOptions.includes(config.postOptions.showPostCardCoverImages)) {
     errors.push(
       `Show post card cover images must be one of: "all", "featured", "home", "posts", "featured-and-posts", or "none". Current value "${config.postOptions.showPostCardCoverImages}" is invalid.`,
     );
   }
 
   // Aspect ratio validation
-  const validAspectRatios = [
-    "16:9",
-    "4:3",
-    "3:2",
-    "og",
-    "square",
-    "golden",
-    "custom",
-  ];
+  const validAspectRatios = ["16:9", "4:3", "3:2", "og", "square", "golden", "custom"];
   if (!validAspectRatios.includes(config.postOptions.postCardAspectRatio)) {
     errors.push(
       `Post card aspect ratio must be one of: "16:9", "4:3", "3:2", "og", "square", "golden", or "custom". Current value "${config.postOptions.postCardAspectRatio}" is invalid.`,
@@ -881,9 +815,7 @@ function validateSiteConfig(config: SiteConfig): {
   if (config.postOptions.postCardAspectRatio === "custom") {
     if (
       !config.postOptions.customPostCardAspectRatio ||
-      !config.postOptions.customPostCardAspectRatio.match(
-        /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/,
-      )
+      !config.postOptions.customPostCardAspectRatio.match(/^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/)
     ) {
       errors.push(
         `Custom aspect ratio must be provided in format "width / height" (e.g., "2.5 / 1") when postCardAspectRatio is "custom". Current value "${config.postOptions.customPostCardAspectRatio}" is invalid.`,
@@ -892,9 +824,7 @@ function validateSiteConfig(config: SiteConfig): {
   }
 
   // Home options validation
-  if (
-    !["above", "below", "none"].includes(config.homeOptions.blurb.placement)
-  ) {
+  if (!["above", "below", "none"].includes(config.homeOptions.blurb.placement)) {
     errors.push(
       `Home blurb placement must be "above", "below", or "none". Current value "${config.homeOptions.blurb.placement}" is invalid.`,
     );
@@ -910,8 +840,7 @@ function validateSiteConfig(config: SiteConfig): {
   // Only validate slug when type is "featured" - slug is optional when type is "latest"
   if (
     config.homeOptions.featuredPost.type === "featured" &&
-    (!config.homeOptions.featuredPost.slug ||
-      config.homeOptions.featuredPost.slug.trim() === "")
+    (!config.homeOptions.featuredPost.slug || config.homeOptions.featuredPost.slug.trim() === "")
   ) {
     errors.push(
       'Featured post slug is required when type is "featured". Set homeOptions.featuredPost.slug to the post slug (the part after /posts/ in the URL).',
@@ -927,30 +856,20 @@ function validateSiteConfig(config: SiteConfig): {
 
   // Footer validation
   if (typeof config.footer.enabled !== "boolean") {
-    errors.push(
-      "Footer enabled setting must be a boolean value (true or false).",
-    );
+    errors.push("Footer enabled setting must be a boolean value (true or false).");
   }
-  if (
-    config.footer.enabled &&
-    (!config.footer.content || config.footer.content.trim() === "")
-  ) {
+  if (config.footer.enabled && (!config.footer.content || config.footer.content.trim() === "")) {
     errors.push(
       "Footer content is required when footer is enabled. Set footer.content to your footer text.",
     );
   }
   if (typeof config.footer.showSocialIconsInFooter !== "boolean") {
-    errors.push(
-      "Footer social icons setting must be a boolean value (true or false).",
-    );
+    errors.push("Footer social icons setting must be a boolean value (true or false).");
   }
 
   // Profile picture validation
   if (config.profilePicture.enabled) {
-    if (
-      !config.profilePicture.image ||
-      config.profilePicture.image.trim() === ""
-    ) {
+    if (!config.profilePicture.image || config.profilePicture.image.trim() === "") {
       errors.push(
         'Profile picture image path is required when profilePicture.enabled is true. Set profilePicture.image to the path of your image (e.g., "/profile.jpg" in the public/ directory).',
       );
