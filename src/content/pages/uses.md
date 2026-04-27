@@ -7,6 +7,8 @@ draft: false
 aliases:
   - using
 ---
+**Last updated**: <time datetime="2026-04-27">27 April 2026</time>
+
 ## Intro
 
 This is a list of the things I'm currently using for work and play. Mostly inspired by [Wes Bos' own `/uses` page](https://wesbos.com/uses). See [Slash Pages](https://slashpages.net/) for more of this kind of thing.
