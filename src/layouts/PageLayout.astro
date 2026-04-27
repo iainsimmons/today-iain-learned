@@ -7,7 +7,6 @@ import { generatePageSEO } from '@/utils/seo';
 import { optimizeContentImagePath, getOptimizedFormat } from '@/utils/images';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
-import Lightbox from '@/components/Lightbox.astro';
 import ImageWrapper from '@/components/ImageWrapper.astro';
 
 export interface Props {
@@ -32,6 +31,9 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= maxDepth);
 const hideTOC = page.data.hideTOC === true;
 const showTOC = page.data.showTOC !== undefined ? page.data.showTOC : true;
 const shouldShowTOC = siteConfig.tableOfContents.enabled && !hideTOC && showTOC && toc.length > 0;
+
+// Get id
+const id = page.id;
 
 // Generate structured data
 const structuredData = {
@@ -75,7 +77,7 @@ const structuredData = {
   <div class="py-8 relative">
     <div class="mx-auto px-4 sm:px-6 lg:px-8 relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       <!-- Page content -->
-      <article class={`bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm ${page.data.image ? 'overflow-hidden' : ''}`}>
+      <article class={`border-glow-top border-glow-top-permanent bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm ${page.data.image ? 'overflow-hidden' : ''}`}>
         {page.data.image && (() => {
           // Process image path similar to PostLayout
           let rawImage = page.data.image;
