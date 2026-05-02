@@ -4,12 +4,10 @@ import { siteConfig } from '@/config';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import { generateCustomPageSEO } from '@/utils/seo';
-import { getFileLastModifiedDate } from '@/utils/file-date';
 
 const podrollEntries = await getCollection('podroll');
 const groups = podrollEntries[0]?.data.groups || [];
-
-const lastUpdated = getFileLastModifiedDate('../data/podroll.opml', import.meta.url);
+const lastUpdated = podrollEntries[0]?.data.lastUpdated;
 
 const seoData = generateCustomPageSEO(
   {

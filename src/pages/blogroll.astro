@@ -4,10 +4,10 @@ import { siteConfig } from '@/config';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import { generateCustomPageSEO } from '@/utils/seo';
-import { getFileLastModifiedDate } from '@/utils/file-date';
 
 const blogrollEntries = await getCollection('blogroll');
 const groups = blogrollEntries[0]?.data.groups || [];
+const lastUpdated = blogrollEntries[0]?.data.lastUpdated;
 
 const seoData = generateCustomPageSEO(
   {
@@ -25,8 +25,6 @@ const toc = groups.map(group => ({
 }));
 
 const shouldShowTOC = toc.length > 1;
-
-const lastUpdated = getFileLastModifiedDate('../data/blogroll.opml', import.meta.url);
 ---
 
 <BaseLayout seoData={seoData}>
