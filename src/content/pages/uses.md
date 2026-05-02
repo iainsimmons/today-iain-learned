@@ -13,7 +13,7 @@ aliases:
 
 ## Intro
 
-This is a list of the things I'm currently using for work and play. Mostly inspired by [Wes Bos' own `/uses` page](https://wesbos.com/uses). See [Slash Pages](https://slashpages.net/) for more of this kind of thing.
+This is a list of the things I'm currently using for work and play. Mostly inspired by [Wes Bos' own `/uses` page](https://wesbos.com/uses). See the [Slash Pages](https://slashpages.net/) site for an explanation of these kinds of pages.
 
 Also see my [dotfiles](https://github.com/iainsimmons/dotfiles) and [Neovim config](https://github.com/iainsimmons/nvim-config).
 
