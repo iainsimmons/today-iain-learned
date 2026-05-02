@@ -1,17 +1,13 @@
-import type {
-  Post,
-  Page,
-  Project,
-  Docs,
-  SEOData,
-  OpenGraphImage,
-} from "@/types";
+import type { Post, Page, Project, Docs, SEOData, OpenGraphImage } from "@/types";
+
+// Simplified type for custom pages (like blogroll)
+export type CustomPage = {
+  title: string;
+  description: string;
+  noIndex?: boolean;
+};
 import siteConfig from "@/config";
-import {
-  getFallbackOGImage,
-  optimizePostImagePath,
-  optimizeContentImagePath,
-} from "./images";
+import { getFallbackOGImage, optimizePostImagePath, optimizeContentImagePath } from "./images";
 
 // Helper function to get default OG image
 function getDefaultOGImage(): OpenGraphImage {
@@ -59,11 +55,7 @@ export function generatePostSEO(post: Post, url: string): SEOData {
     } else {
       // Use optimizePostImagePath for proper path resolution
       // Pass post.id as both postSlug and postId for folder-based posts
-      const optimizedPath = optimizePostImagePath(
-        imagePath,
-        post.id,
-        post.id
-      );
+      const optimizedPath = optimizePostImagePath(imagePath, post.id, post.id);
       imageUrl = `${siteConfig.site}${optimizedPath}`;
     }
     ogImage = {
@@ -111,12 +103,7 @@ export function generatePageSEO(page: Page, url: string): SEOData {
       imageUrl = imagePath;
     } else {
       // Use optimizeContentImagePath for proper path resolution
-      const optimizedPath = optimizeContentImagePath(
-        imagePath,
-        "pages",
-        page.id,
-        page.id
-      );
+      const optimizedPath = optimizeContentImagePath(imagePath, "pages", page.id, page.id);
       imageUrl = `${siteConfig.site}${optimizedPath}`;
     }
     ogImage = {
@@ -161,12 +148,7 @@ export function generateProjectSEO(project: Project, url: string): SEOData {
       imageUrl = imagePath;
     } else {
       // Use optimizeImagePath for proper path resolution
-      const optimizedPath = optimizeContentImagePath(
-        imagePath,
-        "projects",
-        project.id,
-        project.id
-      );
+      const optimizedPath = optimizeContentImagePath(imagePath, "projects", project.id, project.id);
       imageUrl = `${siteConfig.site}${optimizedPath}`;
     }
     ogImage = {
@@ -198,10 +180,7 @@ export function generateProjectSEO(project: Project, url: string): SEOData {
 }
 
 // Generate SEO data for documentation
-export function generateDocumentationSEO(
-  documentation: Docs,
-  url: string
-): SEOData {
+export function generateDocumentationSEO(documentation: Docs, url: string): SEOData {
   const { title, description, image, category, version } = documentation.data;
 
   let ogImage: OpenGraphImage | undefined;
@@ -220,15 +199,13 @@ export function generateDocumentationSEO(
         imagePath,
         "documentation",
         documentation.id,
-        documentation.id
+        documentation.id,
       );
       imageUrl = `${siteConfig.site}${optimizedPath}`;
     }
     ogImage = {
       url: imageUrl,
-      alt:
-        documentation.data.imageAlt ||
-        `Featured image for documentation: ${title}`,
+      alt: documentation.data.imageAlt || `Featured image for documentation: ${title}`,
       width: 1200,
       height: 630,
     };
@@ -255,6 +232,22 @@ export function generateDocumentationSEO(
   };
 }
 
+// Generate SEO data for custom pages (like blogroll)
+export function generateCustomPageSEO(page: CustomPage, url: string): SEOData {
+  // Always use default OG image
+  const ogImage = getDefaultOGImage();
+  ogImage.url = `${siteConfig.site}${ogImage.url}`;
+
+  return {
+    title: `${page.title} | ${siteConfig.title}`,
+    description: page.description || "",
+    canonical: url,
+    ogImage,
+    ogType: "website",
+    noIndex: page.noIndex || false,
+  };
+}
+
 // Generate SEO data for homepage
 export function generateHomeSEO(url: string): SEOData {
   let ogImage: OpenGraphImage | undefined;
@@ -276,16 +269,11 @@ export function generateHomeSEO(url: string): SEOData {
 }
 
 // Generate SEO data for tag pages
-export function generateTagSEO(
-  tag: string,
-  site: string,
-  currentPage?: number
-): SEOData {
+export function generateTagSEO(tag: string, site: string, currentPage?: number): SEOData {
   const title = `Posts tagged with "${tag}" | ${siteConfig.title}`;
   const description = `Browse all posts tagged with ${tag} on ${siteConfig.title}`;
   const baseUrl = `${site}/posts/tag/${tag}`;
-  const canonical =
-    currentPage && currentPage > 1 ? `${baseUrl}/${currentPage}` : baseUrl;
+  const canonical = currentPage && currentPage > 1 ? `${baseUrl}/${currentPage}` : baseUrl;
 
   return {
     title,
@@ -304,19 +292,14 @@ export function generateTagSEO(
 }
 
 // Generate SEO data for posts listing pages
-export function generatePostsListSEO(
-  site: string,
-  currentPage?: number
-): SEOData {
+export function generatePostsListSEO(site: string, currentPage?: number): SEOData {
   const title =
     currentPage && currentPage > 1
       ? `Posts - Page ${currentPage} | ${siteConfig.title}`
       : `Posts | ${siteConfig.title}`;
   const description = `Browse all posts on ${siteConfig.title}`;
   const canonical =
-    currentPage && currentPage > 1
-      ? `${site}/posts/${currentPage}`
-      : `${site}/posts`;
+    currentPage && currentPage > 1 ? `${site}/posts/${currentPage}` : `${site}/posts`;
 
   return {
     title,
@@ -349,14 +332,10 @@ export function normalizeCanonicalUrl(url: string): string {
 }
 
 // Generate structured data (JSON-LD)
-export function generateStructuredData(
-  type: "blog" | "article" | "website",
-  data: any
-) {
+export function generateStructuredData(type: "blog" | "article" | "website", data: any) {
   const baseData = {
     "@context": "https://schema.org",
-    "@type":
-      type === "blog" ? "Blog" : type === "article" ? "BlogPosting" : "WebSite",
+    "@type": type === "blog" ? "Blog" : type === "article" ? "BlogPosting" : "WebSite",
     ...data,
   };
 
@@ -392,21 +371,17 @@ export function generateMetaTags(seoData: SEOData): string {
       `<meta property="og:image:width" content="${seoData.ogImage.width}">`,
       `<meta property="og:image:height" content="${seoData.ogImage.height}">`,
       `<meta name="twitter:image" content="${seoData.ogImage.url}">`,
-      `<meta name="twitter:image:alt" content="${seoData.ogImage.alt}">`
+      `<meta name="twitter:image:alt" content="${seoData.ogImage.alt}">`,
     );
   }
 
   // Add article-specific tags
   if (seoData.ogType === "article") {
     if (seoData.publishedTime) {
-      tags.push(
-        `<meta property="article:published_time" content="${seoData.publishedTime}">`
-      );
+      tags.push(`<meta property="article:published_time" content="${seoData.publishedTime}">`);
     }
     if (seoData.modifiedTime) {
-      tags.push(
-        `<meta property="article:modified_time" content="${seoData.modifiedTime}">`
-      );
+      tags.push(`<meta property="article:modified_time" content="${seoData.modifiedTime}">`);
     }
     if (seoData.tags) {
       seoData.tags.forEach((tag) => {
@@ -414,9 +389,7 @@ export function generateMetaTags(seoData: SEOData): string {
       });
     }
     if (seoData.articleSection) {
-      tags.push(
-        `<meta property="article:section" content="${seoData.articleSection}">`
-      );
+      tags.push(`<meta property="article:section" content="${seoData.articleSection}">`);
     }
   }
 
@@ -440,10 +413,7 @@ export function shouldExcludeFromSitemap(slug: string): boolean {
 }
 
 // Generate meta description
-export function generateMetaDescription(
-  content: string,
-  maxLength: number = 160
-): string {
+export function generateMetaDescription(content: string, maxLength: number = 160): string {
   if (!content) return "";
 
   // Remove markdown formatting and HTML tags
@@ -472,10 +442,7 @@ export function generateMetaDescription(
 }
 
 // Generate robots meta tag
-export function generateRobotsMeta(
-  index: boolean = true,
-  follow: boolean = true
-): string {
+export function generateRobotsMeta(index: boolean = true, follow: boolean = true): string {
   const directives = [];
 
   if (!index) directives.push("noindex");
@@ -489,9 +456,7 @@ export function generateRobotsMeta(
 }
 
 // Create breadcrumb structured data
-export function generateBreadcrumbs(
-  path: Array<{ name: string; url: string }>
-): any {
+export function generateBreadcrumbs(path: Array<{ name: string; url: string }>): any {
   const items = path.map((item, index) => ({
     "@type": "ListItem",
     position: index + 1,

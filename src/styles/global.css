@@ -150,11 +150,11 @@
   }
 
   html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
     scroll-padding-top: 2rem;
 
-    @media (prefers-reduced-motion: no-preference) {
-      scroll-behavior: smooth;
+    @media (prefers-reduced-motion: reduce) {
+      scroll-behavior: auto;
     }
   }
 
@@ -383,9 +383,7 @@
   .astro-code,
   kbd,
   .font-mono {
-    font-family:
-      var(--font-mono, "JetBrains Mono"), "Monaco", "Consolas", "Courier New",
-      monospace;
+    font-family: var(--font-mono, "JetBrains Mono"), "Monaco", "Consolas", "Courier New", monospace;
     font-display: var(--font-display, swap);
   }
 

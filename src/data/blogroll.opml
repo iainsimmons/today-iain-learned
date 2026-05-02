@@ -57,7 +57,7 @@
       <outline feeder:notify="false" feeder:imageUrl="https://modern-css.com/assets/images/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="modern-css.com" text="modern-css.com" type="rss" xmlUrl="https://modern-css.com/feed/"/>
       <outline feeder:notify="false" feeder:imageUrl="https://github.com/gaearon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="overreacted — A blog by Dan Abramov" text="overreacted — A blog by Dan Abramov" type="rss" xmlUrl="https://overreacted.io/rss.xml"/>
       <outline feeder:notify="true" feeder:imageUrl="https://til.iainsimmons.com/favicon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="0" feeder:alternateId="false" title="today iain learned" text="today iain learned" type="rss" xmlUrl="https://til.iainsimmons.com/rss.xml"/>
-      <outline feeder:notify="false" feeder:imageUrl="https://www.gstatic.com/devrel-devsite/prod/v20340109590ecca637cc225c95b56cbdeeca1e36cdadabf4502e87253db1ac7d/web/images/touchicon-180.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="web.dev: Blog" text="web.dev: Blog" type="rss" xmlUrl="https://web.dev/static/blog/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="web.dev: Blog" text="web.dev: Blog" type="rss" xmlUrl="https://web.dev/static/blog/feed.xml"/>
     </outline>
     <feeder:settings>
       <feeder:setting key="pref_sync_only_wifi" value="false"/>
