@@ -65,6 +65,7 @@
     "@types/hast": "^3.0.4",
     "@types/unist": "^3.0.3",
     "cross-env": "^10.0.0",
+    "fast-xml-parser": "^5.7.2",
     "vite": "^7.1.12",
     "wrangler": "^4.46.0"
   }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.1" xmlns:feeder="https://nononsenseapps.com/feeder">
+  <head>
+    <title>
+      Feeder
+    </title>
+  </head>
+  <body>
+    <outline title="Productivity" text="Productivity">
+      <outline feeder:notify="false" feeder:imageUrl="https://obsidian.md/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Obsidian Blog" text="Obsidian Blog" type="rss" xmlUrl="https://obsidian.md/feed.xml"/>
+    </outline>
+    <outline title="Terminal" text="Terminal">
+      <outline feeder:notify="false" feeder:imageUrl="https://echasnovski.com/assets/EC2_256x256.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Evgeni Chasnovski" text="Evgeni Chasnovski" type="rss" xmlUrl="https://echasnovski.com/blog.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://hamvocke.com/favicon.svg" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Ham Vocke" text="Ham Vocke" type="rss" xmlUrl="https://hamvocke.com/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="http://jvns.ca/favicon.ico" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Julia Evans" text="Julia Evans" type="rss" xmlUrl="https://jvns.ca/atom.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://matthewsanabria.dev/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="2" feeder:alternateId="false" title="Matthew Sanabria" text="Matthew Sanabria" type="rss" xmlUrl="https://matthewsanabria.dev/index.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://terminaltrove.com/logo.png" feeder:fullTextByDefault="true" feeder:openArticlesWith="" feeder:alternateId="false" title="Terminal Trove Newly Added Tools" text="Terminal Trove Newly Added Tools" type="rss" xmlUrl="https://terminaltrove.com/new.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://dotfyle.com/ios/180.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="This Week in Neovim" text="This Week in Neovim" type="rss" xmlUrl="https://dotfyle.com/this-week-in-neovim/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://metablog.xyz/public/images/feedle-square.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="feedle | Neovim" text="feedle | Neovim" type="rss" xmlUrl="https://feedle.world/rss/?query=Neovim"/>
+    </outline>
+    <outline title="Web Dev" text="Web Dev">
+      <outline feeder:notify="false" feeder:imageUrl="https://12daysofweb.dev/img/favicon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="12 Days of Web" text="12 Days of Web" type="rss" xmlUrl="https://12daysofweb.dev/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://adactio.com/images/rssbutton.gif" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Adactio (Jeremy Keith)" text="Adactio (Jeremy Keith)" type="rss" xmlUrl="https://adactio.com/journal/rss"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://nerdy.dev/rss-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Adam Argyle" text="Adam Argyle" type="rss" xmlUrl="https://nerdy.dev/rss.xml"/>
+      <outline feeder:notify="false" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Bram.us" text="Bram.us" type="rss" xmlUrl="https://www.bram.us/feed/"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://i0.wp.com/css-tricks.com/wp-content/uploads/2021/07/star.png?fit=32%2C32&amp;ssl=1" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="CSS-Tricks (Archive)" text="CSS-Tricks (Archive)" type="rss" xmlUrl="https://css-tricks.com/feed/"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://cassidoo.co/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Cassidy Williams" text="Cassidy Williams" type="rss" xmlUrl="https://cassidoo.co/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://cdn.changelog.com/uploads/covers/changelog-news-original.png?v=63848365621" feeder:fullTextByDefault="true" feeder:openArticlesWith="2" feeder:alternateId="false" title="Changelog News" text="Changelog News" type="rss" xmlUrl="https://changelog.com/news/feed"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://i0.wp.com/chriscoyier.net/wp-content/uploads/2021/07/IsUISvAq_400x400.jpg?fit=32%2C32&amp;ssl=1" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Chris Coyier" text="Chris Coyier" type="rss" xmlUrl="https://chriscoyier.net/feed/"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://www.learnwithjason.dev/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Learn With Jason Blog RSS Feed" text="Learn With Jason Blog RSS Feed" type="rss" xmlUrl="https://codetv.dev/blog/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://htmhell.dev/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="HTMHell Tips &amp; Tricks" text="HTMHell Tips &amp; Tricks" type="rss" xmlUrl="https://www.htmhell.dev/feed_tips.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://html-css-tip-of-the-week.netlify.app/favicon.svg" feeder:fullTextByDefault="false" feeder:openArticlesWith="2" feeder:alternateId="false" title="HTML &amp; CSS Tip of the Week" text="HTML &amp; CSS Tip of the Week" type="rss" xmlUrl="https://html-css-tip-of-the-week.netlify.app/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://hidde.blog/favicon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Hidde&apos;s blog" text="Hidde&apos;s blog" type="rss" xmlUrl="https://hidde.blog/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://javascriptweekly.com/favicon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="2" feeder:alternateId="false" title="JavaScript Weekly" text="JavaScript Weekly" type="rss" xmlUrl="https://cprss.s3.amazonaws.com/javascriptweekly.com.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://jerodsanto.net/icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Buy the truth, sell it not on Jerod Santo" text="Buy the truth, sell it not on Jerod Santo" type="rss" xmlUrl="https://jerodsanto.net/feed.xml"/>
+      <outline feeder:notify="false" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Jim Nielsen’s Blog" text="Jim Nielsen’s Blog" type="rss" xmlUrl="https://blog.jim-nielsen.com/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://www.joshwcomeau.com/favicon.png" feeder:fullTextByDefault="true" feeder:openArticlesWith="" feeder:alternateId="false" title="Josh Comeau&apos;s blog" text="Josh Comeau&apos;s blog" type="rss" xmlUrl="https://www.joshwcomeau.com/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://kyleshevlin.com/beard-favicon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Kyle Shevlin&apos;s Blog RSS Feed" text="Kyle Shevlin&apos;s Blog RSS Feed" type="rss" xmlUrl="https://kyleshevlin.com/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://lea.verou.me/mark.svg" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Lea Verou’s blog" text="Lea Verou’s blog" type="rss" xmlUrl="https://lea.verou.me/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://allthingssmitty.com/img/favicon/apple-touch-icon.png?v=1768434296" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Matt Smith" text="Matt Smith" type="rss" xmlUrl="https://allthingssmitty.com/atom.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://mayank.co/favicon.ico" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Mayank" text="Mayank" type="rss" xmlUrl="https://mayank.co/blog/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/logo/e873e0ca-6b39-402e-8c1e-9eadfeae594f/Cloudinary_Image_800x800.jpg" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="One Tip a Week" text="One Tip a Week" type="rss" xmlUrl="https://rss.beehiiv.com/feeds/NggVbrRMab.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://assets.buttondown.email/images/349f6a10-bca3-4f68-9106-2fc7af674487.jpg" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Own Your Web" text="Own Your Web" type="rss" xmlUrl="https://buttondown.com/ownyourweb/rss"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://piccalil.li/favicons/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Piccalilli - Everything" text="Piccalilli - Everything" type="rss" xmlUrl="https://piccalil.li/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://ryanmulligan.dev/favicon/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Ryan Mulligan" text="Ryan Mulligan" type="rss" xmlUrl="https://ryanmulligan.dev/feed.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://sarajoy.dev/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Sara Joy" text="Sara Joy" type="rss" xmlUrl="https://sarajoy.dev/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://www.sarasoueidan.com/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Sara Soueidan — UI developer" text="Sara Soueidan — UI developer" type="rss" xmlUrl="https://www.sarasoueidan.com/blog/index.xml"/>
+      <outline feeder:notify="false" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Simon Willison TIL" text="Simon Willison TIL" type="rss" xmlUrl="https://til.simonwillison.net/tils/feed.atom"/>
+      <outline feeder:notify="false" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Stefan Judis Web Development" text="Stefan Judis Web Development" type="rss" xmlUrl="https://www.stefanjudis.com/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://thathtml.blog/favicon-32x32.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="That HTML Blog" text="That HTML Blog" type="rss" xmlUrl="https://thathtml.blog/feed.xml"/>
+      <outline feeder:notify="false" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Thoughts From Eric" text="Thoughts From Eric" type="rss" xmlUrl="https://meyerweb.com/feed/"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://til.jakelazaroff.com/favicon.ico" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Today I Learned" text="Today I Learned" type="rss" xmlUrl="https://til.jakelazaroff.com/rss.xml"/>
+      <outline feeder:notify="false" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="Web Platform Monthly Updates" text="Web Platform Monthly Updates" type="rss" xmlUrl="https://web-platform-dx.github.io/web-features-explorer/release-notes.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://daverupert.com/favicon.ico" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="daverupert.com" text="daverupert.com" type="rss" xmlUrl="https://daverupert.com/atom.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://dbushell.com/assets/icons/180x180.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="dbushell.com (blog)" text="dbushell.com (blog)" type="rss" xmlUrl="https://dbushell.com/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://jakelazaroff.com/favicon.ico" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="jakelazaroff.com" text="jakelazaroff.com" type="rss" xmlUrl="https://jakelazaroff.com/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://modern-css.com/assets/images/apple-touch-icon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="modern-css.com" text="modern-css.com" type="rss" xmlUrl="https://modern-css.com/feed/"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://github.com/gaearon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="overreacted — A blog by Dan Abramov" text="overreacted — A blog by Dan Abramov" type="rss" xmlUrl="https://overreacted.io/rss.xml"/>
+      <outline feeder:notify="true" feeder:imageUrl="https://til.iainsimmons.com/favicon.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="0" feeder:alternateId="false" title="today iain learned" text="today iain learned" type="rss" xmlUrl="https://til.iainsimmons.com/rss.xml"/>
+      <outline feeder:notify="false" feeder:imageUrl="https://www.gstatic.com/devrel-devsite/prod/v20340109590ecca637cc225c95b56cbdeeca1e36cdadabf4502e87253db1ac7d/web/images/touchicon-180.png" feeder:fullTextByDefault="false" feeder:openArticlesWith="" feeder:alternateId="false" title="web.dev: Blog" text="web.dev: Blog" type="rss" xmlUrl="https://web.dev/static/blog/feed.xml"/>
+    </outline>
+    <feeder:settings>
+      <feeder:setting key="pref_sync_only_wifi" value="false"/>
+      <feeder:setting key="pref_show_fab" value="false"/>
+      <feeder:setting key="prefs_filter_recently_read" value="false"/>
+      <feeder:setting key="pref_sync_freq" value="1440"/>
+      <feeder:setting key="pref_added_feeder_news" value="true"/>
+      <feeder:setting key="prefs_filter_saved" value="false"/>
+      <feeder:setting key="pref_sort" value="newest_first"/>
+      <feeder:setting key="pref_open_links_with" value="2"/>
+      <feeder:setting key="pref_swipe_as_read" value="DISABLED"/>
+      <feeder:setting key="pref_sync_on_resume" value="true"/>
+      <feeder:setting key="pref_default_open_item_with" value="3"/>
+      <feeder:setting key="prefs_filter_read" value="false"/>
+    </feeder:settings>
+  </body>
+</opml>
