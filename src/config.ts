@@ -325,6 +325,7 @@ export const siteConfig: SiteConfig = {
       { title: "Posts", url: "/posts/" },
       { title: "Uses", url: "/uses/" },
       { title: "Blogroll", url: "/blogroll/" },
+      { title: "Podroll", url: "/podroll/" },
       {
         title: "GitHub",
         url: "https://github.com/iainsimmons/today-iain-learned",

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<opml version="2.0">
+  <head>
+    <title>AntennaPod Subscriptions</title>
+  </head>
+  <body>
+    <outline title="Misc" text="Misc">
+      <outline text="Once We Were Spacemen" title="Once We Were Spacemen" type="rss" xmlUrl="https://feeds.megaphone.fm/RRS7279782750" htmlUrl="https://www.collision33.com/oncewewerespacemen" />
+    </outline>
+    <outline title="Terminal" text="Terminal">
+      <outline text="Linkarzu Podcast | Neovim, macOS, Emacs, Linux, Terminals and more." title="Linkarzu Podcast | Neovim, macOS, Emacs, Linux, Terminals and more." type="rss" xmlUrl="https://media.rss.com/linkarzu/feed.xml" htmlUrl="https://rss.com/podcasts/linkarzu" />
+      <outline text="The Standup with ThePrimeagen" title="The Standup with ThePrimeagen" type="rss" xmlUrl="https://rss2.flightcast.com/pmgqiszts7kfhopzaq8el6yw.xml" htmlUrl="https://thestanduppod.com" />
+    </outline>
+    <outline title="Web Dev" text="Web Dev">
+      <outline text="Better Stack Podcast" title="Better Stack Podcast" type="rss" xmlUrl="https://anchor.fm/s/1086d7ba4/podcast/rss" htmlUrl="https://betterstack.com/" />
+      <outline text="Convos.dev" title="Convos.dev" type="rss" xmlUrl="https://anchor.fm/s/1079b84dc/podcast/rss" htmlUrl="https://convos.dev" />
+      <outline text="devtools.fm: Developer Tools, Open Source, Software Development" title="devtools.fm: Developer Tools, Open Source, Software Development" type="rss" xmlUrl="https://anchor.fm/s/dd6922b4/podcast/rss" htmlUrl="https://devtools.fm" />
+      <outline text="Front-End Fire" title="Front-End Fire" type="rss" xmlUrl="https://rss.buzzsprout.com/2226499.rss" htmlUrl="https://www.buzzsprout.com/2226499" />
+      <outline text="General Musings with Kevin Powell" title="General Musings with Kevin Powell" type="rss" xmlUrl="https://api.riverside.fm/hosting/t0PUowRQ.rss" htmlUrl="https://kevinpowell.co" />
+      <outline text="Modern Web" title="Modern Web" type="rss" xmlUrl="https://anchor.fm/s/f9191780/podcast/rss" htmlUrl="https://modernweb.podbean.com" />
+      <outline text="Off The Main Thread" title="Off The Main Thread" type="rss" xmlUrl="https://feeds.libsyn.com/492353/rss" htmlUrl="https://offthemainthread.tech" />
+      <outline text="PodRocket" title="PodRocket" type="rss" xmlUrl="https://feeds.fireside.fm/podrocket/rss" htmlUrl="http://podrocket.logrocket.com" />
+      <outline text="ShopTalk" title="ShopTalk" type="rss" xmlUrl="https://shoptalkshow.com/feed/podcast/" htmlUrl="https://shoptalkshow.com/series/default-podcast/" />
+      <outline text="Syntax - Tasty Web Development Treats" title="Syntax - Tasty Web Development Treats" type="rss" xmlUrl="https://feed.syntax.fm/rss" htmlUrl="https://syntax.fm" />
+      <outline text="The Changelog: Software Development, Open Source" title="The Changelog: Software Development, Open Source" type="rss" xmlUrl="https://changelog.com/podcast/feed" htmlUrl="https://changelog.com/podcast" />
+      <outline text="The CSS Podcast" title="The CSS Podcast" type="rss" xmlUrl="https://thecsspodcast.libsyn.com/rss" htmlUrl="https://thecsspodcast.libsyn.com" />
+      <outline text="The Go Make Things Podcast" title="The Go Make Things Podcast" type="rss" xmlUrl="https://gomakethings.com/podcast/feed.rss" htmlUrl="https://gomakethings.com/podcast" />
+      <outline text="The Web Dev Podcast" title="The Web Dev Podcast" type="rss" xmlUrl="https://anchor.fm/s/fc7756a8/podcast/rss" htmlUrl="https://codetv.dev" />
+      <outline text="Whiskey Web and Whatnot" title="Whiskey Web and Whatnot" type="rss" xmlUrl="https://rss2.flightcast.com/w7bqgc792i30fd43a32uawx0.xml" htmlUrl="https://whiskey.fm" />
+    </outline>
+  </body>
+</opml>
