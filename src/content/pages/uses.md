@@ -1,6 +1,6 @@
 ---
 title: Uses
-date: 2026-04-27
+date: 2026-05-02
 description: "A list of the things I'm currently using for work and play"
 noIndex: false
 hideTOC: false
@@ -8,7 +8,8 @@ draft: false
 aliases:
   - using
 ---
-**Last updated**: <time datetime="2026-04-27">27 April 2026</time>
+
+**Last updated**: <time datetime="2026-05-02">2 May 2026</time>
 
 ## Intro
 
@@ -19,7 +20,7 @@ Also see my [dotfiles](https://github.com/iainsimmons/dotfiles) and [Neovim conf
 ## Coding / Terminal
 
 - [Neovim](https://neovim.io/): infinitely configurable text editor, have been using since the end of 2022
-- [Ghostty](https://ghostty.org): terminal emulator, have been using since switching from WezTerm in early 2026
+- [kitty](https://sw.kovidgoyal.net/kitty/): terminal emulator, have been using since switching from WezTerm in early 2026 (after a brief stint with Ghostty)
 - [tmux](https://github.com/tmux/tmux): terminal multiplexer, I mainly use it for having different sessions, and plugins
 - [sesh](https://github.com/joshmedeski/sesh): flexible and configurable CLI for quickly switching tmux sessions
 - [fish](https://fishshell.com/): modern shell with great autocomplete and other features built-in
