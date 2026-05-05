@@ -194,7 +194,6 @@ export {
   clearCache,
 };
 
-// Make functions globally available for Swup compatibility
 if (typeof window !== "undefined") {
   (window as any).initializeMermaid = renderAllDiagrams;
   (window as any).handleMermaidThemeChange = handleThemeChange;

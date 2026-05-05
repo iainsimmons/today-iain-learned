@@ -475,7 +475,6 @@ import Icon from './Icon.astro';
     }
 
     lightboxInstance = new Lightbox();
-    // Make lightbox instance globally accessible for Swup cleanup
     if (typeof window !== 'undefined') {
       window.lightboxInstance = lightboxInstance;
     }
@@ -492,6 +491,4 @@ import Icon from './Icon.astro';
     initializeLightbox();
   }
 
-  // Cleanup lightbox on Swup page transitions
-  // This will be handled by BaseLayout Swup hooks
 </script>

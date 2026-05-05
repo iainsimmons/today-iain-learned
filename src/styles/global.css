@@ -130,6 +130,28 @@
 
     /* Highlight/selection colors */
     --selection-bg: 112 135 148;
+
+    --color-primary-50: 245 245 245;
+    --color-primary-100: 229 229 229;
+    --color-primary-200: 212 212 212;
+    --color-primary-300: 163 163 163;
+    --color-primary-400: 115 115 115;
+    --color-primary-500: 82 82 82;
+    --color-primary-600: 64 64 64;
+    --color-primary-700: 38 38 38;
+    --color-primary-800: 30 30 30;
+    --color-primary-900: 23 23 23;
+    --color-primary-950: 10 10 10;
+    --color-highlight-50: 243 240 255;
+    --color-highlight-100: 233 226 255;
+    --color-highlight-200: 214 199 255;
+    --color-highlight-300: 187 163 255;
+    --color-highlight-400: 156 117 255;
+    --color-highlight-500: 130 87 231;
+    --color-highlight-600: 114 71 204;
+    --color-highlight-700: 98 56 176;
+    --color-highlight-800: 82 41 148;
+    --color-highlight-900: 68 31 120;
   }
 
   .dark {
@@ -867,37 +889,44 @@
     user-select: none;
   }
 
-  .callout-toggle {
-    margin-left: auto;
-    padding: 0.25rem;
-    border-radius: 0.25rem;
+  /* Hide default details marker */
+  .callout-collapsible summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .callout-collapsible summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Animate opening/closing with @starting-style */
+  .callout-collapsible .callout-content {
+    max-height: 1000px;
+    opacity: 1;
     transition:
-      background-color 0.2s,
-      color 0.2s;
+      max-height 0.3s ease,
+      opacity 0.3s ease,
+      display 0.3s ease allow-discrete;
   }
 
-  .callout-toggle:focus {
-    outline: none;
+  @starting-style {
+    .callout-collapsible .callout-content {
+      max-height: 0;
+      opacity: 0;
+    }
   }
 
-  .callout-toggle:focus-visible {
-    box-shadow: 0 0 0 2px rgb(var(--color-highlight-500));
+  .callout-collapsible:not([open]) .callout-content {
+    max-height: 0;
+    opacity: 0;
+    display: none;
   }
 
-  .callout-toggle-icon {
-    transition: transform 0.2s;
+  /* Icon rotation */
+  .callout-collapsible .callout-icon {
+    transition: transform 0.2s ease;
   }
-
-  .callout-collapsed .callout-toggle-icon {
+  .callout-collapsible[open] .callout-icon {
     transform: rotate(90deg);
-  }
-
-  .callout-content {
-    transition: all 0.3s ease-in-out;
-  }
-
-  .callout-collapsed .callout-content {
-    overflow: hidden;
   }
 
   /* Image Grid Layouts - Auto-detect paragraphs with multiple images */
@@ -1518,26 +1547,12 @@
     position: relative;
   }
 
-  /* Smooth page transitions */
-  /* Keep default scroll-behavior; Swup Scroll Plugin manages smooth scrolling */
-  /* html { scroll-behavior: smooth; } */
-
   /* Prevent flash of unstyled content */
   body {
     opacity: 1;
   }
 
-  /* Simple page transitions */
-  /* Removed global overflow hidden on html during transitions to prevent scroll bugs */
-
-  /* Lock scroll during transitions to prevent unwanted movement */
-  /* Avoid global scroll locking during transitions; let Swup handle scroll */
-
-  /* Keep footer and nav stable during transitions */
-  /* footer, */
-  /* nav { */
-  /*   transform: translateZ(0); */
-  /* } */
+  /* Keep footer and nav stable */
 
   /* Header needs special handling to maintain sticky positioning */
   #main-header {
@@ -1609,7 +1624,6 @@
     opacity: 1;
   }
 
-  /* PostCard component styles - moved from component to global for Swup compatibility */
   .post-card {
     background-color: rgb(var(--color-primary-50));
     border: 1px solid rgb(var(--color-primary-200));

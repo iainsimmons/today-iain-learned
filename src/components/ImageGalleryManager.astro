@@ -6,7 +6,6 @@ import { siteConfig } from '../config';
 <!-- This component handles image gallery initialization and management -->
 
 <script>
-  // Declare global function for Swup compatibility
   declare global {
     interface Window {
       initializeImageGalleries: () => void;
@@ -166,6 +165,5 @@ import { siteConfig } from '../config';
   // Initialize on page load
   document.addEventListener('DOMContentLoaded', initializeImageGalleries);
   
-  // Make function available globally for Swup
   window['initializeImageGalleries'] = initializeImageGalleries;
 </script>

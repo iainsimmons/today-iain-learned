@@ -385,7 +385,6 @@ function processExcerptLinks(text: string, targetSlug: string): string {
 )}
 
 <script>
-  // Linked Mentions Toggle Functionality - Swup Compatible
   function initializeLinkedMentions() {
     const toggle = document.getElementById('linked-mentions-toggle') as HTMLButtonElement;
     const content = document.getElementById('linked-mentions-content') as HTMLElement;
@@ -436,7 +435,6 @@ function processExcerptLinks(text: string, targetSlug: string): string {
     initializeLinkedMentions();
   }
 
-  // Make function globally accessible for Swup hooks
   (window as any).initializeLinkedMentions = initializeLinkedMentions;
 </script>
 

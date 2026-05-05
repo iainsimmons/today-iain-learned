@@ -6,14 +6,12 @@ import { siteConfig } from '../config';
 <!-- This component handles category filtering functionality for projects -->
 
 <script>
-  // Declare global function for Swup compatibility
   declare global {
     interface Window {
       initializeCategoryFiltering: () => void;
     }
   }
   
-  // Global category filtering function - Swup compatible
   function initializeCategoryFiltering() {
     // Skip entirely if we're on the projects page (ProjectCategories handles it with multi-select)
     // Check multiple ways to ensure we catch it
@@ -106,6 +104,5 @@ import { siteConfig } from '../config';
   // Initialize on DOM ready
   document.addEventListener('DOMContentLoaded', initializeCategoryFiltering);
   
-  // Make function available globally for Swup
   window['initializeCategoryFiltering'] = initializeCategoryFiltering;
 </script>

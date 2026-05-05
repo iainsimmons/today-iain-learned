@@ -49,12 +49,10 @@ async function renderBaseEmbeds() {
 
   await Promise.all(
     elements.map(async (el, idx) => {
-      // Prevent duplicate concurrent renders on Swup hooks
       if (el.getAttribute('data-base-processing') === 'true') return;
       el.setAttribute('data-base-processing', 'true');
       try {
         const raw = el.getAttribute('data-base-config') || '{}';
-        // Decode common HTML entities that may appear after Swup-cached HTML rehydration
         const decoded = raw
           .replace(/&apos;/g, "'")
           .replace(/&quot;/g, '"')

@@ -415,7 +415,6 @@ if (siteConfig.postOptions.graphView.enabled && siteConfig.postOptions.graphView
         });
       }
 
-      // Make function globally available for Swup re-initialization
       window.initializeWikilinks = initializeWikilinks;
 
       // Process wikilinks and initialize layouts after content loads
@@ -429,7 +428,7 @@ if (siteConfig.postOptions.graphView.enabled && siteConfig.postOptions.graphView
         initializeWikilinks();
       });
 
-      // External links are now handled globally by BaseLayout Swup hooks
+      // External links are now handled globally by BaseLayout
 
     </script>
   </Fragment>

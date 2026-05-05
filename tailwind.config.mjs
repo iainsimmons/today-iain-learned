@@ -55,11 +55,11 @@ export default {
               scrollMarginTop: "2rem",
             },
             a: {
-              color: siteConfig.theme === "oxygen" ? "#0ea5e9" : "#708794",
+              color: "#708794",
               textDecoration: "none",
               fontWeight: "500",
               "&:hover": {
-                color: siteConfig.theme === "oxygen" ? "#0284c7" : "#5a6d77",
+                color: "#5a6d77",
                 textDecoration: "underline",
               },
             },
@@ -162,13 +162,11 @@ export default {
         },
         ".text-selection-highlight": {
           "::selection": {
-            backgroundColor:
-              siteConfig.theme === "oxygen" ? "#0ea5e9" : "#708794",
+            backgroundColor: siteConfig.theme === "oxygen" ? "#0ea5e9" : "#708794",
             color: "#ffffff",
           },
           "::-moz-selection": {
-            backgroundColor:
-              siteConfig.theme === "oxygen" ? "#0ea5e9" : "#708794",
+            backgroundColor: siteConfig.theme === "oxygen" ? "#0ea5e9" : "#708794",
             color: "#ffffff",
           },
         },

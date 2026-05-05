@@ -22,6 +22,8 @@ import rehypeKatex from "rehype-katex";
 import rehypeMark from "./src/utils/rehype-mark.ts";
 import rehypeImageAttributes from "./src/utils/rehype-image-attributes.ts";
 import { rehypeNormalizeAnchors } from "./src/utils/rehype-normalize-anchors.ts";
+import { rehypeExternalLinks } from "./src/utils/rehype-external-links.ts";
+import { rehypeTableWrappers } from "./src/utils/rehype-table-wrappers.ts";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { siteConfig } from "./src/config.ts";
@@ -95,6 +97,8 @@ export default defineConfig({
       ],
     ],
     rehypePlugins: [
+      rehypeExternalLinks,
+      rehypeTableWrappers,
       rehypeKatex,
       rehypeMark,
       rehypeImageAttributes,
