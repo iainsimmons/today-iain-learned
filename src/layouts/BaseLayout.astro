@@ -15,9 +15,10 @@ import '@/styles/global.css';
 export interface Props {
   seoData: SEOData;
   bodyClass?: string;
+  hasTOC?: boolean;
 }
 
-const { seoData, bodyClass = '' } = Astro.props;
+const { seoData, bodyClass = '', hasTOC} = Astro.props;
 
 // Determine scrollbar class based on configuration
 const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
@@ -109,7 +110,9 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
   <!-- Additional head content -->
   <slot name="head" />
-
+  <script>
+    import 'invokers-polyfill';
+  </script>
 </head>
 
 <body class={`min-h-screen bg-white dark:bg-primary-950 text-primary-900 dark:text-primary-50 text-selection-highlight duration-200 ${scrollbarClass} ${bodyClass}`}>
@@ -117,6 +120,11 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 btn-primary px-4 py-2 rounded-md z-50">
     Skip to main content
   </a>
+  {hasTOC && 
+    <a href="#toc" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 btn-primary px-4 py-2 rounded-md z-50">
+      Skip to table of contents
+  </a>}
+
 
   <!-- Header -->
   <Header />

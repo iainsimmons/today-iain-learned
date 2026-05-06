@@ -215,20 +215,6 @@ const structuredData = {
   </main>
 </BaseLayout>
 
-<script>
-  // Hero search button functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    const heroSearchButton = document.getElementById('hero-search-button');
-
-    if (heroSearchButton) {
-      heroSearchButton.addEventListener('click', () => {
-        const event = new CustomEvent('openCommandPalette');
-        window.dispatchEvent(event);
-      });
-    }
-  });
-</script>
-
 <style>
   /* Enhanced homepage styles */
   .btn-primary {

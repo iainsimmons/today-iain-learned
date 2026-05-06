@@ -27,7 +27,7 @@ const toc = groups.map(group => ({
 const shouldShowTOC = toc.length > 1;
 ---
 
-<BaseLayout seoData={seoData}>
+<BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
   <div class="py-8 relative">
     <div class="mx-auto px-4 sm:px-6 lg:px-8 relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       <article class="border-glow-top border-glow-top-permanent bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm overflow-hidden">

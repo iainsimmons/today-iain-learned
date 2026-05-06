@@ -3,7 +3,6 @@ import type { Post, Heading } from '@/types';
 import { siteConfig } from '@/config';
 import { generatePostSEO } from '@/utils/seo';
 import { optimizePostImagePath, getOptimizedFormat } from '@/utils/images';
-import { processWikilinksInHTML } from '@/utils/internallinks';
 import { getCollection } from 'astro:content';
 import { shouldShowPost, processPost, calculateReadingTime, generateTOC, getAdjacentPosts, formatDate, formatDateMobile, getReadingTimeMobile } from '@/utils/markdown';
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -11,10 +10,8 @@ import TableOfContents from '@/components/TableOfContents.astro';
 import LinkedMentions from '@/components/LinkedMentions.astro';
 import LocalGraph from '@/components/LocalGraph.astro';
 import GiscusComments from '@/components/GiscusComments.astro';
-import Lightbox from '@/components/Lightbox.astro';
 import Icon from '@/components/Icon.astro';
 import ImageWrapper from '@/components/ImageWrapper.astro';
-import { devConfig } from '@/config/dev';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -97,7 +94,7 @@ if (siteConfig.postOptions.graphView.enabled && siteConfig.postOptions.graphView
 }
 ---
 
-<BaseLayout seoData={seoData}>
+<BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
   <Fragment slot="head">
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
