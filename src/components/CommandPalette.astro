@@ -7,8 +7,10 @@ import Icon from './Icon.astro';
   dialog {
     position: fixed;
     inset: 0;
-    margin: auto;
+    margin: 2rem auto auto;
+    width: min(100% - 2rem, 42rem);
   }
+
   dialog::backdrop {
     background-color: rgb(0 0 0 / .5);
     backdrop-filter: blur(5px);
@@ -24,7 +26,7 @@ import Icon from './Icon.astro';
 <!-- Command Palette Dialog -->
 <dialog 
   id="command-palette-dialog"
-  class="border-glow-top border-glow-top-permanent w-full max-w-2xl bg-white dark:bg-primary-900 rounded-xl shadow-2xl border border-primary-200 dark:border-primary-700 p-0"
+  class="border-glow-top bg-white dark:bg-primary-900 rounded-xl shadow-2xl border border-primary-200 dark:border-primary-700 p-0"
 >
   <div class="">
       <!-- Header -->
@@ -201,17 +203,7 @@ import Icon from './Icon.astro';
     private init() {
       // Add event listener to open the palette via custom event
       window.addEventListener('openCommandPalette', () => this.open());
-      
-      // Add event listener to close the palette when the close button is clicked
-      // const closeButton = document.getElementById('command-palette-close');
-      // if (closeButton) {
-      //   closeButton.addEventListener('click', (e) => {
-      //     e.preventDefault();
-      //     e.stopPropagation();
-      //     this.close();
-      //   });
-      // }
-      
+
       // Close if clicking outside the modal content
       this.dialog.addEventListener('click', (e) => {
         if (e.target === this.dialog) {
@@ -1015,16 +1007,6 @@ import Icon from './Icon.astro';
       if (this.selectedIndex >= 0 && items[this.selectedIndex]) {
         const item = items[this.selectedIndex] as HTMLElement;
         
-        // Check if this is a "change-theme" action - we need to keep palette open for theme selection
-        const isChangeThemeAction = item.tagName === 'BUTTON' && 
-                                    item.hasAttribute('data-action') && 
-                                    item.getAttribute('data-action') === 'change-theme';
-        
-        // Only close the palette if it's not a "change-theme" action
-        if (!isChangeThemeAction) {
-          this.close();
-        }
-        
         // Ensure scroll is fully restored before navigation
         setTimeout(() => {
           if (item.tagName === 'A') {
@@ -1039,231 +1021,8 @@ import Icon from './Icon.astro';
               // For internal links, use standard navigation
               window.location.href = anchor.href;
             }
-          } else if (item.tagName === 'BUTTON') {
-            if (item.hasAttribute('data-action')) {
-              // Handle action buttons (like theme toggle)
-              const action = item.getAttribute('data-action');
-              this.executeAction(action!);
-            } else if (item.hasAttribute('data-theme')) {
-              // Handle theme selection buttons
-              const theme = item.getAttribute('data-theme');
-              this.selectTheme(theme!);
-            }
           }
         }, 50); // Small delay to ensure cleanup is complete
-      }
-    }
-
-    private executeAction(action: string) {
-      switch (action) {
-        case 'toggle-theme':
-          // Use global theme toggle function instead of clicking button
-          if ((window as any).toggleTheme) {
-            (window as any).toggleTheme();
-          }
-          this.close(); // Close palette after action
-          break;
-        case 'change-theme':
-          // Check if theme switching is available before showing theme selection
-          if ((window as any).isThemeSwitchingAvailable && !(window as any).isThemeSwitchingAvailable()) {
-            console.warn('Theme switching is not available');
-            this.close();
-            return;
-          }
-          // Show theme selection interface
-          this.populateThemeList();
-          this.showThemeSelection();
-          this.selectedIndex = 0; // Select first theme by default so Enter works immediately
-          // Clear the search input and refocus it for keyboard navigation
-          this.input.value = '';
-          this.input.focus();
-          // Update visual selection after a brief delay to ensure DOM is ready
-          setTimeout(() => {
-            const themeButtons = this.themeList.querySelectorAll('button');
-            if (themeButtons.length > 0) {
-              this.updateSelection(themeButtons);
-            }
-          }, 10);
-          break;
-        case 'open-graph':
-          // Open graph modal
-          if ((window as any).openGraphModal) {
-            (window as any).openGraphModal();
-          } else {
-            // Try to initialize GraphModal if it's not available
-            if ((window as any).initializeGraphModal) {
-              (window as any).initializeGraphModal();
-              // Try again after initialization
-              setTimeout(() => {
-                if ((window as any).openGraphModal) {
-                  (window as any).openGraphModal();
-                }
-              }, 100);
-            } else {
-            }
-          }
-          // Close palette after action
-          this.close();
-          break;
-        // Add more actions here as needed
-      }
-    }
-
-    private populateThemeList() {
-      // Check if theme switching is available before showing theme list
-      if ((window as any).isThemeSwitchingAvailable && !(window as any).isThemeSwitchingAvailable()) {
-        this.themeList.innerHTML = '<div class="p-4 text-center text-primary-500 dark:text-primary-400">Theme switching is not available</div>';
-        return;
-      }
-
-      // Available themes from src/themes/index.ts
-      const allThemes = [
-        'minimal', 'oxygen', 'atom', 'ayu', 'catppuccin', 'charcoal', 'dracula', 
-        'everforest', 'flexoki', 'gruvbox', 'macos', 'nord', 'obsidian', 
-        'rose-pine', 'sky', 'solarized', 'things'
-      ];
-
-      // Get current theme using the new preference system
-      let currentTheme = (window as any).siteConfig?.theme || 'oxygen'; // Default to config theme
-      
-      const themePreference = localStorage.getItem('themePreference');
-      
-      if (themePreference === 'default') {
-        // User explicitly chose to follow the site's default theme
-        currentTheme = (window as any).siteConfig?.theme || 'oxygen';
-      } else if (themePreference && themePreference.startsWith('specific:')) {
-        // User chose a specific theme
-        currentTheme = themePreference.replace('specific:', '');
-      } else {
-        // Legacy support: check old selectedTheme key
-        const storedTheme = localStorage.getItem('selectedTheme');
-        if (storedTheme) {
-          currentTheme = storedTheme;
-        } else {
-          // Fallback to current data-theme attribute
-          const dataTheme = document.documentElement.getAttribute('data-theme');
-          if (dataTheme) {
-            currentTheme = dataTheme;
-          }
-        }
-      }
-
-      // Get default theme from config
-      const defaultTheme = (window as any).siteConfig?.theme || 'oxygen';
-      
-      // Only include 'custom' in the list if config theme is set to 'custom'
-      const configTheme = (window as any).siteConfig?.theme;
-      if (configTheme === 'custom') {
-        allThemes.push('custom');
-      }
-      
-      // Get available themes from config
-      const configAvailableThemes = (window as any).siteConfig?.availableThemes || 'default';
-      
-      // Filter themes based on config
-      let filteredThemes;
-      if (configAvailableThemes === 'default') {
-        // Show all built-in themes
-        filteredThemes = allThemes;
-      } else if (Array.isArray(configAvailableThemes)) {
-        // Filter based on availableThemes array
-        filteredThemes = configAvailableThemes.filter(theme => {
-          // Include if it's a built-in theme
-          if (allThemes.includes(theme)) {
-            return true;
-          }
-          // For custom themes, we'll include them and let the theme loading handle validation
-          return true;
-        });
-      } else {
-        // Fallback to all themes
-        filteredThemes = allThemes;
-      }
-      
-      // Always include the selected theme, even if not in availableThemes
-      const selectedTheme = (window as any).siteConfig?.theme;
-      if (selectedTheme && !filteredThemes.includes(selectedTheme)) {
-        filteredThemes.unshift(selectedTheme); // Add to beginning so it appears first
-      }
-      
-      // Reorder themes to put default theme first
-      const themes = [defaultTheme, ...filteredThemes.filter(theme => theme !== defaultTheme)];
-
-      this.themeList.innerHTML = '';
-
-      themes.forEach((theme, index) => {
-        const button = document.createElement('button');
-        const isCurrentTheme = theme === currentTheme;
-        const isDefaultTheme = theme === defaultTheme;
-        
-        button.className = `w-full flex items-center justify-between px-3 py-2 text-left hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors group ${isCurrentTheme ? 'bg-primary-50 dark:bg-primary-800' : ''}`;
-        button.dataset.theme = theme;
-        button.dataset.index = index.toString();
-
-        const themeName = (window as any).getThemeDisplayName ? (window as any).getThemeDisplayName(theme) : theme.charAt(0).toUpperCase() + theme.slice(1).replace('-', ' ');
-        const displayName = isDefaultTheme ? `${themeName} (Default)` : themeName;
-        
-        button.innerHTML = `
-          <span class="text-primary-900 dark:text-primary-50">${displayName}</span>
-          ${isCurrentTheme ? '<svg class="w-4 h-4 text-highlight-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
-        `;
-
-        button.addEventListener('click', () => {
-          this.selectTheme(theme);
-        });
-
-        this.themeList.appendChild(button);
-      });
-    }
-
-    private async selectTheme(theme: string) {
-      // Apply theme change
-      await this.applyTheme(theme);
-      
-      // Update the theme list to reflect the new selection
-      this.populateThemeList();
-      
-      // Close the palette
-      this.close();
-    }
-
-    private async applyTheme(themeName: string) {
-      // Check if theme switching is available before applying
-      if ((window as any).isThemeSwitchingAvailable && !(window as any).isThemeSwitchingAvailable()) {
-        console.warn('Theme switching is not available - theme change blocked');
-        return;
-      }
-      
-      // Validate theme is available before applying
-      if ((window as any).isThemeAvailable && !(window as any).isThemeAvailable(themeName)) {
-        console.warn('Theme is not available:', themeName);
-        return;
-      }
-      
-      // Use the global changeTheme function from BaseLayout.astro
-      if ((window as any).changeTheme) {
-        await (window as any).changeTheme(themeName);
-      } else {
-        // Fallback if global function is not available
-        const configTheme = (window as any).siteConfig?.theme || 'oxygen';
-        
-        // Store theme preference based on selection
-        if (themeName === configTheme) {
-          // User selected the default theme - store as 'default' preference
-          localStorage.setItem('themePreference', 'default');
-        } else {
-          // User selected a specific theme - store as 'specific:theme-name'
-          localStorage.setItem('themePreference', `specific:${themeName}`);
-        }
-        
-        // Also maintain backward compatibility with selectedTheme for now
-        localStorage.setItem('selectedTheme', themeName);
-        document.documentElement.setAttribute('data-theme', themeName);
-        
-        // Trigger theme change event for other components
-        window.dispatchEvent(new CustomEvent('themechange', { 
-          detail: { theme: themeName } 
-        }));
       }
     }
   }
