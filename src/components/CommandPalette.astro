@@ -215,16 +215,6 @@ import Icon from './Icon.astro';
       this.input.addEventListener('input', (e) => this.handleSearch((e.target as HTMLInputElement).value));
       this.input.addEventListener('keydown', (e) => this.handleKeyDown(e));
 
-      // Add event listener for quick actions (like theme toggle) - only within command palette
-      this.dialog.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const actionButton = target.closest('[data-action]');
-        if (actionButton) {
-          e.preventDefault(); // Prevent default button behavior
-          const action = actionButton.getAttribute('data-action');
-          this.executeAction(action!);
-        }
-      });
 
       // Add event listener for all command palette links to close the palette when clicked
       document.addEventListener('click', (e) => {
@@ -505,7 +495,8 @@ import Icon from './Icon.astro';
       }
     }
 
-    public open() {
+    private open() {
+      console.log('open');
       this.isOpen = true;
       this.dialog.showModal();
       this.input.focus();
@@ -514,7 +505,7 @@ import Icon from './Icon.astro';
       document.body.style.overflow = 'hidden';
     }
 
-    public close() {
+    private close() {
       this.isOpen = false;
       this.dialog.close();
       this.input.blur();

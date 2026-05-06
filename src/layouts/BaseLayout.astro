@@ -182,6 +182,41 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
         window.initializeLinkedMentions();
       }
     });
+
+    // Command Palette Keyboard Shortcut Handler
+    function setupCommandPaletteShortcut() {
+      const isMac = typeof navigator !== 'undefined' && (/mac/i.test(navigator.platform) || /mac os x/i.test(navigator.userAgent));
+      // Add global keyboard listener
+      document.addEventListener('keydown', (e) => {
+        // Check modifiers with cross-platform primary mapping (Ctrl on Win/Linux, Cmd on macOS)
+        const primaryPressed = isMac ? e.metaKey : e.ctrlKey;
+
+        // Check if the key matches (case insensitive)
+        const keyMatch = e.key.toLowerCase() === 'k';
+
+        // Only trigger if we're not in an input field, textarea, or contenteditable
+        const isInputField = e.target.tagName === 'INPUT' ||
+                            e.target.tagName === 'TEXTAREA' ||
+                            e.target.contentEditable === 'true' ||
+                            e.target.isContentEditable;
+
+        if (primaryPressed && keyMatch && !isInputField) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Dispatch the openCommandPalette event
+          const event = new CustomEvent('openCommandPalette');
+          window.dispatchEvent(event);
+        }
+      });
+    }
+
+    // Setup command palette shortcut when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupCommandPaletteShortcut);
+    } else {
+      setupCommandPaletteShortcut();
+    }
   </script>
 
 
