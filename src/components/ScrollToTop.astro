@@ -6,7 +6,7 @@ import Icon from './Icon.astro';
 
 <button
   id="scroll-to-top"
-  class="fixed bottom-20 right-6 z-50 hidden p-3 bg-primary-800/90 dark:bg-primary-100/90 text-primary-50 dark:text-primary-900 rounded-full shadow-lg hover:shadow-xl hover:bg-highlight-600 dark:hover:bg-highlight-400 hover:text-white dark:hover:text-white transition-all duration-300 backdrop-blur-sm cursor-pointer"
+  class="scroll-top-btn hidden"
   aria-label="Scroll to top"
 >
   <Icon name="arrow-up" class="w-5 h-5" />
@@ -63,16 +63,41 @@ import Icon from './Icon.astro';
 </script>
 
 <style>
+  .scroll-top-btn {
+    position: fixed;
+    bottom: 5rem;
+    right: 1.5rem;
+    z-index: 50;
+    padding: 0.75rem;
+    background-color: rgba(var(--color-primary-800), 0.9);
+    color: rgb(var(--color-primary-50));
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .scroll-top-btn:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    background-color: rgb(var(--color-highlight-600));
+    color: white;
+  }
+
   @media (max-width: 640px) {
-    #scroll-to-top {
-      bottom: 5rem; /* Increased to avoid footer overlap */
+    .scroll-top-btn {
+      bottom: 5rem;
       right: 1rem;
     }
   }
-  
+
   @media (max-width: 480px) {
-    #scroll-to-top {
-      bottom: 4.5rem; /* Slightly higher on very small screens */
+    .scroll-top-btn {
+      bottom: 4.5rem;
       right: 0.75rem;
     }
   }

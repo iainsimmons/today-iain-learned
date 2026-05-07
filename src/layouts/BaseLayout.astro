@@ -23,7 +23,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 ---
 
 <!DOCTYPE html>
-<html lang={siteConfig.language} class={`dark scrollbar-hide ${scrollbarClass}`} data-theme="obsidian">
+<html lang={siteConfig.language} class={scrollbarClass} data-theme="obsidian">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,12 +96,27 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
   <!-- Font CSS Variables -->
   <style>
-    :root {
-      --font-heading: var(--font-jetbrains-mono);
-      --font-prose: var(--font-jetbrains-mono);
-      --font-mono: var(--font-jetbrains-mono);
-      --font-display: var(--font-jetbrains-mono);
-    }
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 50;
+    padding: 0.5rem 1rem;
+    background-color: rgb(var(--color-highlight-600));
+    color: white;
+    border-radius: 0.375rem;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+  .main-content {
+    max-width: var(--content-width, 45rem);
+    margin: 0 auto;
+    position: relative;
+    min-height: calc(100vh - 4rem);
+  }
   </style>
 
   <!-- Native CSS view transitions enabled via CSS -->
@@ -113,13 +128,13 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
   </script>
 </head>
 
-<body class={`min-h-screen bg-white dark:bg-primary-950 text-primary-900 dark:text-primary-50 text-selection-highlight duration-200 ${scrollbarClass} ${bodyClass}`}>
+<body class={`${scrollbarClass} ${bodyClass}`}>
   <!-- Skip to main content -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 btn-primary px-4 py-2 rounded-md z-50">
+  <a href="#main-content" class="skip-link">
     Skip to main content
   </a>
   {hasTOC && 
-    <a href="#toc" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 btn-primary px-4 py-2 rounded-md z-50">
+    <a href="#toc" class="skip-link">
       Skip to table of contents
   </a>}
 
@@ -128,7 +143,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
   <Header />
 
   <!-- Main content -->
-  <main id="main-content" class="container mx-auto relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <main id="main-content" class="main-content" style={`max-width: ${siteConfig.layout.contentWidth}`}>
     <slot />
   </main>
 
