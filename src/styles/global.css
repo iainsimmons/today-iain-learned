@@ -152,6 +152,11 @@
     --color-highlight-700: 98 56 176;
     --color-highlight-800: 82 41 148;
     --color-highlight-900: 68 31 120;
+
+    /* Fonts */
+    --font-sans: var(--font-jetbrains-mono);
+    --font-heading: var(--font-jetbrains-mono);
+    --font-prose: var(--font-jetbrains-mono);
   }
 
   .dark {
