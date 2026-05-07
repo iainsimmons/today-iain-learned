@@ -2,9 +2,6 @@
 import { siteConfig } from '../config';
 ---
 
-<!-- Category Filter Component -->
-<!-- This component handles category filtering functionality for projects -->
-
 <script>
   declare global {
     interface Window {
@@ -13,24 +10,9 @@ import { siteConfig } from '../config';
   }
   
   function initializeCategoryFiltering() {
-    // Skip entirely if we're on the projects page (ProjectCategories handles it with multi-select)
-    // Check multiple ways to ensure we catch it
-    const pathname = window.location.pathname;
-    const hasCategoriesContainer = document.querySelector('.categories-container') !== null;
-    const isProjectsPage = pathname.startsWith('/projects') || 
-                          pathname === '/projects' ||
-                          pathname.match(/^\/projects\/?$/) !== null ||
-                          hasCategoriesContainer;
-    
-    if (isProjectsPage) {
-      // Completely skip - ProjectCategories will handle it
-      return;
-    }
-
     const categoryItems = document.querySelectorAll('.category-item');
-    const projectCards = document.querySelectorAll('[data-project-categories]');
     let currentActiveCategory: string | null = null;
-
+    
     // If no category items found, skip
     if (categoryItems.length === 0) {
       return;
@@ -62,20 +44,22 @@ import { siteConfig } from '../config';
         
         // Reset all buttons to inactive state
         freshCategoryItems.forEach(btn => {
-          btn.classList.remove('bg-highlight-100', 'dark:bg-highlight-900/40', 'text-highlight-800', 'dark:text-highlight-200', 'ring-1', 'ring-highlight-300', 'dark:ring-highlight-700');
-          btn.classList.add('bg-primary-100', 'dark:bg-primary-800', 'text-primary-700', 'dark:text-primary-300');
+          btn.classList.remove('category-active');
+          btn.classList.add('category-inactive');
         });
         
         if (isCurrentlyActive) {
-          // If clicking the same category, show all projects
-          projectCards.forEach(card => {
+          // If clicking the same category, show all items
+          const allItems = document.querySelectorAll('[data-categories]');
+          allItems.forEach(card => {
             (card as HTMLElement).style.display = 'block';
           });
           currentActiveCategory = null;
         } else {
-          // Filter projects by category
-          projectCards.forEach(card => {
-            const cardCategories = card.getAttribute('data-project-categories') || '';
+          // Filter items by category
+          const allItems = document.querySelectorAll('[data-categories]');
+          allItems.forEach(card => {
+            const cardCategories = card.getAttribute('data-categories') || '';
             
             if (cardCategories.includes(category)) {
               (card as HTMLElement).style.display = 'block';
@@ -85,8 +69,8 @@ import { siteConfig } from '../config';
           });
           
           // Make clicked button active
-          item.classList.remove('bg-primary-100', 'dark:bg-primary-800', 'text-primary-700', 'dark:text-primary-300');
-          item.classList.add('bg-highlight-100', 'dark:bg-highlight-900/40', 'text-highlight-800', 'dark:text-highlight-200', 'ring-1', 'ring-highlight-300', 'dark:ring-highlight-700');
+          item.classList.remove('category-inactive');
+          item.classList.add('category-active');
           currentActiveCategory = category;
         }
 
@@ -102,7 +86,32 @@ import { siteConfig } from '../config';
   initializeCategoryFiltering();
   
   // Initialize on DOM ready
-  document.addEventListener('DOMContentLoaded', initializeCategoryFiltering);
-  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeCategoryFiltering);
+  }
+
   window['initializeCategoryFiltering'] = initializeCategoryFiltering;
 </script>
+
+<style>
+  .category-item {
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .category-inactive {
+    background-color: rgb(var(--color-primary-100));
+    color: rgb(var(--color-primary-700));
+    border: 1px solid rgb(var(--color-primary-300));
+  }
+
+  .category-active {
+    background-color: rgb(var(--color-highlight-900) / 0.4);
+    color: rgb(var(--color-highlight-200));
+    border: 1px solid rgb(var(--color-highlight-700));
+  }
+
+  .category-inactive:hover {
+    background-color: rgb(var(--color-primary-200));
+  }
+</style>
