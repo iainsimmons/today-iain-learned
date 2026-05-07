@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { siteConfig } from '@/config';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
+import RollPage from '@/components/RollPage.astro';
 import { generateCustomPageSEO } from '@/utils/seo';
 
 const blogrollEntries = await getCollection('blogroll');
@@ -28,49 +29,21 @@ const shouldShowTOC = toc.length > 1;
 ---
 
 <BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
-  <div class="py-8 relative">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8 relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
-      <article class="border-glow-top border-glow-top-permanent bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm overflow-hidden">
-        <div class="p-6">
-          <header class="mb-8">
-            <h1 class="text-xl font-bold text-primary-900 dark:text-primary-50 mb-6 leading-tight">
-              Blogroll
-            </h1>
-          </header>
-
-          <div class="prose dark:prose-dark max-w-none" id="page-content">
-          {lastUpdated && (
-            <p><strong>Last updated</strong>: <time datetime={lastUpdated.datetime}>{lastUpdated.formatted}</time></p>
-          )}
-            <p>Here is an up-to-date collection of the RSS feeds that I subscribe to, grouped (roughly) by topic.</p>
-            <p>See <a href="/podroll/">Podroll</a> for a list of podcasts I listen to or the <a href="https://slashpages.net/" target="_blank" rel="noopener noreferrer">Slash Pages</a> site for an explanation of these kinds of pages.</p>
-            {groups.map((group, index) => (
-              <section class="mb-8">
-                <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-50 mb-4" id={toc[index]?.slug}>
-                  {group.title}
-                </h2>
-                <div class="flex flex-col gap-1">
-                  {group.feeds.map((feed) => (
-                    <div class="flex items-center gap-3">
-                      {feed.imageUrl
-                        ? <img src={feed.imageUrl} alt={feed.title} class="w-8 h-8 my-2 rounded object-cover not-prose" />
-                        : <svg class="w-8 h-8 my-2 shrink-0 text-primary-600 dark:text-primary-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13 19a8 8 0 0 0-8-8M19 19c0-7.732-6.268-14-14-14"/><circle cx="6" cy="18" r="2" fill="currentColor"/></svg>
-                      }
-                      <a href={feed.xmlUrl} target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        {feed.title}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        </div>
-      </article>
-
+  <div class="page-container">
+    <div class="page-inner">
+      <RollPage
+        title="Blogroll"
+        description="Here is an up-to-date collection of the RSS feeds that I subscribe to, grouped (roughly) by topic."
+        seeAlsoText="Podroll"
+        seeAlsoLink="/podroll/"
+        toc={toc}
+        groups={groups}
+        lastUpdated={lastUpdated}
+        hasTOC={shouldShowTOC}
+      />
       {shouldShowTOC && (
-        <div class="hidden xl:block absolute top-0 left-full ml-1 w-[280px]">
-          <div class="sticky top-24" id="toc">
+        <div class="toc-sidebar">
+          <div class="toc-sticky" id="toc">
             <TableOfContents headings={toc} />
           </div>
         </div>

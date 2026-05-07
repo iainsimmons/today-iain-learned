@@ -1,0 +1,127 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  seeAlsoText: string;
+  seeAlsoLink: string;
+  toc: Array<{depth: number, slug: string, text: string}>;
+  groups: Array<{title: string, feeds: Array<{title: string, xmlUrl: string, siteUrl: string, imageUrl: string | null}>}>;
+  lastUpdated: {datetime: string, formatted: string} | null;
+  hasTOC: boolean;
+}
+const { title, description, seeAlsoText, seeAlsoLink, toc, groups, lastUpdated, hasTOC } = Astro.props;
+---
+
+<article class="roll-page">
+  <div class="roll-page-content">
+    <header class="roll-page-header">
+      <h1 class="roll-page-title">{title}</h1>
+    </header>
+
+    <div class="roll-page-body prose dark:prose-dark max-w-none" id="page-content">
+      {lastUpdated && (
+        <p><strong>Last updated</strong>: <time datetime={lastUpdated.datetime}>{lastUpdated.formatted}</time></p>
+      )}
+      <p>{description}</p>
+      <p>See <a href={seeAlsoLink}>{seeAlsoText}</a> or the <a href="https://slashpages.net/" target="_blank" rel="noopener noreferrer">Slash Pages</a> site for an explanation of these kinds of pages.</p>
+
+      {groups.map((group, index) => (
+        <section class="roll-page-group">
+          <h2 class="roll-page-group-title" id={toc[index]?.slug}>
+            {group.title}
+          </h2>
+          <div class="roll-page-feed-list">
+            {group.feeds.map((feed) => (
+              <div class="roll-page-feed-item">
+                {feed.imageUrl
+                  ? <img src={feed.imageUrl} alt={feed.title} class="roll-page-feed-image" />
+                  : <svg class="roll-page-feed-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13 19a8 8 0 0 0-8-8M19 19c0-7.732-6.268-14-14-14"/><circle cx="6" cy="18" r="2" fill="currentColor"/></svg>
+                }
+                <a href={feed.xmlUrl} target="_blank" rel="noopener noreferrer" class="roll-page-feed-link">
+                  {feed.title}
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</article>
+
+<style>
+  .roll-page {
+    border: 1px solid rgb(var(--color-primary-700));
+    background-color: rgb(var(--color-primary-900));
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    overflow: hidden;
+  }
+
+  .roll-page-content {
+    padding: 1.5rem;
+  }
+
+  .roll-page-header {
+    margin-bottom: 2rem;
+  }
+
+  .roll-page-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: rgb(var(--color-primary-50));
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
+  }
+
+  .roll-page-body {
+    /* prose styles inherited from class */
+  }
+
+  .roll-page-group {
+    margin-bottom: 2rem;
+  }
+
+  .roll-page-group-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: rgb(var(--color-primary-50));
+    margin-bottom: 1rem;
+  }
+
+  .roll-page-feed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .roll-page-feed-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .roll-page-feed-image {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem 0;
+    border-radius: 0.25rem;
+    object-fit: cover;
+  }
+
+  .roll-page-feed-icon {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem 0;
+    flex-shrink: 0;
+    color: rgb(var(--color-primary-400));
+  }
+
+  .roll-page-feed-link {
+    /* hover:underline equivalent */
+  }
+
+  .roll-page-feed-link:hover {
+    text-decoration: underline;
+  }
+</style>

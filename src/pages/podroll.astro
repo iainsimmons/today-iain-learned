@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { siteConfig } from '@/config';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
+import RollPage from '@/components/RollPage.astro';
 import { generateCustomPageSEO } from '@/utils/seo';
 
 const podrollEntries = await getCollection('podroll');
@@ -28,50 +29,21 @@ const shouldShowTOC = toc.length > 1;
 ---
 
 <BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
-  <div class="py-8 relative">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8 relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
-      <article class="border-glow-top border-glow-top-permanent bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm overflow-hidden">
-        <div class="p-6">
-          <header class="mb-8">
-            <h1 class="text-xl font-bold text-primary-900 dark:text-primary-50 mb-6 leading-tight">
-              Podroll
-            </h1>
-          </header>
-
-          <div class="prose dark:prose-dark max-w-none" id="page-content">
-            {lastUpdated && (
-            <p><strong>Last updated</strong>: <time datetime={lastUpdated.datetime}>{lastUpdated.formatted}</time></p>
-            )}
-            <p>Here is an up-to-date collection of the podcasts that I listen to, grouped (roughly) by topic.</p>
-            <p>See <a href="/blogroll/">Blogroll</a> for a list of blog feeds I subscribe to or the <a href="https://slashpages.net/" target="_blank" rel="noopener noreferrer">Slash Pages</a> site for an explanation of these kinds of pages.</p>
-
-            {groups.map((group, index) => (
-              <section class="mb-8">
-                <h2 class="text-lg font-semibold text-primary-900 dark:text-primary-50 mb-4" id={toc[index]?.slug}>
-                  {group.title}
-                </h2>
-                <div class="flex flex-col gap-1">
-                  {group.feeds.map((feed) => (
-                    <div class="flex items-center gap-3">
-                      {feed.imageUrl
-                        ? <img src={feed.imageUrl} alt={feed.title} class="w-8 h-8 my-2 rounded object-cover not-prose" />
-                        : <svg class="w-8 h-8 my-2 shrink-0 text-primary-600 dark:text-primary-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 0 1 0-12.728m12.728 0a9 9 0 0 1 0 12.728M8.111 15.889a5.5 5.5 0 0 1 0-7.778m7.778 0a5.5 5.5 0 0 1 0 7.778M14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/></svg>
-                      }
-                      <a href={feed.xmlUrl} target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        {feed.title}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        </div>
-      </article>
-
+  <div class="page-container">
+    <div class="page-inner">
+      <RollPage
+        title="Podroll"
+        description="Here is an up-to-date collection of the podcasts that I listen to, grouped (roughly) by topic."
+        seeAlsoText="Blogroll"
+        seeAlsoLink="/blogroll/"
+        toc={toc}
+        groups={groups}
+        lastUpdated={lastUpdated}
+        hasTOC={shouldShowTOC}
+      />
       {shouldShowTOC && (
-        <div class="hidden xl:block absolute top-0 left-full ml-1 w-[280px]">
-          <div class="sticky top-24" id="toc">
+        <div class="toc-sidebar">
+          <div class="toc-sticky" id="toc">
             <TableOfContents headings={toc} />
           </div>
         </div>
