@@ -5,11 +5,9 @@ import type { SEOData } from '@/types';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import CommandPalette from '@/components/CommandPalette.astro';
-import GraphModal from '@/components/GraphModal.astro';
 import ScrollToTop from '@/components/ScrollToTop.astro';
 import Lightbox from '@/components/Lightbox.astro';
 import ImageGalleryManager from '@/components/ImageGalleryManager.astro';
-import CategoryFilter from '@/components/CategoryFilter.astro';
 import '@/styles/global.css';
 
 export interface Props {
@@ -147,9 +145,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
   <!-- Image Gallery Manager -->
   <ImageGalleryManager />
 
-  <!-- Category Filter -->
-  <CategoryFilter />
-
 
     <!-- Mermaid diagrams handled by client script -->
     <script>
@@ -170,11 +165,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
       // Initialize base embeds on initial page load
       if (window.initializeBaseEmbeds) {
         window.initializeBaseEmbeds();
-      }
-
-      // Initialize GraphModal on initial page load
-      if (window.initializeGraphModal) {
-        window.initializeGraphModal();
       }
 
       // Initialize linked mentions on initial page load
@@ -223,9 +213,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
   <!-- Lightbox for images (global) -->
   <Lightbox />
-
-  <!-- Graph Modal (global) -->
-  <GraphModal />
 
   <!-- Additional body scripts -->
   <slot name="scripts" />
