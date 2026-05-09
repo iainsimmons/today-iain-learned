@@ -40,7 +40,6 @@ const {
 
 const className = Astro.props.class;
 
-// Clean the src path first - remove Obsidian brackets if present
 let cleanSrc = src;
 if (!cleanSrc) {
   console.warn('ImageWrapper: src is undefined');
@@ -50,9 +49,6 @@ if (cleanSrc.startsWith('[[') && cleanSrc.endsWith(']]')) {
   cleanSrc = cleanSrc.slice(2, -2);
 }
 
-// Determine image type using cleaned src
-// For folder-based content, if basePath indicates a synced folder, treat as local for optimization
-// Also treat global attachments directories as synced folders for Astro Image optimization
 const isSyncedFolder = basePath && basePath.includes('/') && (
   !basePath.endsWith('/attachments/') || 
   basePath === '/posts/attachments/' || 
@@ -66,10 +62,9 @@ const isLocal = !(
   cleanSrc.startsWith("http") ||
   cleanSrc.startsWith("https") ||
   cleanSrc.startsWith("data:")
-) || isSyncedFolder; // Treat synced folders as local for Astro Image optimization
+) || isSyncedFolder;
 const isPublic = cleanSrc.startsWith("/") && !isSyncedFolder;
 
-// Dynamic import for local images
 let img: any = null;
 let fallbackSrc: string | null = null;
 let isImageMissing = false;
@@ -80,46 +75,35 @@ if (isLocal) {
       import: "default",
     });
     
-    // Remove leading "./" if present for folder-based posts
     if (cleanSrc.startsWith('./')) {
       cleanSrc = cleanSrc.slice(2);
     }
     
-    // Remove leading "images/" if present since basePath already includes it
-    // But only for global images, not folder-based images
     if (cleanSrc.startsWith('images/') && (basePath === '/posts/attachments/' || basePath === '/projects/attachments/' || basePath === '/docs/attachments/' || basePath === '/pages/attachments/' || basePath === '/special/attachments/')) {
       cleanSrc = cleanSrc.slice(7);
     }
     
-    // For folder-based content, if basePath already includes 'images/' and cleanSrc starts with 'images/',
-    // remove the prefix from cleanSrc to avoid double 'images/'
     if (cleanSrc.startsWith('images/') && basePath.includes('/attachments/') && basePath !== '/posts/attachments/' && basePath !== '/projects/attachments/' && basePath !== '/docs/attachments/' && basePath !== '/pages/attachments/' && basePath !== '/special/attachments/') {
       cleanSrc = cleanSrc.slice(7);
     }
     
-    // For content with attachments/ prefix, remove it since the sync script already handles this
     if (cleanSrc.startsWith('attachments/') && basePath.includes('/projects/') && !basePath.includes('/attachments/')) {
-      cleanSrc = cleanSrc.slice(12); // Remove 'attachments/' prefix
+      cleanSrc = cleanSrc.slice(12);
     }
     
-    // For single-file projects, also remove attachments/ prefix when using global attachments directory
     if (cleanSrc.startsWith('attachments/') && basePath === '/projects/attachments/') {
-      cleanSrc = cleanSrc.slice(12); // Remove 'attachments/' prefix
+      cleanSrc = cleanSrc.slice(12);
     }
     
-    // Normalize the path for the glob pattern
     let normalizedPath = path
       .normalize(path.join("/public", basePath, cleanSrc))
       .replace(/\\/g, "/");
     
-    // Ensure the path starts with /public
     if (!normalizedPath.startsWith("/public")) {
       normalizedPath = `/public${normalizedPath}`;
     }
     
-    // Debug logging
     if (isDev && devConfig.images.logMissingImages) {
-      // Debug logging removed for production
     }
     
     const file = files[normalizedPath];
@@ -127,19 +111,16 @@ if (isLocal) {
       img = await file();
     } else {
       isImageMissing = true;
-      // No fallback images - just mark as missing
     }
   } catch (error) {
     isImageMissing = true;
-    // No fallback images - just mark as missing
   }
 }
 
-const imageClass = "w-full h-full object-cover";
 const imageStyle = `object-position: ${position}`;
 ---
 
-<div id={id} class:list={[className, 'overflow-hidden relative']}>
+<div id={id} class:list={[className, 'image-wrapper']}>
   {isLocal && img ? (
     <Image 
       src={img} 
@@ -148,7 +129,7 @@ const imageStyle = `object-position: ${position}`;
       height={height}
       format={format}
       quality={quality}
-      class={imageClass} 
+      class="image-wrapper-img" 
       style={imageStyle}
       loading={loading}
       decoding={decoding}
@@ -159,7 +140,7 @@ const imageStyle = `object-position: ${position}`;
     <img 
       src={isSyncedFolder ? `${basePath}${cleanSrc}` : cleanSrc} 
       alt={alt} 
-      class={imageClass} 
+      class="image-wrapper-img" 
       style={imageStyle}
       loading={loading}
       decoding={decoding}
@@ -168,13 +149,12 @@ const imageStyle = `object-position: ${position}`;
       height={height}
     />
   ) : isImageMissing ? (
-    // Don't render anything for missing local images
     null
   ) : (
     <img 
       src={cleanSrc} 
       alt={alt} 
-      class={imageClass} 
+      class="image-wrapper-img" 
       style={imageStyle}
       loading={loading}
       decoding={decoding}
@@ -185,8 +165,30 @@ const imageStyle = `object-position: ${position}`;
   )}
   
   {caption && (
-    <figcaption class="mt-2 text-sm text-primary-600 dark:text-primary-400 text-center italic">
+    <figcaption class="image-caption">
       {caption}
     </figcaption>
   )}
 </div>
+
+<style>
+  .image-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .image-wrapper-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .image-caption {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: rgb(var(--color-primary-400));
+    text-align: center;
+    font-style: italic;
+  }
+</style>

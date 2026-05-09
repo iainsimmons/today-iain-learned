@@ -5,15 +5,15 @@ import Icon from './Icon.astro';
 
 <div id="lightbox-overlay" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.9) !important; z-index: 999999 !important; backdrop-filter: blur(4px) !important; margin: 0 !important; padding: 0 !important;">
   <button id="lightbox-close" style="position: absolute; top: 16px; right: 16px; z-index: 10; padding: 12px; color: white; background: rgba(0, 0, 0, 0.5); border: none; border-radius: 50%; cursor: pointer; backdrop-filter: blur(4px);">
-    <Icon name="x" class="w-6 h-6" />
+    <Icon name="x" />
   </button>
   
   <button id="lightbox-prev" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); z-index: 10; padding: 12px; color: white; background: rgba(0, 0, 0, 0.5); border: none; border-radius: 50%; cursor: pointer; backdrop-filter: blur(4px);">
-    <Icon name="chevron-left" class="w-6 h-6" />
+    <Icon name="chevron-left" />
   </button>
   
   <button id="lightbox-next" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); z-index: 10; padding: 12px; color: white; background: rgba(0, 0, 0, 0.5); border: none; border-radius: 50%; cursor: pointer; backdrop-filter: blur(4px);">
-    <Icon name="chevron-right" class="w-6 h-6" />
+    <Icon name="chevron-right" />
   </button>
   
   <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 2rem; position: relative;">
@@ -332,7 +332,7 @@ import Icon from './Icon.astro';
     private collectImages(clickedButton?: HTMLElement) {
       // If a specific button was clicked, find its gallery
       if (clickedButton) {
-        const gallery = clickedButton.closest('.image-grid');
+        const gallery = clickedButton.closest('.image-gallery');
         if (gallery) {
           const galleryImages = gallery.querySelectorAll('img[data-lightbox="gallery"]');
           

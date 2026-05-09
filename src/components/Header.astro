@@ -2,147 +2,89 @@
 import { siteConfig } from '../config';
 import Icon from './Icon.astro';
 
-// Get current path from Astro.url (available at build time)
 const currentPath = Astro.url.pathname;
 
-// Helper to check if nav link is active
 function isLinkActive(linkUrl: string | undefined): boolean {
   if (!linkUrl || linkUrl === '#') return false;
-  
-  // External links are never "active"
   if (linkUrl.startsWith('http://') || linkUrl.startsWith('https://')) return false;
-  
-  // Normalize paths (ensure trailing slash)
   const normalizedLink = linkUrl.endsWith('/') ? linkUrl : linkUrl + '/';
   const normalizedCurrent = currentPath.endsWith('/') ? currentPath : currentPath + '/';
-   
   return normalizedLink === normalizedCurrent;
 }
 
-// Check if shortcut is defined and not empty
 const hasShortcut = siteConfig.commandPalette.shortcut && siteConfig.commandPalette.shortcut.trim();
-
-// Extract the key from the shortcut (e.g., 'ctrl+k' -> 'K')
 const shortcutKey = hasShortcut ? siteConfig.commandPalette.shortcut.split('+').pop()?.toUpperCase() || 'K' : '';
-
-// Check if all command palette sections are disabled
 const allSectionsDisabled = !siteConfig.commandPalette.sections.quickActions && 
                              !siteConfig.commandPalette.sections.pages && 
                              !siteConfig.commandPalette.sections.social;
-
-// Choose icon based on whether all sections are disabled (for no shortcut case)
 const paletteIcon = allSectionsDisabled ? 'search' : 'command';
 ---
 
-<header id="main-header" class="sticky top-0 z-40 w-full bg-white dark:bg-primary-950 transition-shadow duration-200">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8" style={`max-width: ${siteConfig.layout.contentWidth}`}>
-    <div class="flex items-center justify-between h-16">
-      <!-- Site Title -->
-      <div class="flex items-center">
+<header id="main-header" class="site-header">
+  <div class="site-header-inner" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+    <div class="site-header-bar">
+      <div class="site-header-brand">
         <a href="/">
-          <span class="font-semibold text-primary-900 dark:text-primary-50 hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors">
-            {siteConfig.title}
-          </span>
+          <span class="site-header-title">{siteConfig.title}</span>
         </a>
       </div>
 
-      <!-- Center area with smart navigation -->
-      <div class={`flex-1 flex items-center ${ siteConfig.navigation.style === 'minimal' ? 'justify-end' : 'justify-center' }`}> 
-        <!-- Smart Navigation (single system with style variants) -->
-        {siteConfig.navigation.showNavigation && (  
-          <nav class="hidden md:flex items-center space-x-5 mr-6" aria-label="Main navigation">
+      <div class={`site-header-nav-area ${siteConfig.navigation.style === 'minimal' ? 'site-header-nav-area--right' : 'site-header-nav-area--center'}`}>
+        {siteConfig.navigation.showNavigation && (
+          <nav class="site-header-nav" aria-label="Main navigation">
             {siteConfig.navigation.pages.map((page) => (
-                <a 
-                  href={page.url || '#'}
-                  class="flex items-center space-x-1 text-xs font-normal transition-colors hover:text-highlight-600 dark:hover:text-highlight-400 text-primary-600 dark:text-primary-300"
-                  target={page.url?.startsWith('http') ? '_blank' : undefined}
-                  aria-label={`Navigate to ${page.title}`}
-                >
-                  <span>{siteConfig.navigation.style === 'minimal' ? page.title.toLowerCase() : page.title}</span>
-                  {page.url?.startsWith('http') && (
-                    <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
-                  )}
-                </a>
-              )
-            )}
+              <a href={page.url || '#'} class="site-header-nav-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
+                <span>{siteConfig.navigation.style === 'minimal' ? page.title.toLowerCase() : page.title}</span>
+                {page.url?.startsWith('http') && (
+                  <Icon name="external-link" class="site-header-ext-link" />
+                )}
+              </a>
+            ))}
           </nav>
         )}
-        </div>
-
-        <!-- Action buttons -->
-        <div class="flex items-center gap-4">
-          <!-- Command palette trigger -->
-          {siteConfig.commandPalette.enabled && (
-            hasShortcut ? (
-              <button
-                id="command-palette-trigger"
-                command="show-modal"
-                commandfor="command-palette-dialog"
-                class="flex items-center space-x-2 px-3 py-2 text-sm text-primary-500 dark:text-primary-400 bg-primary-50 dark:bg-primary-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-700 transition-colors cursor-pointer"
-                aria-label="Open command palette"
-              >
-                <Icon name={paletteIcon} class="w-5 h-5" />
-                <kbd class="text-xs font-medium text-primary-600 dark:text-primary-300">
-                  {shortcutKey}
-                </kbd>
-              </button>
-            ) : (
-              <button
-                id="command-palette-trigger"
-                command="show-modal"
-                commandfor="command-palette-dialog"
-                class="p-2 text-primary-500 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors cursor-pointer"
-                aria-label="Open command palette"
-              >
-                <Icon name={paletteIcon} class="w-5 h-5" />
-              </button>
-            )
-          )}
-
-          <!-- Mobile menu button (if navigation and mobile menu are enabled) -->
-          {siteConfig.navigation.showNavigation && siteConfig.navigation.showMobileMenu && (
-            <button
-              id="mobile-menu-toggle"
-              class="md:hidden p-2 text-primary-500 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-800 rounded-lg transition-colors"
-              aria-label="Toggle mobile navigation menu"
-              aria-expanded="false"
-            >
-              <Icon name="menu" class="w-5 h-5 menu-icon" />
-              <Icon name="x" class="w-5 h-5 close-icon hidden" />
-            </button>
-          )}
-        </div>
       </div>
 
-      <!-- Mobile navigation menu -->
-      {siteConfig.navigation.showNavigation && siteConfig.navigation.showMobileMenu && (
-        <div id="mobile-menu" class="md:hidden hidden py-4 border-t border-primary-200 dark:border-primary-700" role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation menu">
-          <nav class="flex flex-col space-y-1">
-            {siteConfig.navigation.pages.map((page) => (
-                  <a 
-                    href={page.url || '#'}
-                    class="flex items-center justify-between px-3 py-2 text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 hover:bg-primary-50 dark:hover:bg-primary-800 transition-colors font-medium rounded-md"
-                    target={page.url?.startsWith('http') ? '_blank' : undefined}
-                    aria-label={`Navigate to ${page.title}`}
-                  >
-                    <span>{page.title}</span>
-                    {page.url?.startsWith('http') && (
-                      <Icon name="external-link" class="w-3 h-3 text-primary-400 dark:text-primary-500" />
-                    )}
-                  </a>
-                )
-              
-            )}
-          </nav>
-        </div>
-      )}
+      <div class="site-header-actions">
+        {siteConfig.commandPalette.enabled && (
+          hasShortcut ? (
+            <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger" aria-label="Open command palette">
+              <Icon name={paletteIcon} class="cmd-trigger-icon" />
+              <kbd class="cmd-trigger-kbd">{shortcutKey}</kbd>
+            </button>
+          ) : (
+            <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger-simple" aria-label="Open command palette">
+              <Icon name={paletteIcon} class="cmd-trigger-icon" />
+            </button>
+          )
+        )}
+
+        {siteConfig.navigation.showNavigation && siteConfig.navigation.showMobileMenu && (
+          <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle mobile navigation menu" aria-expanded="false">
+            <Icon name="menu" class="mobile-toggle-icon menu-icon" />
+            <Icon name="x" class="mobile-toggle-icon close-icon hidden" />
+          </button>
+        )}
+      </div>
+    </div>
+
+    {siteConfig.navigation.showNavigation && siteConfig.navigation.showMobileMenu && (
+      <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
+        <nav class="mobile-menu-nav">
+          {siteConfig.navigation.pages.map((page) => (
+            <a href={page.url || '#'} class="mobile-menu-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
+              <span>{page.title}</span>
+              {page.url?.startsWith('http') && (
+                <Icon name="external-link" class="site-header-ext-link" />
+              )}
+            </a>
+          ))}
+        </nav>
+      </div>
+    )}
   </div>
 </header>
 
 <script>
-  // Mobile menu toggle
   document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -150,8 +92,6 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
     if (menuToggle && mobileMenu) {
       menuToggle.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
-         
-        // Update menu icon and ARIA attribute
         const menuIcon = menuToggle.querySelector('.menu-icon');
         const closeIcon = menuToggle.querySelector('.close-icon');
         if (menuIcon && closeIcon) {
@@ -168,12 +108,9 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
       });
     }
     
-    // Function to close mobile menu
     function closeMobileMenu() {
       if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
-         
-        // Update menu icon and ARIA attribute
         if (menuToggle) {
           const menuIcon = menuToggle.querySelector('.menu-icon');
           const closeIcon = menuToggle.querySelector('.close-icon');
@@ -186,28 +123,219 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
       }
     }
     
-    // Close mobile menu when navigation links are clicked
     const mobileMenuLinks = mobileMenu?.querySelectorAll('nav a');
     mobileMenuLinks?.forEach(link => {
-      link.addEventListener('click', () => {
-        closeMobileMenu();
-      });
+      link.addEventListener('click', () => { closeMobileMenu(); });
     });
     
-    // Make closeMobileMenu globally accessible for other components
     (window as any).closeMobileMenu = closeMobileMenu;
     
-    // Close mobile menu when clicking outside of it
     document.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const isMenuToggle = target.closest('#mobile-menu-toggle');
       const isMobileMenu = target.closest('#mobile-menu');
-       
-      // If clicking outside the menu and toggle button, close the menu
       if (!isMenuToggle && !isMobileMenu && mobileMenu && !mobileMenu.classList.contains('hidden')) {
         closeMobileMenu();
       }
     });
-    
   });
 </script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    width: 100%;
+    background-color: rgb(var(--color-primary-950));
+    transition: box-shadow 0.2s;
+  }
+
+  .site-header-inner {
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .site-header-inner { padding: 0 1.5rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .site-header-inner { padding: 0 2rem; }
+  }
+
+  .site-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+
+  .site-header-brand {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-header-title {
+    font-weight: 600;
+    color: rgb(var(--color-primary-50));
+    transition: color 0.2s;
+  }
+
+  .site-header-title:hover {
+    color: rgb(var(--color-highlight-400));
+  }
+
+  .site-header-nav-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .site-header-nav-area--right {
+    justify-content: flex-end;
+  }
+
+  .site-header-nav-area--center {
+    justify-content: center;
+  }
+
+  .site-header-nav {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .site-header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-right: 1.5rem;
+    }
+  }
+
+  .site-header-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgb(var(--color-primary-300));
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .site-header-nav-link:hover {
+    color: rgb(var(--color-highlight-400));
+  }
+
+  .site-header-ext-link {
+    width: 0.75rem;
+    height: 0.75rem;
+    color: rgb(var(--color-primary-500));
+  }
+
+  .site-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .cmd-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    color: rgb(var(--color-primary-400));
+    background-color: rgb(var(--color-primary-800));
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .cmd-trigger:hover {
+    background-color: rgb(var(--color-primary-700));
+  }
+
+  .cmd-trigger-simple {
+    padding: 0.5rem;
+    color: rgb(var(--color-primary-400));
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .cmd-trigger-simple:hover {
+    color: rgb(var(--color-primary-300));
+  }
+
+  .cmd-trigger-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .cmd-trigger-kbd {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgb(var(--color-primary-300));
+  }
+
+  .mobile-toggle {
+    display: block;
+    padding: 0.5rem;
+    color: rgb(var(--color-primary-400));
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+
+  .mobile-toggle:hover {
+    background-color: rgb(var(--color-primary-800));
+  }
+
+  @media (min-width: 768px) {
+    .mobile-toggle { display: none; }
+  }
+
+  .mobile-toggle-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .mobile-menu {
+    display: none;
+    padding: 1rem 0;
+    border-top: 1px solid rgb(var(--color-primary-700));
+  }
+
+  .mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mobile-menu-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    color: rgb(var(--color-primary-300));
+    font-weight: 500;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s, color 0.2s;
+    text-decoration: none;
+  }
+
+  .mobile-menu-link:hover {
+    color: rgb(var(--color-highlight-400));
+    background-color: rgb(var(--color-primary-800));
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>

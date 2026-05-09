@@ -10,112 +10,76 @@ export interface Props {
 const { pagination, baseUrl = '/posts' } = Astro.props;
 const { currentPage, totalPages, hasNext, hasPrev } = pagination;
 
-// Generate page numbers to show
 function generatePageNumbers(current: number, total: number) {
   const pages: (number | string)[] = [];
-  const delta = 2; // Number of pages to show on each side of current page
-
-  // Always show first page
+  const delta = 2;
   pages.push(1);
-
-  // Add ellipsis if needed
-  if (current - delta > 2) {
-    pages.push('...');
-  }
-
-  // Add pages around current page
+  if (current - delta > 2) pages.push('...');
   for (let i = Math.max(2, current - delta); i <= Math.min(total - 1, current + delta); i++) {
     pages.push(i);
   }
-
-  // Add ellipsis if needed
-  if (current + delta < total - 1) {
-    pages.push('...');
-  }
-
-  // Always show last page if there's more than one page
-  if (total > 1) {
-    pages.push(total);
-  }
-
+  if (current + delta < total - 1) pages.push('...');
+  if (total > 1) pages.push(total);
   return pages;
 }
 
 const pageNumbers = generatePageNumbers(currentPage, totalPages);
 
-const prevUrl = hasPrev 
+const prevUrl = hasPrev
     ? (currentPage === 2 ? baseUrl : `${baseUrl}/${currentPage - 1}`)
     : undefined;
 
-  const nextUrl = hasNext 
-    ? `${baseUrl}/${currentPage + 1}`
-    : undefined;
+const nextUrl = hasNext
+  ? `${baseUrl}/${currentPage + 1}`
+  : undefined;
 ---
 
 {totalPages > 1 && (
-  <nav class="flex items-center justify-between py-8" aria-label="Pagination">
-    <!-- Previous page -->
-    <div class="flex-1 flex justify-start">
+  <nav class="pagination-nav" aria-label="Pagination">
+    <div class="pagination-side">
       {hasPrev ? (
-        <a
-          href={prevUrl || `${baseUrl}/${currentPage - 1}`}
-          class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-600 dark:text-primary-300 bg-white dark:bg-primary-900 border border-primary-300 dark:border-primary-600 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-800 hover:text-primary-800 dark:hover:text-primary-200 transition-colors"
-        >
-          <Icon name="arrow-left" class="w-4 h-4 mr-2" />
+        <a href={prevUrl || `${baseUrl}/${currentPage - 1}`} class="pagination-btn">
+          <Icon name="arrow-left" class="pagination-icon-left" />
           Previous
         </a>
       ) : (
-        <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-400 dark:text-primary-500 bg-primary-100 dark:bg-primary-800 border border-primary-200 dark:border-primary-700 rounded-lg cursor-not-allowed">
-          <Icon name="arrow-left" class="w-4 h-4 mr-2" />
+        <span class="pagination-btn pagination-btn--disabled">
+          <Icon name="arrow-left" class="pagination-icon-left" />
           Previous
         </span>
       )}
     </div>
 
-    <!-- Page numbers -->
-    <div class="hidden md:flex items-center space-x-2">
+    <div class="pagination-pages">
       {pageNumbers.map(page => (
         typeof page === 'number' ? (
           <a
             href={page === 1 ? baseUrl : `${baseUrl}/${page}`}
-            class={`inline-flex items-center justify-center w-10 h-10 text-sm font-medium rounded-lg transition-colors ${
-              page === currentPage
-                ? 'btn-primary'
-                : 'text-primary-600 dark:text-primary-300 bg-white dark:bg-primary-900 border border-primary-300 dark:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-800 hover:text-primary-800 dark:hover:text-primary-200'
-            }`}
+            class={`pagination-page ${page === currentPage ? 'pagination-page--active btn-primary' : ''}`}
             aria-current={page === currentPage ? 'page' : undefined}
           >
             {page}
           </a>
         ) : (
-          <span class="inline-flex items-center justify-center w-10 h-10 text-sm text-primary-400 dark:text-primary-500">
-            {page}
-          </span>
+          <span class="pagination-ellipsis">{page}</span>
         )
       ))}
     </div>
 
-    <!-- Mobile page indicator -->
-    <div class="md:hidden flex items-center space-x-2 text-sm text-primary-600 dark:text-primary-300">
-      <span>
-        Page {currentPage} of {totalPages}
-      </span>
+    <div class="pagination-mobile-info">
+      <span>Page {currentPage} of {totalPages}</span>
     </div>
 
-    <!-- Next page -->
-    <div class="flex-1 flex justify-end">
+    <div class="pagination-side pagination-side--right">
       {hasNext ? (
-        <a
-          href={nextUrl || `${baseUrl}/${currentPage + 1}`}
-          class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-600 dark:text-primary-300 bg-white dark:bg-primary-900 border border-primary-300 dark:border-primary-600 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-800 hover:text-primary-800 dark:hover:text-primary-200 transition-colors"
-        >
+        <a href={nextUrl || `${baseUrl}/${currentPage + 1}`} class="pagination-btn">
           Next
-          <Icon name="arrow-right" class="w-4 h-4 ml-2" />
+          <Icon name="arrow-right" class="pagination-icon-right" />
         </a>
       ) : (
-        <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-400 dark:text-primary-500 bg-primary-100 dark:bg-primary-800 border border-primary-200 dark:border-primary-700 rounded-lg cursor-not-allowed">
+        <span class="pagination-btn pagination-btn--disabled">
           Next
-          <Icon name="arrow-right" class="w-4 h-4 ml-2" />
+          <Icon name="arrow-right" class="pagination-icon-right" />
         </span>
       )}
     </div>
@@ -123,31 +87,126 @@ const prevUrl = hasPrev
 )}
 
 <style>
-  /* Enhanced pagination styles */
-  nav[aria-label="Pagination"] {
+  .pagination-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
     user-select: none;
   }
 
-  /* Smooth transitions for all interactive elements */
-  nav[aria-label="Pagination"] a,
-  nav[aria-label="Pagination"] span {
-    transition: all 0.2s;
-  }
-
-  /* Focus styles */
-  nav[aria-label="Pagination"] a:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgb(var(--color-highlight-500));
+  .pagination-nav a:focus-visible {
+    outline: 2px solid rgb(var(--color-highlight-500));
     outline-offset: 2px;
   }
 
-  /* Active page enhancement */
-  nav[aria-label="Pagination"] [aria-current="page"] {
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  .pagination-nav a:hover {
+    transform: scale(1.05);
   }
 
-  /* Hover effects */
-  nav[aria-label="Pagination"] a:hover {
-    transform: scale(1.05);
+  .pagination-nav [aria-current="page"] {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .pagination-side {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .pagination-side--right {
+    justify-content: flex-end;
+  }
+
+  .pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(var(--color-primary-300));
+    background-color: rgb(var(--color-primary-900));
+    border: 1px solid rgb(var(--color-primary-600));
+    border-radius: 0.5rem;
+    transition: background-color 0.2s, color 0.2s;
+    text-decoration: none;
+  }
+
+  .pagination-btn:hover {
+    background-color: rgb(var(--color-primary-800));
+    color: rgb(var(--color-primary-200));
+  }
+
+  .pagination-btn--disabled {
+    color: rgb(var(--color-primary-500));
+    background-color: rgb(var(--color-primary-800));
+    border-color: rgb(var(--color-primary-700));
+    cursor: not-allowed;
+  }
+
+  .pagination-icon-left {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .pagination-icon-right {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.5rem;
+  }
+
+  .pagination-pages {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .pagination-pages {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  .pagination-page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    color: rgb(var(--color-primary-300));
+    background-color: rgb(var(--color-primary-900));
+    border: 1px solid rgb(var(--color-primary-600));
+    text-decoration: none;
+  }
+
+  .pagination-page:hover {
+    background-color: rgb(var(--color-primary-800));
+    color: rgb(var(--color-primary-200));
+  }
+
+  .pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.875rem;
+    color: rgb(var(--color-primary-500));
+  }
+
+  .pagination-mobile-info {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    color: rgb(var(--color-primary-300));
+  }
+
+  @media (min-width: 768px) {
+    .pagination-mobile-info { display: none; }
   }
 </style>

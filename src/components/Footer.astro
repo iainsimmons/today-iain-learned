@@ -9,93 +9,59 @@ const showProfilePicture = siteConfig.profilePicture.enabled && siteConfig.profi
 const profilePicture = siteConfig.profilePicture;
 const footerEnabled = siteConfig.footer.enabled;
 
-// Replace placeholder with actual author name
 const footerContent = siteConfig.footer.content.replace('{year}', `${new Date().getFullYear()}`).replace('{author}', siteConfig.author);
 
-// Size and style classes for profile picture
 const getProfilePictureClasses = (size: string, style: string) => {
-  let sizeClasses = '';
+  let classes = 'footer-profile-img';
   switch (size) {
-    case 'sm': sizeClasses = 'h-8'; break;
-    case 'lg': sizeClasses = 'h-16'; break;
-    default: sizeClasses = 'h-12'; // md
+    case 'sm': classes += ' footer-profile-img--sm'; break;
+    case 'lg': classes += ' footer-profile-img--lg'; break;
+    default: classes += ' footer-profile-img--md';
   }
-  
-  let styleClasses = '';
   switch (style) {
-    case 'circle': styleClasses = 'rounded-full object-cover border-2 border-primary-200 dark:border-primary-700'; break;
-    case 'square': styleClasses = 'rounded-lg object-cover border-2 border-primary-200 dark:border-primary-700'; break;
-    default: styleClasses = 'object-contain'; // none
+    case 'circle': classes += ' footer-profile-img--circle'; break;
+    case 'square': classes += ' footer-profile-img--square'; break;
+    default: classes += ' footer-profile-img--none';
   }
-  
-  return `${sizeClasses} ${styleClasses}`;
+  return classes;
 };
 ---
 
-<footer class="bg-white dark:bg-primary-950 mt-auto">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8 py-8" style={`max-width: ${siteConfig.layout.contentWidth}`}>
-    <!-- Profile picture above footer content when footer is enabled -->
+<footer class="site-footer">
+  <div class="site-footer-inner" style={`max-width: ${siteConfig.layout.contentWidth}`}>
     {showProfilePicture && footerEnabled && (
-      <div class="mb-4 flex justify-start">
+      <div class="footer-profile-row">
         {profilePicture.url ? (
-          <a 
-            href={profilePicture.url}
-            class="inline-block hover:opacity-80 transition-opacity"
-            target={profilePicture.url.startsWith('http') ? '_blank' : undefined}
-            rel={profilePicture.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-          >
-            <img
-              src={profilePicture.image}
-              alt={profilePicture.alt}
-              class={getProfilePictureClasses(profilePicture.size, profilePicture.style)}
-            />
+          <a href={profilePicture.url} class="footer-profile-link" target={profilePicture.url.startsWith('http') ? '_blank' : undefined} rel={profilePicture.url.startsWith('http') ? 'noopener noreferrer' : undefined}>
+            <img src={profilePicture.image} alt={profilePicture.alt} class={getProfilePictureClasses(profilePicture.size, profilePicture.style)} />
           </a>
         ) : (
-          <img
-            src={profilePicture.image}
-            alt={profilePicture.alt}
-            class={getProfilePictureClasses(profilePicture.size, profilePicture.style)}
-          />
+          <img src={profilePicture.image} alt={profilePicture.alt} class={getProfilePictureClasses(profilePicture.size, profilePicture.style)} />
         )}
       </div>
     )}
 
-    <!-- Mobile: Social icons above footer content, centered -->
     {showSocialIcons && (
-      <div class="flex justify-center md:hidden mb-4">
-        <div class="flex items-center space-x-4">
+      <div class="footer-social-mobile">
+        <div class="footer-social-row">
           {socialLinks.map((social) => (
-            <a
-              href={social.url}
-              title={social.title}
-              class="text-primary-500 hover:text-highlight-600 dark:text-primary-400 dark:hover:text-highlight-400 transition-colors duration-200"
-              target="_blank"
-            >
-              <Icon name={social.icon} class="w-5 h-5" />
+            <a href={social.url} title={social.title} class="footer-social-link" target="_blank">
+              <Icon name={social.icon} class="footer-social-icon" />
               <span class="sr-only">{social.title}</span>
             </a>
           ))}
         </div>
       </div>
     )}
-    
-    <!-- Footer content and social icons on same line -->
+
     {footerEnabled && (
-      <div class={`text-center ${showSocialIcons ? 'md:flex md:justify-between md:items-center' : ''}`}>
-        <p class="text-xs text-primary-500 dark:text-primary-400" set:html={footerContent}>
-        </p>
-        
-        <!-- Desktop: Social icons on same line as footer content -->
+      <div class={`footer-content-row ${showSocialIcons ? 'footer-content-row--with-social' : ''}`}>
+        <p class="footer-content-text" set:html={footerContent} />
         {showSocialIcons && (
-          <div class="hidden md:flex items-center space-x-4">
+          <div class="footer-social-desktop">
             {socialLinks.map((social) => (
-              <a
-                href={social.url}
-                title={social.title}
-                class="text-primary-500 hover:text-highlight-600 dark:text-primary-400 dark:hover:text-highlight-400 transition-colors duration-200"
-                target="_blank"
-              >
-                <Icon name={social.icon} class="w-5 h-5" />
+              <a href={social.url} title={social.title} class="footer-social-link" target="_blank">
+                <Icon name={social.icon} class="footer-social-icon" />
                 <span class="sr-only">{social.title}</span>
               </a>
             ))}
@@ -104,45 +70,24 @@ const getProfilePictureClasses = (size: string, style: string) => {
       </div>
     )}
 
-    <!-- When footer is disabled: Profile picture aligned with social icons OR just centered social icons -->
     {!footerEnabled && (
-      <div class={`text-center ${showProfilePicture && showSocialIcons ? 'md:flex md:justify-between md:items-center' : ''}`}>
+      <div class={`footer-no-content ${showProfilePicture && showSocialIcons ? 'footer-no-content--side' : ''}`}>
         {showProfilePicture ? (
-          <div class="flex justify-start">
+          <div class="footer-profile-row">
             {profilePicture.url ? (
-              <a 
-                href={profilePicture.url}
-                class="inline-block hover:opacity-80 transition-opacity"
-                target={profilePicture.url.startsWith('http') ? '_blank' : undefined}
-                rel={profilePicture.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-              >
-                <img
-                  src={profilePicture.image}
-                  alt={profilePicture.alt}
-                  class={getProfilePictureClasses(profilePicture.size, profilePicture.style)}
-                />
+              <a href={profilePicture.url} class="footer-profile-link" target={profilePicture.url.startsWith('http') ? '_blank' : undefined} rel={profilePicture.url.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                <img src={profilePicture.image} alt={profilePicture.alt} class={getProfilePictureClasses(profilePicture.size, profilePicture.style)} />
               </a>
             ) : (
-              <img
-                src={profilePicture.image}
-                alt={profilePicture.alt}
-                class={getProfilePictureClasses(profilePicture.size, profilePicture.style)}
-              />
+              <img src={profilePicture.image} alt={profilePicture.alt} class={getProfilePictureClasses(profilePicture.size, profilePicture.style)} />
             )}
           </div>
         ) : null}
-        
-        <!-- Social icons: centered when no profile picture, or aligned when profile picture exists -->
         {showSocialIcons && (
-          <div class={`flex items-center space-x-4 ${showProfilePicture ? 'hidden md:flex' : 'justify-center'}`}>
+          <div class={`footer-social-icons ${showProfilePicture ? 'footer-social-icons--side' : 'footer-social-icons--center'}`}>
             {socialLinks.map((social) => (
-              <a
-                href={social.url}
-                title={social.title}
-                class="text-primary-500 hover:text-highlight-600 dark:text-primary-400 dark:hover:text-highlight-400 transition-colors duration-200"
-                target="_blank"
-              >
-                <Icon name={social.icon} class="w-5 h-5" />
+              <a href={social.url} title={social.title} class="footer-social-link" target="_blank">
+                <Icon name={social.icon} class="footer-social-icon" />
                 <span class="sr-only">{social.title}</span>
               </a>
             ))}
@@ -152,3 +97,166 @@ const getProfilePictureClasses = (size: string, style: string) => {
     )}
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    background-color: rgb(var(--color-primary-950));
+    margin-top: auto;
+  }
+
+  .site-footer-inner {
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .site-footer-inner { padding: 2rem 1.5rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .site-footer-inner { padding: 2rem 2rem; }
+  }
+
+  .footer-profile-row {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .footer-profile-link {
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+
+  .footer-profile-link:hover {
+    opacity: 0.8;
+  }
+
+  .footer-profile-img {
+    object-fit: cover;
+  }
+
+  .footer-profile-img--sm { height: 2rem; }
+  .footer-profile-img--md { height: 3rem; }
+  .footer-profile-img--lg { height: 4rem; }
+  .footer-profile-img--circle {
+    border-radius: 9999px;
+    border: 2px solid rgb(var(--color-primary-700));
+  }
+  .footer-profile-img--square {
+    border-radius: 0.5rem;
+    border: 2px solid rgb(var(--color-primary-700));
+  }
+  .footer-profile-img--none {
+    object-fit: contain;
+  }
+
+  .footer-social-mobile {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-social-mobile { display: none; }
+  }
+
+  .footer-social-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-social-link {
+    color: rgb(var(--color-primary-400));
+    transition: color 0.2s;
+  }
+
+  .footer-social-link:hover {
+    color: rgb(var(--color-highlight-400));
+  }
+
+  .footer-social-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .footer-content-row {
+    text-align: center;
+  }
+
+  .footer-content-row--with-social {
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .footer-content-row--with-social {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .footer-content-text {
+    font-size: 0.75rem;
+    color: rgb(var(--color-primary-400));
+  }
+
+  .footer-social-desktop {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .footer-social-desktop {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  .footer-no-content {
+    text-align: center;
+  }
+
+  .footer-no-content--side {
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .footer-no-content--side {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .footer-social-icons--center {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .footer-social-icons--side {
+    display: none;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-social-icons--side {
+      display: flex;
+      align-items: center;
+    }
+  }
+</style>

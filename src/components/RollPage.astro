@@ -18,7 +18,7 @@ const { title, description, seeAlsoText, seeAlsoLink, toc, groups, lastUpdated, 
       <h1 class="roll-page-title">{title}</h1>
     </header>
 
-    <div class="roll-page-body prose dark:prose-dark max-w-none" id="page-content">
+    <div class="roll-page-body prose" id="page-content">
       {lastUpdated && (
         <p><strong>Last updated</strong>: <time datetime={lastUpdated.datetime}>{lastUpdated.formatted}</time></p>
       )}

@@ -9,7 +9,7 @@ import Icon from './Icon.astro';
   class="scroll-top-btn hidden"
   aria-label="Scroll to top"
 >
-  <Icon name="arrow-up" class="w-5 h-5" />
+  <Icon name="arrow-up" class="scroll-top-icon" />
 </button>
 
 <script>
@@ -63,6 +63,15 @@ import Icon from './Icon.astro';
 </script>
 
 <style>
+  .hidden {
+    display: none;
+  }
+
+  .scroll-top-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   .scroll-top-btn {
     position: fixed;
     bottom: 5rem;

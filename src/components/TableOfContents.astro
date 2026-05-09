@@ -9,36 +9,30 @@ export interface Props {
 
 const { headings } = Astro.props;
 
-// Filter and structure headings using configurable depth
 const maxDepth = getTableOfContentsDepth();
 const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= maxDepth);
-// Hide TOC if there's only 1 heading (not useful)
 const shouldShowTOC = filteredHeadings.length > 1;
 ---
 
 {shouldShowTOC && (
-  <nav class="toc-nav toc-container p-4 pr-5 bg-white dark:bg-primary-900 rounded-xl border border-primary-200 dark:border-primary-700 shadow-lg backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
-    <div class="toc-content">
-      <button 
-        class="toc-toggle w-full font-semibold text-primary-900 dark:text-primary-50 mb-3 flex items-center justify-between text-sm hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors"
+  <nav class="toc-container">
+    <div class="toc-inner">
+      <button
+        class="toc-toggle"
         aria-expanded="true"
         aria-controls="toc-list"
       >
-        <div class="flex items-center">
-          <Icon name="list" class="w-4 h-4 mr-2" />
+        <div class="toc-toggle-label">
+          <Icon name="list" class="toc-toggle-icon" />
           Contents
         </div>
-        <Icon name="chevron-down" class="w-4 h-4 toc-chevron transition-transform duration-200" />
+        <Icon name="chevron-down" class="toc-chevron" />
       </button>
-      
-      <ul class="space-y-2 toc-list" id="toc-list">
+
+      <ul class="toc-list" id="toc-list">
         {filteredHeadings.map(heading => (
           <li class={`toc-item toc-level-${heading.depth}`}>
-            <a 
-              href={`#${heading.slug}`}
-              class="toc-link block text-sm text-primary-600 dark:text-primary-300 hover:text-highlight-600 dark:hover:text-highlight-400 transition-colors py-1 pr-2"
-              data-heading={heading.slug}
-            >
+            <a href={`#${heading.slug}`} class="toc-link" data-heading={heading.slug}>
               {heading.text}
             </a>
           </li>
@@ -49,134 +43,172 @@ const shouldShowTOC = filteredHeadings.length > 1;
 )}
 
 <script>
-  // Global function to initialize table of contents
   function initializeTableOfContents() {
     const tocLinks = document.querySelectorAll('.toc-link');
     const headings = document.querySelectorAll('h2, h3, h4, h5, h6');
     const tocToggle = document.querySelector('.toc-toggle') as HTMLButtonElement;
     const tocList = document.querySelector('.toc-list') as HTMLElement;
     const tocChevron = document.querySelector('.toc-chevron') as HTMLElement;
-    
+
     if (!tocLinks.length || !headings.length) return;
-    
-    // Remove existing event listeners to prevent duplicates
+
     if (tocToggle) {
       const newToggle = tocToggle.cloneNode(true) as HTMLButtonElement;
       tocToggle.parentNode?.replaceChild(newToggle, tocToggle);
     }
-    
-    // Get fresh references after cloning
+
     const freshTocToggle = document.querySelector('.toc-toggle') as HTMLButtonElement;
     const freshTocList = document.querySelector('.toc-list') as HTMLElement;
     const freshTocChevron = document.querySelector('.toc-chevron') as HTMLElement;
-    
-    // TOC Toggle functionality
+
     if (freshTocToggle && freshTocList && freshTocChevron) {
       freshTocToggle.addEventListener('click', () => {
         const isExpanded = freshTocToggle.getAttribute('aria-expanded') === 'true';
-        
         if (isExpanded) {
-          // Collapse
           freshTocList.style.display = 'none';
           freshTocToggle.setAttribute('aria-expanded', 'false');
           freshTocChevron.style.transform = 'rotate(90deg)';
         } else {
-          // Expand
           freshTocList.style.display = 'block';
           freshTocToggle.setAttribute('aria-expanded', 'true');
           freshTocChevron.style.transform = 'rotate(0deg)';
         }
       });
     }
-    
-    // Highlight active section in TOC
+
     function highlightTOC() {
       let current = '';
-      
       headings.forEach(heading => {
         const rect = heading.getBoundingClientRect();
-        if (rect.top <= 100) {
-          current = heading.id;
-        }
+        if (rect.top <= 100) current = heading.id;
       });
-      
       tocLinks.forEach(link => {
         const href = link.getAttribute('href')?.slice(1);
-        if (href === current) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
+        if (href === current) link.classList.add('active');
+        else link.classList.remove('active');
       });
     }
-    
-    // Update active link on scroll
+
     let ticking = false;
     window.addEventListener('scroll', () => {
       if (!ticking) {
-        requestAnimationFrame(() => {
-          highlightTOC();
-          ticking = false;
-        });
+        requestAnimationFrame(() => { highlightTOC(); ticking = false; });
         ticking = true;
       }
     });
-    
-    // Initial highlight
+
     highlightTOC();
-    
-    // Force scrollbar style refresh
-    const tocNav = document.querySelector('.toc-container') as HTMLElement;
-    if (tocNav) {
-      // Trigger a reflow to force style recalculation
-      tocNav.style.display = 'none';
-      tocNav.offsetHeight; // Trigger reflow
-      tocNav.style.display = '';
-    }
   }
 
-  // Make function globally available
   (window as any).initializeTableOfContents = initializeTableOfContents;
-
-  // Initialize on DOMContentLoaded
   document.addEventListener('DOMContentLoaded', initializeTableOfContents);
 </script>
 
 <style>
-  .toc-level-2 {
-    margin-left: 0;
+  .toc-container {
+    padding: 1rem;
+    padding-right: 1.25rem;
+    background-color: rgb(var(--color-primary-900));
+    border-radius: 0.75rem;
+    border: 1px solid rgb(var(--color-primary-700));
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
-  
-  .toc-level-3 {
-    margin-left: 1rem;
+
+  .toc-inner {
+    overflow-x: hidden;
+    overflow-y: visible;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
   }
-  
-  .toc-level-4 {
-    margin-left: 2rem;
+
+  .toc-toggle {
+    width: 100%;
+    font-weight: 600;
+    color: rgb(var(--color-primary-50));
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
   }
-  
-  .toc-level-5 {
-    margin-left: 3rem;
+
+  .toc-toggle:hover {
+    color: rgb(var(--color-highlight-400));
   }
-  
-  .toc-level-6 {
-    margin-left: 4rem;
+
+  .toc-toggle-label {
+    display: flex;
+    align-items: center;
   }
-  
+
+  .toc-toggle-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .toc-chevron {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s;
+    transform-origin: center;
+  }
+
+  .toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    padding-right: 0;
+    box-sizing: border-box;
+  }
+
+  .toc-item {
+    position: relative;
+    min-width: 0;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    box-sizing: border-box;
+  }
+
+  .toc-link {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    line-height: 1.5;
+    display: block;
+    box-sizing: border-box;
+    font-size: 0.875rem;
+    color: rgb(var(--color-primary-300));
+    padding: 0.25rem 0.5rem 0.25rem 0;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .toc-link:hover {
+    color: rgb(var(--color-highlight-400));
+  }
+
   .toc-link.active {
-    color: rgb(var(--color-highlight-600));
+    color: rgb(var(--color-highlight-400));
     font-weight: 500;
   }
 
-  :global(.dark) .toc-link.active {
-    color: rgb(var(--color-highlight-400));
-  }
-  
-  /* Ensure proper transform origin for chevron rotation */
-  .toc-chevron {
-    transform-origin: center;
-  }
-  
   .toc-link.active::before {
     content: '';
     position: absolute;
@@ -185,131 +217,19 @@ const shouldShowTOC = filteredHeadings.length > 1;
     transform: translateY(-50%);
     width: 2px;
     height: 1rem;
-    background-color: rgb(var(--color-highlight-600));
+    background-color: rgb(var(--color-highlight-400));
     border-radius: 9999px;
   }
 
-  :global(.dark) .toc-link.active::before {
-    background-color: rgb(var(--color-highlight-400));
-  }
-  
-  .toc-item {
-    position: relative;
-  }
-  
-  .toc-nav {
-    /* No height restrictions - let it flow naturally */
-  }
-  
-  .toc-content {
-    /* No scrolling needed - content flows naturally */
-    overflow-x: hidden;
-    overflow-y: visible;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .toc-link {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    hyphens: auto;
-    line-height: 1.5;
-    display: block;
-  
-  .toc-item {
-    position: relative;
-  }
-  
-  .toc-nav {
-    /* No height restrictions - let it flow naturally */
-  }
-  
-  .toc-content {
-    /* No scrolling needed - content flows naturally */
-    overflow-x: hidden;
-    overflow-y: visible;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .toc-link {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    hyphens: auto;
-    line-height: 1.5;
-    display: block;
-    box-sizing: border-box;
-  }
-  
-  /* Level 2 (no indentation) - full width */
-  .toc-level-2 .toc-link {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  /* Indented levels - account for left margin in width calculation */
-  .toc-level-3 .toc-link {
-    width: calc(100% - 1rem);
-    max-width: calc(100% - 1rem);
-  }
-  
-  .toc-level-4 .toc-link {
-    width: calc(100% - 2rem);
-    max-width: calc(100% - 2rem);
-  }
-  
-  .toc-level-5 .toc-link {
-    width: calc(100% - 3rem);
-    max-width: calc(100% - 3rem);
-  }
-  
-  .toc-level-6 .toc-link {
-    width: calc(100% - 4rem);
-    max-width: calc(100% - 4rem);
-  }
-  
-  /* Desktop floating TOC */
-  @media (min-width: 1280px) {
-    .toc-nav {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
-  }
-  
-  /* Mobile/Tablet TOC */
-  @media (max-width: 1279px) {
-    .toc-nav {
-      width: 100%;
-      max-width: 100%;
-    }
-  }
-  
-  /* Prevent horizontal overflow */
-  .toc-list {
-    overflow-x: hidden;
-    overflow-y: visible;
-    width: 100%;
-    padding-right: 0;
-    box-sizing: border-box;
-  }
-  
-  .toc-item {
-    min-width: 0;
-    width: 100%;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    box-sizing: border-box;
-  }
-  
-  
-  .toc-chevron {
-    transition: transform 0.2s;
-  }
+  .toc-level-2 { margin-left: 0; }
+  .toc-level-3 { margin-left: 1rem; }
+  .toc-level-4 { margin-left: 2rem; }
+  .toc-level-5 { margin-left: 3rem; }
+  .toc-level-6 { margin-left: 4rem; }
+
+  .toc-level-2 .toc-link { width: 100%; max-width: 100%; }
+  .toc-level-3 .toc-link { width: calc(100% - 1rem); max-width: calc(100% - 1rem); }
+  .toc-level-4 .toc-link { width: calc(100% - 2rem); max-width: calc(100% - 2rem); }
+  .toc-level-5 .toc-link { width: calc(100% - 3rem); max-width: calc(100% - 3rem); }
+  .toc-level-6 .toc-link { width: calc(100% - 4rem); max-width: calc(100% - 4rem); }
 </style>

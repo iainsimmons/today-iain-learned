@@ -5,20 +5,20 @@ export interface Props {
 }
 const { columns, rows } = Astro.props as Props;
 ---
-<div class="overflow-x-auto">
-  <table class="w-full text-left border-collapse">
+<div class="bt-wrapper">
+  <table class="bt-table">
     <thead>
-      <tr class="border-b border-primary-200 dark:border-primary-600">
+      <tr class="bt-header-row">
         {columns.map((col) => (
-          <th class="py-2 pr-4 text-primary-600 dark:text-primary-300 whitespace-nowrap">{col}</th>
+          <th class="bt-header-cell">{col}</th>
         ))}
       </tr>
     </thead>
     <tbody>
       {rows.map((row) => (
-        <tr class="border-b border-primary-200/60 dark:border-primary-600/60 last:border-0">
+        <tr class="bt-row">
           {columns.map((col) => (
-            <td class="py-2 pr-4 text-primary-900 dark:text-primary-100 whitespace-nowrap">{String(row[col] ?? '')}</td>
+            <td class="bt-cell">{String(row[col] ?? '')}</td>
           ))}
         </tr>
       ))}
@@ -26,4 +26,38 @@ const { columns, rows } = Astro.props as Props;
   </table>
 </div>
 
+<style>
+  .bt-wrapper {
+    overflow-x: auto;
+  }
 
+  .bt-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+  }
+
+  .bt-header-row {
+    border-bottom: 1px solid rgb(var(--color-primary-600));
+  }
+
+  .bt-header-cell {
+    padding: 0.5rem 1rem 0.5rem 0;
+    color: rgb(var(--color-primary-300));
+    white-space: nowrap;
+  }
+
+  .bt-row {
+    border-bottom: 1px solid rgba(var(--color-primary-600), 0.6);
+  }
+
+  .bt-row:last-child {
+    border-bottom: 0;
+  }
+
+  .bt-cell {
+    padding: 0.5rem 1rem 0.5rem 0;
+    color: rgb(var(--color-primary-100));
+    white-space: nowrap;
+  }
+</style>

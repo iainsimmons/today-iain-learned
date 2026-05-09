@@ -11,17 +11,16 @@ export interface Props {
 
 const { images, layout = 'auto' } = Astro.props;
 
-// Process layout if auto
 const processedLayout = layout === 'auto' ? processImageLayout(images) : { layout, images };
 const { layout: finalLayout, images: finalImages } = processedLayout;
 ---
 
 {finalImages.length > 0 && (
-  <div class={`image-gallery ${finalLayout} my-8`}>
+  <div class={`image-gallery ${finalLayout}`}>
     {finalImages.map((image, index) => (
       <div class="image-item">
         <button 
-          class="image-button w-full h-full group cursor-pointer"
+          class="image-button"
           data-image-index={index}
           data-lightbox="gallery"
           aria-label={`View ${image.alt} in full size`}
@@ -30,15 +29,15 @@ const { layout: finalLayout, images: finalImages } = processedLayout;
             src={image.src}
             basePath="/posts/attachments/"
             alt={image.alt}
-            class="w-full h-full rounded-lg transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.02]"
+            class="image-gallery-img"
             width={600}
             height={400}
             format="webp"
             quality={85}
             loading="lazy"
           />
-          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg flex items-center justify-center">
-            <Icon name="zoom-in" class="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div class="image-button-overlay">
+            <Icon name="zoom-in" class="image-button-icon" />
           </div>
         </button>
       </div>
@@ -95,11 +94,48 @@ const { layout: finalLayout, images: finalImages } = processedLayout;
   .image-button {
     position: relative;
     display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .image-button .image-gallery-img {
+    border-radius: 0.5rem;
+    transition: all 300ms;
   }
   
-  /* Responsive adjustments - maintain side-by-side layout on mobile */
+  .image-button:hover .image-gallery-img {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    scale: 1.02;
+  }
+
+  .image-button-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(0 0 0 / 0);
+    transition: background-color 300ms;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-button:hover .image-button-overlay {
+    background-color: rgb(0 0 0 / 0.1);
+  }
+
+  .image-button-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: rgb(255 255 255);
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+
+  .image-button:hover .image-button-icon {
+    opacity: 1;
+  }
   
-  /* Mixed aspect ratios for better layouts */
   .image-gallery.grid-3 .image-item:first-child {
     grid-column: span 2;
   }
@@ -130,14 +166,12 @@ const { layout: finalLayout, images: finalImages } = processedLayout;
         e.preventDefault();
         const imageIndex = parseInt(button.getAttribute('data-image-index') || '0');
         
-        // Dispatch custom event to open lightbox
         const event = new CustomEvent('openLightbox', {
           detail: { index: imageIndex }
         });
         window.dispatchEvent(event);
       });
       
-      // Support for press-and-hold on mobile
       let pressTimer: number;
       
       button.addEventListener('touchstart', (e) => {
