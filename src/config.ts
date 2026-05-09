@@ -60,7 +60,7 @@ export interface SiteConfig {
   // [CONFIG:HIDE_SCROLL_BAR]
   hideScrollBar: boolean;
   scrollToTop: boolean;
-  featureButton: "mode" | "graph" | "theme" | "none";
+  featureButton: "mode" | "theme" | "none";
   deployment: {
     platform: "netlify" | "vercel" | "github-pages" | "cloudflare-workers";
   };
@@ -73,8 +73,6 @@ export interface SiteConfig {
     search: {
       posts: boolean;
       pages: boolean;
-      projects: boolean;
-      docs: boolean;
     };
     sections: {
       quickActions: boolean;
@@ -84,7 +82,6 @@ export interface SiteConfig {
     quickActions: {
       enabled: boolean;
       toggleMode: boolean;
-      graphView: boolean;
       changeTheme: boolean;
     };
   };
@@ -120,14 +117,6 @@ export interface SiteConfig {
       enabled: boolean;
       count: number;
     };
-    projects: {
-      enabled: boolean;
-      count: number;
-    };
-    docs: {
-      enabled: boolean;
-      count: number;
-    };
     blurb: {
       placement: "above" | "below" | "none";
     };
@@ -142,12 +131,6 @@ export interface SiteConfig {
     linkedMentions: {
       enabled: boolean;
       linkedMentionsCompact: boolean;
-    };
-    graphView: {
-      enabled: boolean;
-      showInSidebar: boolean;
-      maxNodes: number;
-      showOrphanedPosts: boolean;
     };
     postNavigation: boolean;
     showPostCardCoverImages: "all" | "featured" | "home" | "posts" | "featured-and-posts" | "none";
@@ -171,11 +154,6 @@ export interface SiteConfig {
     };
   };
 
-  // Optional Content Types
-  optionalContentTypes: {
-    projects: boolean;
-    docs: boolean;
-  };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -250,7 +228,7 @@ export const siteConfig: SiteConfig = {
   // [CONFIG:SCROLL_TO_TOP]
   scrollToTop: true,
   // [CONFIG:FEATURE_BUTTON]
-  featureButton: "mode", // "mode" | "graph" | "theme" | "none"
+  featureButton: "mode", // "mode" | "theme" | "none"
   deployment: {
     // [CONFIG:DEPLOYMENT_PLATFORM]
     platform: "cloudflare-workers", // "netlify" | "vercel" | "github-pages" | "cloudflare-workers" - sets redirect configuration for the chosen platform (Cloudflare Workers uses Workers-compatible config)
@@ -269,10 +247,6 @@ export const siteConfig: SiteConfig = {
       posts: true,
       // [CONFIG:COMMAND_PALETTE_SEARCH_PAGES]
       pages: true,
-      // [CONFIG:COMMAND_PALETTE_SEARCH_PROJECTS]
-      projects: false,
-      // [CONFIG:COMMAND_PALETTE_SEARCH_DOCS]
-      docs: false,
     },
     sections: {
       // [CONFIG:COMMAND_PALETTE_SECTIONS_QUICK_ACTIONS]
@@ -287,8 +261,6 @@ export const siteConfig: SiteConfig = {
       enabled: true,
       // [CONFIG:COMMAND_PALETTE_QUICK_ACTIONS_TOGGLE_MODE]
       toggleMode: true,
-      // [CONFIG:COMMAND_PALETTE_QUICK_ACTIONS_GRAPH_VIEW]
-      graphView: false,
       // [CONFIG:COMMAND_PALETTE_QUICK_ACTIONS_CHANGE_THEME]
       changeTheme: true,
     },
@@ -341,14 +313,6 @@ export const siteConfig: SiteConfig = {
     ],
   },
 
-  // Optional Content Types - Enable/disable optional content sections (takes priority over homeOptions)
-  optionalContentTypes: {
-    // [CONFIG:OPTIONAL_CONTENT_TYPES_PROJECTS]
-    projects: false, // Enable projects section
-    // [CONFIG:OPTIONAL_CONTENT_TYPES_DOCS]
-    docs: false, // Enable documentation section
-  },
-
   // Home Options
   homeOptions: {
     featuredPost: {
@@ -364,18 +328,6 @@ export const siteConfig: SiteConfig = {
       enabled: true, // Show recent posts on homepage
       // [CONFIG:HOME_OPTIONS_RECENT_POSTS_COUNT]
       count: 7, // Number of recent posts to show
-    },
-    projects: {
-      // [CONFIG:HOME_OPTIONS_PROJECTS_ENABLED]
-      enabled: false, // Show featured projects on homepage
-      // [CONFIG:HOME_OPTIONS_PROJECTS_COUNT]
-      count: 2, // Number of projects to show
-    },
-    docs: {
-      // [CONFIG:HOME_OPTIONS_DOCS_ENABLED]
-      enabled: false, // Show featured docs on homepage
-      // [CONFIG:HOME_OPTIONS_DOCS_COUNT]
-      count: 3, // Number of docs to show
     },
     blurb: {
       // [CONFIG:HOME_OPTIONS_BLURB_PLACEMENT]
@@ -398,16 +350,6 @@ export const siteConfig: SiteConfig = {
       enabled: true,
       // [CONFIG:POST_OPTIONS_LINKED_MENTIONS_COMPACT]
       linkedMentionsCompact: false,
-    },
-    graphView: {
-      // [CONFIG:POST_OPTIONS_GRAPH_VIEW_ENABLED]
-      enabled: false,
-      // [CONFIG:POST_OPTIONS_GRAPH_VIEW_SHOW_IN_SIDEBAR]
-      showInSidebar: true,
-      // [CONFIG:POST_OPTIONS_GRAPH_VIEW_MAX_NODES]
-      maxNodes: 100,
-      // [CONFIG:POST_OPTIONS_GRAPH_VIEW_SHOW_ORPHANED_POSTS]
-      showOrphanedPosts: true,
     },
     // [CONFIG:POST_OPTIONS_POST_NAVIGATION]
     postNavigation: true,
@@ -459,7 +401,6 @@ export function getFeature(
     | "postCardAspectRatio"
     | "customPostCardAspectRatio"
     | "linkedMentions"
-    | "graphView"
     | "comments"
   >,
 ): boolean {
@@ -772,12 +713,6 @@ function validateSiteConfig(config: SiteConfig): {
   }
   if (config.homeOptions.recentPosts.count < 1) {
     errors.push("Recent posts count must be at least 1. Adjust homeOptions.recentPosts.count.");
-  }
-  if (config.homeOptions.projects.count < 1) {
-    errors.push("Projects count must be at least 1. Adjust homeOptions.projects.count.");
-  }
-  if (config.homeOptions.docs.count < 1) {
-    errors.push("Documentation count must be at least 1. Adjust homeOptions.docs.count.");
   }
 
   // Content width validation
