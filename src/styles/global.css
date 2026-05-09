@@ -217,6 +217,15 @@ textarea {
   border-radius: 0;
 }
 
+button,
+input:where([type="button"], [type="reset"], [type="submit"]) {
+  appearance: button;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
 img,
 svg,
 video,
@@ -227,6 +236,12 @@ embed,
 object {
   vertical-align: middle;
   display: block;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 input[type="text"],
@@ -262,6 +277,11 @@ menu {
   &:where(:not(.prose &)) {
     margin: 0;
   }
+}
+
+blockquote,
+figure {
+  margin: 0;
 }
 
 :root {
@@ -1073,13 +1093,9 @@ textarea:focus {
 }
 
 .prose {
-  color: rgb(var(--color-primary-700));
+  color: rgb(var(--color-primary-50));
   font-family: var(--font-prose);
   font-display: var(--font-display, swap);
-}
-
-.prose {
-  color: rgb(var(--color-primary-50));
 }
 
 .prose h1,
@@ -1146,7 +1162,7 @@ textarea:focus {
 }
 
 .prose a {
-  color: rgb(var(--color-highlight-600));
+  color: rgb(var(--color-highlight-400));
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -1154,40 +1170,24 @@ textarea:focus {
   transition: color 0.2s;
 }
 
-.prose a {
-  color: rgb(var(--color-highlight-400));
-}
-
-.prose a:hover {
-  color: rgb(var(--color-highlight-700));
-  text-decoration-thickness: 2px;
-}
-
 .prose a:hover {
   color: rgb(var(--color-highlight-300));
-}
-
-.prose strong {
-  color: rgb(var(--color-primary-900));
-  font-weight: 600;
+  text-decoration-thickness: 2px;
 }
 
 .prose strong {
   color: rgb(var(--color-primary-200));
+  font-weight: 600;
 }
 
 .prose blockquote {
-  border-left: 4px solid rgb(var(--color-primary-300));
+  border-left: 4px solid rgb(var(--color-primary-600));
   padding-left: 1.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  background-color: rgb(var(--color-primary-50));
+  background-color: rgb(var(--color-primary-800) / 0.3);
   border-radius: 0.5rem;
-}
-
-.prose blockquote {
-  border-left-color: rgb(var(--color-primary-600));
-  background-color: rgba(var(--color-primary-800), 0.3);
+  font-style: italic;
 }
 
 .prose img {
@@ -1196,15 +1196,10 @@ textarea:focus {
 }
 
 .prose mark {
-  background-color: rgb(var(--color-highlight-100));
-  color: rgb(var(--color-highlight-800));
+  background-color: rgb(var(--color-highlight-900) / 0.3);
+  color: rgb(var(--color-highlight-200));
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
-}
-
-.prose mark {
-  background-color: rgba(var(--color-highlight-900), 0.3);
-  color: rgb(var(--color-highlight-200));
 }
 
 .prose ul,
