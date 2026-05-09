@@ -1,6 +1,5 @@
 import { defineConfig, fontProviders } from "astro/config";
 import expressiveCode from "astro-expressive-code";
-import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import {
@@ -162,7 +161,6 @@ export default defineConfig({
       exclude: ["astro:content"],
     },
     exclude: ["**/_redirects"],
-    plugins: [tailwindcss()],
   },
   build: {
     assets: "_assets",
