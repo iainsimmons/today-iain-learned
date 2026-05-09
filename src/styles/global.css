@@ -145,17 +145,39 @@ p:has(.katex-display) {
 }
 
 * {
-  border-color: rgb(var(--color-primary-200));
+  border-color: rgb(var(--color-primary-700));
 }
 
-*:is(*) {
-  border-color: rgb(var(--color-primary-700));
+*,
+:after,
+:before,
+::backdrop {
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
   interpolate-size: allow-keywords;
+}
+html,
+:host {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  line-height: 1.5;
+  font-family: var(
+    --font-jetbrains-mono,
+    ui-sans-serif,
+    system-ui,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji"
+  );
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -177,6 +199,57 @@ body {
   font-display: var(--font-display, swap);
   scrollbar-gutter: stable;
   min-height: 100vh;
+}
+
+button,
+input,
+select,
+optgroup,
+textarea {
+  font: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  opacity: 1;
+  background-color: #0000;
+  border-radius: 0;
+}
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  vertical-align: middle;
+  display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea {
+  border: 1px solid rgb(var(--color-primary-600));
+  width: 100%;
+  color: rgb(var(--color-primary-100));
+  background-color: rgb(var(--color-primary-800));
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  display: block;
+}
+
+input::placeholder {
+  color: rgb(var(--color-primary-400));
+}
+
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2px rgb(var(--color-highlight-500));
+  border-color: #0000;
+  outline: none;
 }
 
 :root {
@@ -232,11 +305,6 @@ html.show-scrollbars {
 
 :focus-visible {
   outline: 2px solid rgb(var(--color-highlight-500));
-  outline-offset: 2px;
-}
-
-:focus-visible {
-  outline-color: rgb(var(--color-highlight-400));
 }
 
 h1,

@@ -3,7 +3,7 @@ import { siteConfig } from '../config';
 import Icon from './Icon.astro';
 ---
 
-<style>
+<style is:global>
   dialog {
     position: fixed;
     inset: 0;
@@ -17,73 +17,60 @@ import Icon from './Icon.astro';
   }
 
   /* Dialog container */
-  :global(.cp-dialog) {
+  .cp-dialog {
     background-color: rgb(var(--color-primary-900));
     border-radius: 0.75rem;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     border: 1px solid rgb(var(--color-primary-700));
     padding: 0;
   }
-  :root:not(.dark) :global(.cp-dialog) {
-    background-color: rgb(255, 255, 255);
-    border-color: rgb(var(--color-primary-200));
-  }
 
   /* Header */
-  :global(.cp-header) {
+  .cp-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
     border-bottom: 1px solid rgb(var(--color-primary-700));
   }
-  :root:not(.dark) :global(.cp-header) {
-    border-color: rgb(var(--color-primary-200));
-  }
 
   /* Title */
-  :global(.cp-title) {
+  .cp-title {
+    margin: 0;
     font-size: 1.125rem;
     line-height: 1.75rem;
     font-weight: 600;
     color: rgb(var(--color-primary-50));
   }
-  :root:not(.dark) :global(.cp-title) {
-    color: rgb(var(--color-primary-900));
-  }
 
   /* Close button */
-  :global(.cp-close-btn) {
+  .cp-close-btn {
+    background-color: transparent;
     padding: 0.25rem;
     color: rgb(var(--color-primary-400));
+    border: 0;
     border-radius: 0.5rem;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
   }
-  :global(.cp-close-btn:hover) {
+  .cp-close-btn:hover {
     background-color: rgb(var(--color-primary-800));
-  }
-  :root:not(.dark) :global(.cp-close-btn) {
-    color: rgb(var(--color-primary-500));
-  }
-  :root:not(.dark) :global(.cp-close-btn:hover) {
-    background-color: rgb(var(--color-primary-100));
   }
 
   /* Icon sizes */
-  :global(.cp-icon-md) { width: 1.25rem; height: 1.25rem; }
-  :global(.cp-icon-sm) { width: 1rem; height: 1rem; }
-  :global(.cp-icon-xs) { width: 0.75rem; height: 0.75rem; }
-  :global(.cp-icon-lg) { width: 2rem; height: 2rem; }
+  .cp-icon-md { width: 1.25rem; height: 1.25rem; }
+  .cp-icon-sm { width: 1rem; height: 1rem; }
+  .cp-icon-xs { width: 0.75rem; height: 0.75rem; }
+  .cp-icon-lg { width: 2rem; height: 2rem; }
 
   /* Search wrapper */
-  :global(.cp-search-wrapper) { padding: 1rem; }
+  .cp-search-wrapper { padding: 1rem; }
 
   /* Search container */
-  :global(.cp-search-container) { position: relative; }
+  .cp-search-container { position: relative; }
 
   /* Search input */
-  :global(.cp-search-input) {
+  .cp-search-input {
     width: 100%;
     padding-right: 2.5rem;
     background-color: rgb(var(--color-primary-800));
@@ -92,25 +79,16 @@ import Icon from './Icon.astro';
     color: rgb(var(--color-primary-50));
     outline: none;
   }
-  :global(.cp-search-input::placeholder) {
+  .cp-search-input::placeholder {
     color: rgb(var(--color-primary-400));
   }
-  :global(.cp-search-input:focus) {
+  .cp-search-input:focus {
     outline: 2px solid rgb(var(--color-highlight-500));
-    outline-offset: -2px;
     border-color: transparent;
-  }
-  :root:not(.dark) :global(.cp-search-input) {
-    background-color: rgb(var(--color-primary-50));
-    border-color: rgb(var(--color-primary-200));
-    color: rgb(var(--color-primary-900));
-  }
-  :root:not(.dark) :global(.cp-search-input::placeholder) {
-    color: rgb(var(--color-primary-500));
   }
 
   /* Search icon wrapper */
-  :global(.cp-search-icon-wrapper) {
+  .cp-search-icon-wrapper {
     position: absolute;
     right: 0.75rem;
     top: 50%;
@@ -118,17 +96,14 @@ import Icon from './Icon.astro';
   }
 
   /* Search icon */
-  :global(.cp-search-icon) {
+ .cp-search-icon {
     width: 1rem;
     height: 1rem;
     color: rgb(var(--color-primary-400));
   }
-  :root:not(.dark) :global(.cp-search-icon) {
-    color: rgb(var(--color-primary-500));
-  }
 
   /* Inline loading */
-  :global(.cp-inline-loading) {
+  .cp-inline-loading {
     position: absolute;
     right: 0.75rem;
     top: 50%;
@@ -136,7 +111,7 @@ import Icon from './Icon.astro';
   }
 
   /* Spinner */
-  :global(.cp-spinner) {
+  .cp-spinner {
     animation: cp-spin 1s linear infinite;
     border-radius: 9999px;
     height: 1rem;
@@ -144,83 +119,65 @@ import Icon from './Icon.astro';
     border: 2px solid rgb(var(--color-primary-600));
     border-top-color: rgb(var(--color-highlight-500));
   }
-  :root:not(.dark) :global(.cp-spinner) {
-    border-color: rgb(var(--color-primary-300));
-  }
 
   @keyframes cp-spin {
     to { transform: rotate(360deg); }
   }
 
   /* Results container */
-  :global(.cp-results-container) {
+  .cp-results-container {
     max-height: 24rem;
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  :global(.cp-results-container::-webkit-scrollbar) {
+  .cp-results-container::-webkit-scrollbar {
     display: none;
   }
 
   /* Loading state */
-  :global(.cp-loading) { padding: 1rem; text-align: center; }
+  .cp-loading { padding: 1rem; text-align: center; }
 
-  :global(.cp-loading-content) {
+  .cp-loading-content {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     color: rgb(var(--color-primary-400));
   }
-  :root:not(.dark) :global(.cp-loading-content) {
-    color: rgb(var(--color-primary-500));
-  }
 
   /* No results */
-  :global(.cp-no-results) { padding: 2rem; text-align: center; }
+  .cp-no-results { padding: 2rem; text-align: center; }
 
-  :global(.cp-no-results-icon) {
+  .cp-no-results-icon {
     width: 2rem;
     height: 2rem;
     color: rgb(var(--color-primary-500));
     margin: 0 auto 0.5rem;
   }
-  :root:not(.dark) :global(.cp-no-results-icon) {
-    color: rgb(var(--color-primary-400));
-  }
 
-  :global(.cp-no-results-title) {
+  .cp-no-results-title {
     color: rgb(var(--color-primary-300));
   }
-  :root:not(.dark) :global(.cp-no-results-title) {
-    color: rgb(var(--color-primary-600));
-  }
 
-  :global(.cp-no-results-subtitle) {
+  .cp-no-results-subtitle {
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: rgb(var(--color-primary-400));
     margin-top: 0.25rem;
   }
-  :root:not(.dark) :global(.cp-no-results-subtitle) {
-    color: rgb(var(--color-primary-500));
-  }
 
   /* Default section */
-  :global(.cp-default-section) > * + * {
+  .cp-default-section > * + * {
     border-top-width: 1px;
     border-color: rgb(var(--color-primary-700));
   }
-  :root:not(.dark) :global(.cp-default-section) > * + * {
-    border-color: rgb(var(--color-primary-200));
-  }
 
   /* Section padding */
-  :global(.cp-section) { padding: 0.5rem; }
+  .cp-section { padding: 0.5rem; }
 
   /* Section title */
-  :global(.cp-section-title) {
+  .cp-section-title {
     padding: 0.5rem 0.75rem;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -229,12 +186,9 @@ import Icon from './Icon.astro';
     text-transform: uppercase;
     letter-spacing: 0.025em;
   }
-  :root:not(.dark) :global(.cp-section-title) {
-    color: rgb(var(--color-primary-500));
-  }
 
   /* Result item (default items) */
-  :global(.cp-result-item) {
+  .cp-result-item {
     width: 100%;
     display: flex;
     align-items: center;
@@ -243,65 +197,44 @@ import Icon from './Icon.astro';
     border-radius: 0.5rem;
     transition: background-color 0.2s;
   }
-  :global(.cp-result-item:hover) {
+
+  .cp-result-item:hover {
     background-color: rgb(var(--color-primary-800));
   }
-  :root:not(.dark) :global(.cp-result-item:hover) {
-    background-color: rgb(var(--color-primary-50));
-  }
 
-  :global(.cp-result-item-icon) {
+  .cp-result-item-icon {
     width: 1rem;
     height: 1rem;
     color: rgb(var(--color-primary-400));
     transition: color 0.2s;
   }
-  :global(.cp-result-item:hover) :global(.cp-result-item-icon) {
-    color: rgb(var(--color-highlight-500));
-  }
-  :root:not(.dark) :global(.cp-result-item-icon) {
-    color: rgb(var(--color-primary-500));
-  }
 
-  :global(.cp-result-item-title) {
+  .cp-result-item-title {
     color: rgb(var(--color-primary-50));
   }
-  :root:not(.dark) :global(.cp-result-item-title) {
-    color: rgb(var(--color-primary-900));
-  }
 
-  :global(.cp-result-item-ext) {
+  .cp-result-item-ext {
     width: 0.75rem;
     height: 0.75rem;
     color: rgb(var(--color-primary-500));
   }
-  :root:not(.dark) :global(.cp-result-item-ext) {
-    color: rgb(var(--color-primary-400));
-  }
 
   /* Search results */
-  :global(.cp-search-results) { transition: opacity 200ms var(--default-easing); }
-  :global(.cp-search-results) > * + * {
+  .cp-search-results { transition: opacity 200ms var(--default-easing); }
+  .cp-search-results > * + * {
     border-top-width: 1px;
     border-color: rgb(var(--color-primary-700));
   }
-  :root:not(.dark) :global(.cp-search-results) > * + * {
-    border-color: rgb(var(--color-primary-200));
-  }
 
   /* Footer */
-  :global(.cp-footer) {
+  .cp-footer {
     padding: 0.75rem;
     border-top: 1px solid rgb(var(--color-primary-700));
     background-color: rgb(var(--color-primary-800));
     border-radius: 0 0 0.75rem 0.75rem;
   }
-  :root:not(.dark) :global(.cp-footer) {
-    border-color: rgb(var(--color-primary-200));
-    background-color: rgb(var(--color-primary-50));
-  }
 
-  :global(.cp-footer-text) {
+  .cp-footer-text {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -309,13 +242,10 @@ import Icon from './Icon.astro';
     line-height: 1rem;
     color: rgb(var(--color-primary-400));
   }
-  :root:not(.dark) :global(.cp-footer-text) {
-    color: rgb(var(--color-primary-500));
-  }
 
   /* Search result items (created by JS) */
-  :global(.command-palette-item),
-  :global(.cp-result-item-search) {
+  .command-palette-item,
+  .cp-result-item-search {
     width: 100%;
     display: flex;
     align-items: flex-start;
@@ -324,51 +254,34 @@ import Icon from './Icon.astro';
     border-radius: 0.5rem;
     transition: background-color 0.2s;
   }
-  :global(.command-palette-item:hover),
-  :global(.cp-result-item-search:hover) {
+  .command-palette-item:hover,
+  .cp-result-item-search:hover {
     background-color: rgb(var(--color-primary-800));
   }
-  :root:not(.dark) :global(.command-palette-item:hover),
-  :root:not(.dark) :global(.cp-result-item-search:hover) {
-    background-color: rgb(var(--color-primary-50));
-  }
 
-  :global(.cp-selected) {
+  .cp-selected {
     background-color: rgb(var(--color-primary-800));
   }
-  :root:not(.dark) :global(.cp-selected) {
-    background-color: rgb(var(--color-primary-50));
-  }
 
-  :global(.cp-result-item-search-icon) {
+  .cp-result-item-search-icon {
     width: 1rem;
     height: 1rem;
     color: rgb(var(--color-primary-400));
     margin-top: 0.125rem;
     transition: color 0.2s;
   }
-  :global(.command-palette-item:hover) :global(.cp-result-item-search-icon),
-  :global(.cp-result-item-search:hover) :global(.cp-result-item-search-icon) {
-    color: rgb(var(--color-highlight-500));
-  }
-  :root:not(.dark) :global(.cp-result-item-search-icon) {
-    color: rgb(var(--color-primary-500));
-  }
 
-  :global(.cp-result-item-search-content) {
+  .cp-result-item-search-content {
     flex: 1 1 0%;
     min-width: 0;
   }
 
-  :global(.cp-result-item-search-title) {
+  .cp-result-item-search-title {
     color: rgb(var(--color-primary-50));
     font-weight: 500;
   }
-  :root:not(.dark) :global(.cp-result-item-search-title) {
-    color: rgb(var(--color-primary-900));
-  }
 
-  :global(.cp-result-item-search-desc) {
+  .cp-result-item-search-desc {
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: rgb(var(--color-primary-300));
@@ -377,28 +290,21 @@ import Icon from './Icon.astro';
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  :root:not(.dark) :global(.cp-result-item-search-desc) {
-    color: rgb(var(--color-primary-600));
-  }
 
   /* Mark highlighting */
-  :global(.cmd-mark) {
+  .cmd-mark {
     background-color: rgb(var(--color-highlight-800));
     color: rgb(var(--color-highlight-100));
     padding-left: 0.25rem;
     padding-right: 0.25rem;
     border-radius: 0.25rem;
   }
-  :root:not(.dark) :global(.cmd-mark) {
-    background-color: rgb(var(--color-highlight-200));
-    color: rgb(var(--color-highlight-900));
-  }
 
   /* Virtual scroll container */
-  :global(.cp-scroll-container) { overflow-y: auto; }
+  .cp-scroll-container { overflow-y: auto; }
 
   /* Hidden utility */
-  :global(.cp-hidden) { display: none; }
+  .cp-hidden { display: none; }
 </style>
 
 <!-- Make site configuration available to client-side JavaScript -->
@@ -424,7 +330,7 @@ import Icon from './Icon.astro';
           class="cp-close-btn"
           aria-label="Close dialog"
         >
-          <Icon name="x" class="cp-icon-md" />
+        <Icon name="x" class="cp-icon-md" size={20} />
         </button>
       </div>
 
@@ -441,7 +347,7 @@ import Icon from './Icon.astro';
           >
           <!-- Search icon -->
           <div class="cp-search-icon-wrapper">
-            <Icon name="search" class="cp-search-icon" />
+          <Icon name="search" class="cp-search-icon" size={16} />
           </div>
           <!-- Inline loading indicator -->
           <div id="command-palette-inline-loading" class="cp-inline-loading cp-hidden">
