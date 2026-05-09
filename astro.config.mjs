@@ -138,7 +138,7 @@ export default defineConfig({
       },
     },
     server: {
-      host: "localhost",
+      host: true,
       port: 5000,
       strictPort: false, // Allow fallback to 5001 if 5000 is occupied (e.g., AirPlay on macOS)
       allowedHosts: [],
@@ -166,6 +166,10 @@ export default defineConfig({
   },
   build: {
     assets: "_assets",
+  },
+  server: {
+    host: true,
+    port: 5000,
   },
   experimental: {
     rustCompiler: true,
