@@ -253,6 +253,13 @@ textarea:focus {
   outline: none;
 }
 
+ol,
+ul,
+menu {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
 :root {
   --scrollbar-display: none;
   --scrollbar-width: none;
@@ -2188,6 +2195,14 @@ figure .video-player {
   color: rgb(191 219 254);
 }
 
+.page-inner {
+  padding-inline: 1.5rem;
+
+  @media (min-width: 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
 .mobile-sidebar {
   margin-top: 3rem;
 }
@@ -2202,7 +2217,8 @@ figure .video-player {
   }
 }
 
-.desktop-sidebar {
+.desktop-sidebar,
+.toc-sidebar {
   display: none;
   position: absolute;
   top: 0;
@@ -2211,8 +2227,13 @@ figure .video-player {
   width: 16rem;
 }
 
+.toc-sidebar {
+  margin-left: 0.25rem;
+}
+
 @media (min-width: 1280px) {
-  .desktop-sidebar {
+  .desktop-sidebar,
+  .toc-sidebar {
     display: block;
   }
 }
