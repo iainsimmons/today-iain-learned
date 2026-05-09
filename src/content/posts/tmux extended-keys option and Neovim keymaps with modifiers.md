@@ -10,6 +10,7 @@ tags:
 hideTOC: false
 draft: false
 ---
+
 Recently I switched back to using [tmux](https://github.com/tmux/tmux), along with moving from [WezTerm](https://wezterm.org/) to [Ghostty](https://ghostty.org/). This was mostly because WezTerm was becoming increasingly buggy, and didn't seem to be well maintained any longer (understandable, given how much a terminal emulator is expected to do these days). Also, I missed using [sesh](https://github.com/joshmedeski/sesh), my favourite tool for managing sessions in a terminal.
 
 One thing that has bugged me about tmux, and in particular about using Neovim in tmux, is that some keymaps in Neovim seemed to just not work. They would often send other key presses or sequences, making them effectively useless. Once such example was trying to map <kbd>Ctrl</kbd> + <kbd>Space</kbd> to [[Upgrading to Neovim 0.12: built-in Undotree plugin, incremental selections|increment and decrement the visual selection using Treesitter]]. As far as I could tell, Neovim only received the <kbd>Space</kbd> key press.
@@ -20,7 +21,7 @@ I first found this helpful site and page: [How to fix modifier key issues in tmu
 
 Given the "AI" in the site name, I of course validated it against the official docs: [Modifier Keys on the tmux wiki](https://github.com/tmux/tmux/wiki/Modifier-Keys#extended-keys).
 
-The general gist of it is that you want to turn _on_ the `extended-keys` option, and also set additional terminal features to make sure they are passed on to the underlying terminal. I also have `allow-passthrough` set to `on`, as this generally seems to help with tmux compatibility with various terminal features and escape sequences. 
+The general gist of it is that you want to turn _on_ the `extended-keys` option, and also set additional terminal features to make sure they are passed on to the underlying terminal. I also have `allow-passthrough` set to `on`, as this generally seems to help with tmux compatibility with various terminal features and escape sequences.
 
 ```txt title="~/.tmux.conf"
 set -g allow-passthrough on
@@ -28,7 +29,7 @@ set -g extended-keys on
 set -g terminal-features 'xterm*:extkeys'
 ```
 
-And the result is that I can now use `Ctrl + Space`as a keymap in Neovim:
+And the result is that I can now use `Ctrl + Space` as a keymap in Neovim:
 
 ```lua title="~/.config/nvim/init.lua"
 vim.keymap.set("n", "<C-Space>", function()
