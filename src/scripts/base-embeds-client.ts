@@ -1,5 +1,5 @@
 type BaseConfig = {
-  source?: 'posts' | 'pages' | 'projects' | 'docs';
+  source?: 'posts' | 'pages';
   select?: string[];
   limit?: number;
   view?: 'table';
@@ -15,10 +15,6 @@ function getApiUrlForSource(source: string): string | null {
       return '/api/posts.json';
     case 'pages':
       return '/api/pages.json';
-    case 'projects':
-      return '/api/projects.json';
-    case 'docs':
-      return '/api/docs.json';
     default:
       return null;
   }
@@ -85,13 +81,11 @@ async function renderBaseEmbeds() {
           return;
         } else if (!source) {
           // Fallback aggregation when explicitly not in files mode
-          const [a, b, c, d] = await Promise.all([
+          const [a, b] = await Promise.all([
             fetchSource('posts'),
             fetchSource('pages'),
-            fetchSource('projects'),
-            fetchSource('docs'),
           ]);
-          items = [...a, ...b, ...c, ...d];
+          items = [...a, ...b];
         } else {
           items = await fetchSource(source);
         }

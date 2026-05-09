@@ -39,16 +39,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
         return false;
       }
 
-      // For projects and docs: only include if their features are disabled
-      // When features are enabled, the dedicated routes handle these paths
-      if (page.id === 'projects') {
-        return !siteConfig.optionalContentTypes.projects;
-      }
-
-      if (page.id === 'docs') {
-        return !siteConfig.optionalContentTypes.docs;
-      }
-
       return true;
     })
     .map(page => ({
