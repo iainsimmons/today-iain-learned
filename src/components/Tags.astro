@@ -36,7 +36,7 @@ const sortedTags = [...tags].sort();
   </div>
 )}
 
-<style>
+<style is:global>
   .tags-container {
     padding: 1rem;
     background-color: rgb(var(--color-primary-900));
@@ -85,7 +85,7 @@ const sortedTags = [...tags].sort();
   }
 
   .tags-item--active {
-    background-color: rgba(var(--color-highlight-900), 0.4);
+    background-color: rgb(var(--color-highlight-900) / 0.4);
     color: rgb(var(--color-highlight-200));
     outline: 1px solid rgb(var(--color-highlight-700));
   }

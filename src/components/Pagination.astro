@@ -55,7 +55,7 @@ const nextUrl = hasNext
         typeof page === 'number' ? (
           <a
             href={page === 1 ? baseUrl : `${baseUrl}/${page}`}
-            class={`pagination-page ${page === currentPage ? 'pagination-page--active btn-primary' : ''}`}
+            class={`pagination-page ${page === currentPage ? 'pagination-page--active' : ''}`}
             aria-current={page === currentPage ? 'page' : undefined}
           >
             {page}
@@ -86,7 +86,7 @@ const nextUrl = hasNext
   </nav>
 )}
 
-<style>
+<style is:global>
   .pagination-nav {
     display: flex;
     align-items: center;
@@ -128,7 +128,9 @@ const nextUrl = hasNext
     background-color: rgb(var(--color-primary-900));
     border: 1px solid rgb(var(--color-primary-600));
     border-radius: 0.5rem;
-    transition: background-color 0.2s, color 0.2s;
+    transition-property: background-color, color, transform;
+    transition-duration: 0.2s;
+    transition-timing-function: var(--default-easing);
     text-decoration: none;
   }
 
@@ -142,6 +144,10 @@ const nextUrl = hasNext
     background-color: rgb(var(--color-primary-800));
     border-color: rgb(var(--color-primary-700));
     cursor: not-allowed;
+
+    &:hover {
+      color: rgb(var(--color-primary-500));
+    }
   }
 
   .pagination-icon-left {
@@ -175,18 +181,27 @@ const nextUrl = hasNext
     width: 2.5rem;
     height: 2.5rem;
     font-size: 0.875rem;
+    line-height: 1.25rem;
     font-weight: 500;
     border-radius: 0.5rem;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    transition-property: background-color, border-color, color, transform;
+    transition-duration: 0.2s;
+    transition-timing-function: var(--default-easing);
     color: rgb(var(--color-primary-300));
     background-color: rgb(var(--color-primary-900));
     border: 1px solid rgb(var(--color-primary-600));
     text-decoration: none;
   }
 
-  .pagination-page:hover {
+  .pagination-page:not(.pagination-page--active):hover {
     background-color: rgb(var(--color-primary-800));
     color: rgb(var(--color-primary-200));
+  }
+
+  .pagination-page--active {
+    background-color: rgb(var(--color-highlight-400));
+    color: white;
+    border-color: rgb(var(--color-highlight-400));
   }
 
   .pagination-ellipsis {

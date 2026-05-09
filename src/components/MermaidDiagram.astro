@@ -54,7 +54,7 @@ const { id, source, class: className = '' } = Astro.props;
     border: 1px solid rgb(var(--color-primary-600));
     border-radius: 0.5rem;
     padding: 1rem;
-    background-color: rgba(var(--color-primary-800), 0.2);
+    background-color: rgb(var(--color-primary-800) / 0.2);
   }
 
   .mermaid-diagram.loading .mermaid-diagram-content {
@@ -71,7 +71,7 @@ const { id, source, class: className = '' } = Astro.props;
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(var(--color-primary-700), 0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgb(var(--color-primary-700) / 0.5), transparent);
     animation: shimmer 2s infinite;
   }
 

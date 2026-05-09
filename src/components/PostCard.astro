@@ -240,6 +240,14 @@ const shouldShowCoverImage = (() => {
     text-decoration: none;
   }
 
+  .post-card-title:after {
+    content: "";
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    inset: 0;
+}
+
   .post-card-title:hover {
     color: rgb(var(--color-highlight-400));
   }
@@ -266,6 +274,7 @@ const shouldShowCoverImage = (() => {
   .post-card-tag {
     display: inline-block;
     font-size: 0.75rem;
+    line-height: calc(1 / 0.75);
     color: rgb(var(--color-primary-300));
     background-color: rgb(var(--color-primary-800));
     padding: 0.25rem 0.625rem;
