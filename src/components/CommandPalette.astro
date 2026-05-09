@@ -280,7 +280,7 @@ import Icon from './Icon.astro';
   }
 
   /* Search results */
-  :global(.cp-search-results) { transition: opacity 200ms; }
+  :global(.cp-search-results) { transition: opacity 200ms var(--default-easing); }
   :global(.cp-search-results) > * + * {
     border-top-width: 1px;
     border-color: rgb(var(--color-primary-700));

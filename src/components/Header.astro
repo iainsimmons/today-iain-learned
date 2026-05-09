@@ -21,7 +21,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
 ---
 
 <header id="main-header" class="site-header">
-  <div class="site-header-inner" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <div class="site-header-inner">
     <div class="site-header-bar">
       <div class="site-header-brand">
         <a href="/">
@@ -45,42 +45,30 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
       </div>
 
       <div class="site-header-actions">
-        {siteConfig.commandPalette.enabled && (
-          hasShortcut ? (
-            <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger" aria-label="Open command palette">
-              <Icon name={paletteIcon} class="cmd-trigger-icon" />
-              <kbd class="cmd-trigger-kbd">{shortcutKey}</kbd>
-            </button>
-          ) : (
-            <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger-simple" aria-label="Open command palette">
-              <Icon name={paletteIcon} class="cmd-trigger-icon" />
-            </button>
-          )
-        )}
+        <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger" aria-label="Open command palette">
+          <Icon name={paletteIcon} class="cmd-trigger-icon" size={20} />
+          <kbd class="cmd-trigger-kbd">{shortcutKey}</kbd>
+        </button>
 
-        {siteConfig.navigation.showNavigation && siteConfig.navigation.showMobileMenu && (
-          <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle mobile navigation menu" aria-expanded="false">
-            <Icon name="menu" class="mobile-toggle-icon menu-icon" />
-            <Icon name="x" class="mobile-toggle-icon close-icon hidden" />
-          </button>
-        )}
+        <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle mobile navigation menu" aria-expanded="false">
+          <Icon name="menu" class="mobile-toggle-icon menu-icon" size={20} />
+          <Icon name="x" class="mobile-toggle-icon close-icon hidden" size={20} />
+        </button>
       </div>
     </div>
 
-    {siteConfig.navigation.showNavigation && siteConfig.navigation.showMobileMenu && (
-      <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
-        <nav class="mobile-menu-nav">
-          {siteConfig.navigation.pages.map((page) => (
-            <a href={page.url || '#'} class="mobile-menu-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
-              <span>{page.title}</span>
-              {page.url?.startsWith('http') && (
-                <Icon name="external-link" class="site-header-ext-link" />
-              )}
-            </a>
-          ))}
-        </nav>
-      </div>
-    )}
+    <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
+      <nav class="mobile-menu-nav">
+        {siteConfig.navigation.pages.map((page) => (
+          <a href={page.url || '#'} class="mobile-menu-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
+            <span>{page.title}</span>
+            {page.url?.startsWith('http') && (
+              <Icon name="external-link" class="site-header-ext-link" />
+            )}
+          </a>
+        ))}
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -88,25 +76,23 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
   document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-        const menuIcon = menuToggle.querySelector('.menu-icon');
-        const closeIcon = menuToggle.querySelector('.close-icon');
-        if (menuIcon && closeIcon) {
-          if (mobileMenu.classList.contains('hidden')) {
-            menuIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-            menuToggle.setAttribute('aria-expanded', 'false');
-          } else {
-            menuIcon.classList.add('hidden');
-            closeIcon.classList.remove('hidden');
-            menuToggle.setAttribute('aria-expanded', 'true');
-          }
-        }
-      });
-    }
+    const menuIcon = menuToggle!.querySelector('.menu-icon');
+    const closeIcon = menuToggle!.querySelector('.close-icon');
+
+    if (!menuToggle || !mobileMenu || !menuIcon || !closeIcon) { return; }
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+
+      if (mobileMenu.classList.contains('hidden')) {
+        menuIcon!.classList.remove('hidden');
+        closeIcon!.classList.add('hidden');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      } else {
+        menuIcon!.classList.add('hidden');
+        closeIcon!.classList.remove('hidden');
+        menuToggle.setAttribute('aria-expanded', 'true');
+      }
+    });
     
     function closeMobileMenu() {
       if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
@@ -148,12 +134,14 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
     z-index: 40;
     width: 100%;
     background-color: rgb(var(--color-primary-950));
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s var(--default-easing);
   }
 
   .site-header-inner {
+    max-width: var(--container-max-width);
     margin: 0 auto;
     padding: 0 1rem;
+    position: relative;
   }
 
   @media (min-width: 640px) {
@@ -307,9 +295,36 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
   }
 
   .mobile-menu {
-    display: none;
+    opacity: 1;
+    height: auto;
     padding: 1rem 0;
     border-top: 1px solid rgb(var(--color-primary-700));
+    transition-property: display, opacity, height;
+    transition-duration: 0.2s;
+    transition-timing-function: var(--default-easing);
+    transition-behavior: allow-discrete;
+
+    @media (prefers-reduced-motion: reduce) {
+      background-color: rgb(var(--color-primary-950));
+      width: calc(100% - 2rem);
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-inline: 1rem;
+      transition: none;
+    }
+  }
+
+  .mobile-menu.hidden {
+    opacity: 0;
+    height: 0;
+  }
+
+  @starting-style {
+    .mobile-menu {
+      opacity: 0;
+      height: 0;
+    }
   }
 
   .mobile-menu-nav {
@@ -333,9 +348,5 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
   .mobile-menu-link:hover {
     color: rgb(var(--color-highlight-400));
     background-color: rgb(var(--color-primary-800));
-  }
-
-  .hidden {
-    display: none;
   }
 </style>

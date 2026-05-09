@@ -130,6 +130,7 @@ p:has(.katex-display) {
   --font-heading: var(--font-jetbrains-mono);
   --font-prose: var(--font-jetbrains-mono);
   --font-sans: var(--font-jetbrains-mono);
+  --font-mono: var(--font-jetbrains-mono);
   --font-display: var(--font-jetbrains-mono);
 
   --selection-bg: 112 135 148;
@@ -137,6 +138,10 @@ p:has(.katex-display) {
   --code-text: 240 240 240;
   --inline-code-bg: 55 55 55;
   --inline-code-text: 240 240 240;
+
+  --default-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --container-max-width: 55rem;
 }
 
 * {
@@ -150,6 +155,7 @@ p:has(.katex-display) {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
+  interpolate-size: allow-keywords;
 }
 
 body {
@@ -1914,4 +1920,14 @@ code:not(pre code),
 
 figure .video-player {
   margin: 0 auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@starting-style {
+  .hidden {
+    display: none !important;
+  }
 }
