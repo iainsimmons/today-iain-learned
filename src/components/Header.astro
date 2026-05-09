@@ -36,7 +36,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
               <a href={page.url || '#'} class="site-header-nav-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
                 <span>{siteConfig.navigation.style === 'minimal' ? page.title.toLowerCase() : page.title}</span>
                 {page.url?.startsWith('http') && (
-                  <Icon name="external-link" class="site-header-ext-link" />
+            <Icon name="external-link" class="site-header-ext-link" size={12} />
                 )}
               </a>
             ))}
@@ -63,7 +63,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
           <a href={page.url || '#'} class="mobile-menu-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
             <span>{page.title}</span>
             {page.url?.startsWith('http') && (
-              <Icon name="external-link" class="site-header-ext-link" />
+          <Icon name="external-link" class="site-header-ext-link" size={12} />
             )}
           </a>
         ))}
@@ -216,7 +216,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
     color: rgb(var(--color-highlight-400));
   }
 
-  .site-header-ext-link {
+  :global(.site-header-ext-link) {
     width: 0.75rem;
     height: 0.75rem;
     color: rgb(var(--color-primary-500));
