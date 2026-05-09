@@ -57,7 +57,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
       </div>
     </div>
 
-    <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
+    <div id="mobile-menu" class="mobile-menu hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
       <nav class="mobile-menu-nav">
         {siteConfig.navigation.pages.map((page) => (
           <a href={page.url || '#'} class="mobile-menu-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
