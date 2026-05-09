@@ -74,10 +74,10 @@ const structuredData = {
     })()}
   </Fragment>
 
-  <div class="py-8 relative">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8 relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <div class="pl-wrapper">
+    <div class="pl-container" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       <!-- Page content -->
-      <article class={`border-glow-top border-glow-top-permanent bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm ${page.data.image ? 'overflow-hidden' : ''}`}>
+      <article class={`border-glow-top border-glow-top-permanent pl-article${page.data.image ? ' pl-article--cover' : ''}`}>
         {page.data.image && (() => {
           // Process image path similar to PostLayout
           let rawImage = page.data.image;
@@ -130,12 +130,12 @@ const structuredData = {
           imageSrc = getOptimizedFormat(imageSrc);
           
           return (
-            <div class="h-40 sm:h-48 md:h-56 lg:h-64 overflow-hidden rounded-t-lg bg-primary-100 dark:bg-primary-800">
+            <div class="pl-image-wrap">
               <ImageWrapper
                 src={imageSrc}
                 basePath={imageBasePath}
                 alt={page.data.imageAlt || `Featured image for page: ${page.data.title}`}
-                class="w-full h-full object-cover"
+                class="pl-image"
                 width={800}
                 height={450}
                 format="webp"
@@ -148,16 +148,16 @@ const structuredData = {
         })()}
 
         <!-- Page content wrapper -->
-        <div class={`p-6 ${page.data.image ? 'rounded-b-lg' : 'rounded-lg'}`}>
+        <div class={`pl-content${page.data.image ? ' pl-content--with-image' : ''}`}>
           <!-- Page header -->
-          <header class="mb-4">
-            <h1 class="text-xl font-bold text-primary-900 dark:text-primary-50 mb-6 leading-tight">
+          <header class="pl-header">
+            <h1 class="pl-title">
               {page.data.title}
             </h1>
           </header>
 
           <!-- Page content -->
-          <div class="prose dark:prose-dark max-w-none" id="page-content">
+          <div class="prose" id="page-content">
             <Content />
           </div>
         </div>
@@ -165,8 +165,8 @@ const structuredData = {
 
       <!-- Desktop TOC - floats to the right of the content container -->
       {shouldShowTOC && (
-        <div class="hidden xl:block absolute top-0 left-full ml-1 w-[280px]">
-          <div class="sticky top-24" id="toc">
+        <div class="pl-sidebar">
+          <div class="pl-sticky" id="toc">
             <TableOfContents headings={toc} />
           </div>
         </div>
@@ -287,4 +287,130 @@ const structuredData = {
       });
     </script>
   </Fragment>
+
+  <style>
+    .pl-wrapper {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      position: relative;
+    }
+
+    .pl-container {
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      position: relative;
+    }
+
+    @media (min-width: 640px) {
+      .pl-container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .pl-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+
+    .pl-article {
+      background-color: rgb(var(--color-primary-900));
+      border-radius: 0.5rem;
+      border: 1px solid rgb(var(--color-primary-700));
+      box-shadow: 0 1px 2px 0 rgba(var(--color-primary-950), 0.05);
+    }
+
+    :root:not(.dark) .pl-article {
+      background-color: rgb(var(--color-primary-50));
+      border-color: rgb(var(--color-primary-200));
+    }
+
+    .pl-article--cover {
+      overflow: hidden;
+    }
+
+    .pl-image-wrap {
+      height: 10rem;
+      overflow: hidden;
+      border-radius: 0.5rem 0.5rem 0 0;
+      background-color: rgb(var(--color-primary-800));
+    }
+
+    @media (min-width: 640px) {
+      .pl-image-wrap {
+        height: 12rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .pl-image-wrap {
+        height: 14rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .pl-image-wrap {
+        height: 16rem;
+      }
+    }
+
+    :root:not(.dark) .pl-image-wrap {
+      background-color: rgb(var(--color-primary-100));
+    }
+
+    .pl-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pl-content {
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+    }
+
+    .pl-content--with-image {
+      border-radius: 0 0 0.5rem 0.5rem;
+    }
+
+    .pl-header {
+      margin-bottom: 1rem;
+    }
+
+    .pl-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: rgb(var(--color-primary-50));
+      margin-bottom: 1.5rem;
+      line-height: 1.25;
+    }
+
+    :root:not(.dark) .pl-title {
+      color: rgb(var(--color-primary-900));
+    }
+
+    .pl-sidebar {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      margin-left: 0.25rem;
+      width: 280px;
+    }
+
+    @media (min-width: 1280px) {
+      .pl-sidebar {
+        display: block;
+      }
+    }
+
+    .pl-sticky {
+      position: sticky;
+      top: 6rem;
+    }
+  </style>
 </BaseLayout>

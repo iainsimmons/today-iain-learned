@@ -69,6 +69,8 @@ const toc = shouldShowTOC ? await generateTOC(headings) : [];
 // Get adjacent posts for navigation
 const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.id);
 
+const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true;
+
 ---
 
 <BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
@@ -102,12 +104,12 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
     )}
   </Fragment>
 
-  <div class="py-8 relative">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8 relative" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <div class="pol-wrapper">
+    <div class="pol-container" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       <!-- Main content -->
-      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`border-glow-top border-glow-top-permanent bg-primary-50 dark:bg-primary-900 rounded-lg border border-primary-200 dark:border-primary-700 shadow-sm ${siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true ? 'overflow-hidden' : ''}`}>
+      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`border-glow-top border-glow-top-permanent pol-article ${showCoverImage ? 'pol-article--cover' : ''}`}>
         {/* Cover image - shown if global config allows and not hidden by frontmatter */}
-        {siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true && (() => {
+        {showCoverImage && (() => {
           // Process image path similar to PostCard
           let rawImage = post.data.image;
           if (Array.isArray(rawImage)) {
@@ -159,12 +161,12 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
           imageSrc = getOptimizedFormat(imageSrc);
           
           return (
-            <div class="h-40 sm:h-48 md:h-56 lg:h-64 overflow-hidden rounded-t-lg bg-primary-100 dark:bg-primary-800">
+            <div class="pol-image-wrap">
               <ImageWrapper
                 src={imageSrc}
                 basePath={imageBasePath}
                 alt={post.data.imageAlt || `Featured image for post: ${post.data.title}`}
-                class="w-full h-full"
+                class="pol-image"
                 width={800}
                 height={450}
                 format="webp"
@@ -177,52 +179,52 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
         })()}
 
         <!-- Post content wrapper -->
-        <div class={`p-6 ${siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true ? 'rounded-b-lg' : 'rounded-lg'}`}>
+        <div class={`pol-content ${showCoverImage ? 'pol-content--cover' : 'pol-content--no-cover'}`}>
           <!-- Post header -->
-          <header class="mb-4">
-            <h1 class="text-xl font-bold text-primary-900 dark:text-primary-50 mb-6 leading-tight">
+          <header class="pol-header">
+            <h1 class="pol-title">
             {post.data.title}
           </h1>
 
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-primary-600 dark:text-primary-300 mb-6">
-            <time datetime={post.data.date.toISOString()} class="font-medium">
-              <span class="hidden sm:inline">
+          <div class="pol-meta">
+            <time datetime={post.data.date.toISOString()} class="pol-meta-date">
+              <span class="pol-desktop">
                 {formatDate(post.data.date)}
               </span>
-              <span class="sm:hidden">
+              <span class="pol-mobile">
                 {formatDateMobile(post.data.date)}
               </span>
             </time>
 
             {siteConfig.postOptions.readingTime && readingTime && (
               <>
-                <span class="text-primary-300 dark:text-primary-600 hidden sm:inline">•</span>
-                <span class="text-primary-300 dark:text-primary-600 sm:hidden">•</span>
+                <span class="pol-sep-desktop">•</span>
+                <span class="pol-sep-mobile">•</span>
                 <span>
-                  <span class="hidden sm:inline">{readingTime.text && readingTime.text !== 'read0' && readingTime.text !== '' ? readingTime.text : '1 min read'}</span>
-                  <span class="sm:hidden">{getReadingTimeMobile(readingTime)}</span>
+                  <span class="pol-desktop">{readingTime.text && readingTime.text !== 'read0' && readingTime.text !== '' ? readingTime.text : '1 min read'}</span>
+                  <span class="pol-mobile">{getReadingTimeMobile(readingTime)}</span>
                 </span>
               </>
             )}
 
             {siteConfig.postOptions.wordCount && wordCount !== undefined && (
               <>
-                <span class="text-primary-300 dark:text-primary-600 hidden sm:inline">•</span>
-                <span class="text-primary-300 dark:text-primary-600 sm:hidden">•</span>
-                <span class="min-w-0">
-                  <span class="hidden sm:inline">{wordCount === 1 ? '1 word' : `${wordCount} words`}</span>
-                  <span class="sm:hidden">{wordCount === 1 ? '1 word' : `${wordCount.toLocaleString()} words`}</span>
+                <span class="pol-sep-desktop">•</span>
+                <span class="pol-sep-mobile">•</span>
+                <span class="pol-meta-value-wrap">
+                  <span class="pol-desktop">{wordCount === 1 ? '1 word' : `${wordCount} words`}</span>
+                  <span class="pol-mobile">{wordCount === 1 ? '1 word' : `${wordCount.toLocaleString()} words`}</span>
                 </span>
               </>
             )}
           </div>
 
           {siteConfig.postOptions.tags && post.data.tags && post.data.tags.length > 0 && (
-            <div class="flex flex-wrap gap-2 mb-8">
+            <div class="pol-tags">
               {post.data.tags.map(tag => (
                 <a
                   href={`/posts/tag/${encodeURIComponent(tag)}`}
-                  class="text-xs text-primary-600 dark:text-primary-300 bg-primary-100 dark:bg-primary-800 px-2.5 py-1 rounded-full border border-primary-200 dark:border-primary-700 transition-colors hover:bg-highlight-100 dark:hover:bg-highlight-800"
+                  class="pol-tag"
                 >
                   {tag}
                 </a>
@@ -232,7 +234,7 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
         </header>
 
         <!-- Article content -->
-        <div class="prose dark:prose-dark max-w-none" id="post-content">
+        <div class="prose" id="post-content">
           <Content />
         </div>
 
@@ -242,35 +244,35 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
 
         <!-- Post navigation -->
         {siteConfig.postOptions.postNavigation && (prevPost || nextPost) && (
-          <nav class={`mt-8 pt-8 ${siteConfig.postOptions.linkedMentions.enabled ? '' : 'border-t border-primary-200 dark:border-primary-700'}`}>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <nav class={`pol-nav ${!siteConfig.postOptions.linkedMentions.enabled ? 'pol-nav-border' : ''}`}>
+            <div class="pol-nav-grid">
               {prevPost && (
-                <div class="text-left">
+                <div class="pol-nav-cell">
                   <a
                     href={`/posts/${prevPost.id}`}
-                    class="group block p-4 rounded-lg border border-primary-200 dark:border-primary-700 hover:border-highlight-300 dark:hover:border-highlight-600 transition-all duration-200 hover:shadow-md"
+                    class="pol-nav-card"
                   >
-                    <h3 class="font-semibold text-primary-900 dark:text-primary-50 group-hover:text-highlight-600 dark:group-hover:text-highlight-400 transition-colors">
+                    <h3 class="pol-nav-title">
                       {prevPost.data.title}
                     </h3>
-                    <div class="flex justify-start mt-2">
-                      <Icon name="arrow-left" class="w-5 h-5 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500 dark:group-hover:text-highlight-400 transition-colors" />
+                    <div class="pol-nav-left">
+                      <Icon name="arrow-left" class="pol-nav-icon" />
                     </div>
                   </a>
                 </div>
               )}
 
               {nextPost && (
-                <div class={`text-right ${!prevPost ? 'md:col-start-2' : ''}`}>
+                <div class={`pol-nav-cell--right ${!prevPost ? 'pol-nav-cell--col2' : ''}`}>
                   <a
                     href={`/posts/${nextPost.id}`}
-                    class="group block p-4 rounded-lg border border-primary-200 dark:border-primary-700 hover:border-highlight-300 dark:hover:border-highlight-600 transition-all duration-200 hover:shadow-md"
+                    class="pol-nav-card"
                   >
-                    <h3 class="font-semibold text-primary-900 dark:text-primary-50 group-hover:text-highlight-600 dark:group-hover:text-highlight-400 transition-colors">
+                    <h3 class="pol-nav-title">
                       {nextPost.data.title}
                     </h3>
-                    <div class="flex justify-end mt-2">
-                      <Icon name="arrow-right" class="w-5 h-5 text-primary-500 dark:text-primary-400 group-hover:text-highlight-500 dark:group-hover:text-highlight-400 transition-colors" />
+                    <div class="pol-nav-right">
+                      <Icon name="arrow-right" class="pol-nav-icon" />
                     </div>
                   </a>
                 </div>
@@ -281,7 +283,7 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
 
         <!-- Giscus Comments -->
         {siteConfig.postOptions.comments.enabled && (
-          <div class="mt-16">
+          <div class="pol-comments">
             <GiscusComments
               postTitle={post.data.title}
               postSlug={post.id}
@@ -293,8 +295,8 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
       </article>
 
       <!-- Desktop Sidebar - floats to the right of the content container -->
-      <div class="hidden xl:block absolute top-0 left-full ml-1 w-[280px]">
-        <div class={`top-24 ${shouldShowTOC ? 'space-y-4' : ''}`} id="sidebar">
+      <div class="pol-sidebar">
+        <div class={`pol-sidebar-inner ${shouldShowTOC ? 'pol-sidebar-inner--toc' : ''}`} id="sidebar">
           {shouldShowTOC && (
             <div id="toc">
               <TableOfContents headings={toc} />
@@ -402,3 +404,383 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.i
 
   <!-- Lightbox is handled globally by BaseLayout -->
 </BaseLayout>
+
+<style is:global>
+  /* Layout wrapper */
+  .pol-wrapper {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    position: relative;
+  }
+
+  /* Container */
+  .pol-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+  }
+
+  @media (min-width: 640px) {
+    .pol-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pol-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  /* Article card */
+  .pol-article {
+    background-color: rgb(var(--color-primary-900));
+    border-radius: 0.5rem;
+    border: 1px solid rgb(var(--color-primary-700));
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  :root:not(.dark) .pol-article {
+    background-color: rgb(var(--color-primary-50));
+    border-color: rgb(var(--color-primary-200));
+  }
+
+  .pol-article--cover {
+    overflow: hidden;
+  }
+
+  /* Image wrapper */
+  .pol-image-wrap {
+    height: 10rem;
+    overflow: hidden;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background-color: rgb(var(--color-primary-800));
+  }
+
+  @media (min-width: 640px) {
+    .pol-image-wrap {
+      height: 12rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .pol-image-wrap {
+      height: 14rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pol-image-wrap {
+      height: 16rem;
+    }
+  }
+
+  :root:not(.dark) .pol-image-wrap {
+    background-color: rgb(var(--color-primary-100));
+  }
+
+  /* Image */
+  .pol-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Content */
+  .pol-content {
+    padding: 1.5rem;
+  }
+
+  .pol-content--cover {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  .pol-content--no-cover {
+    border-radius: 0.5rem;
+  }
+
+  /* Post header */
+  .pol-header {
+    margin-bottom: 1rem;
+  }
+
+  /* Title */
+  .pol-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: rgb(var(--color-primary-50));
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
+  }
+
+  :root:not(.dark) .pol-title {
+    color: rgb(var(--color-primary-900));
+  }
+
+  /* Meta row */
+  .pol-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+    font-size: 0.875rem;
+    color: rgb(var(--color-primary-300));
+    margin-bottom: 1.5rem;
+  }
+
+  :root:not(.dark) .pol-meta {
+    color: rgb(var(--color-primary-600));
+  }
+
+  .pol-meta-date {
+    font-weight: 500;
+  }
+
+  /* Desktop-only */
+  .pol-desktop {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .pol-desktop {
+      display: inline;
+    }
+  }
+
+  /* Mobile-only */
+  .pol-mobile {
+    display: inline;
+  }
+
+  @media (min-width: 640px) {
+    .pol-mobile {
+      display: none;
+    }
+  }
+
+  /* Separator desktop */
+  .pol-sep-desktop {
+    color: rgb(var(--color-primary-600));
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .pol-sep-desktop {
+      display: inline;
+    }
+  }
+
+  :root:not(.dark) .pol-sep-desktop {
+    color: rgb(var(--color-primary-300));
+  }
+
+  /* Separator mobile */
+  .pol-sep-mobile {
+    color: rgb(var(--color-primary-600));
+    display: inline;
+  }
+
+  @media (min-width: 640px) {
+    .pol-sep-mobile {
+      display: none;
+    }
+  }
+
+  :root:not(.dark) .pol-sep-mobile {
+    color: rgb(var(--color-primary-300));
+  }
+
+  /* Meta value wrap */
+  .pol-meta-value-wrap {
+    min-width: 0;
+  }
+
+  /* Tags container */
+  .pol-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Tag link */
+  .pol-tag {
+    font-size: 0.75rem;
+    color: rgb(var(--color-primary-300));
+    background-color: rgb(var(--color-primary-800));
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(var(--color-primary-700));
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .pol-tag:hover {
+    background-color: rgb(var(--color-highlight-800));
+  }
+
+  :root:not(.dark) .pol-tag {
+    color: rgb(var(--color-primary-600));
+    background-color: rgb(var(--color-primary-100));
+    border-color: rgb(var(--color-primary-200));
+  }
+
+  :root:not(.dark) .pol-tag:hover {
+    background-color: rgb(var(--color-highlight-100));
+  }
+
+  /* Post navigation container */
+  .pol-nav {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .pol-nav-border {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(var(--color-primary-700));
+  }
+
+  :root:not(.dark) .pol-nav-border {
+    border-top-color: rgb(var(--color-primary-200));
+  }
+
+  /* Navigation grid */
+  .pol-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .pol-nav-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Nav cards */
+  .pol-nav-card {
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(var(--color-primary-700));
+    transition: all 200ms ease;
+  }
+
+  .pol-nav-card:hover {
+    border-color: rgb(var(--color-highlight-600));
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  :root:not(.dark) .pol-nav-card {
+    border-color: rgb(var(--color-primary-200));
+  }
+
+  :root:not(.dark) .pol-nav-card:hover {
+    border-color: rgb(var(--color-highlight-300));
+  }
+
+  /* Nav titles */
+  .pol-nav-title {
+    font-weight: 600;
+    color: rgb(var(--color-primary-50));
+    transition: color 0.2s;
+  }
+
+  .pol-nav-card:hover .pol-nav-title {
+    color: rgb(var(--color-highlight-400));
+  }
+
+  :root:not(.dark) .pol-nav-title {
+    color: rgb(var(--color-primary-900));
+  }
+
+  :root:not(.dark) .pol-nav-card:hover .pol-nav-title {
+    color: rgb(var(--color-highlight-600));
+  }
+
+  /* Nav icons */
+  .pol-nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: rgb(var(--color-primary-400));
+    transition: color 0.2s;
+  }
+
+  .pol-nav-card:hover .pol-nav-icon {
+    color: rgb(var(--color-highlight-400));
+  }
+
+  :root:not(.dark) .pol-nav-icon {
+    color: rgb(var(--color-primary-500));
+  }
+
+  :root:not(.dark) .pol-nav-card:hover .pol-nav-icon {
+    color: rgb(var(--color-highlight-500));
+  }
+
+  /* Nav flex */
+  .pol-nav-left {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .pol-nav-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  /* Nav cells */
+  .pol-nav-cell {
+    text-align: left;
+  }
+
+  .pol-nav-cell--right {
+    text-align: right;
+  }
+
+  @media (min-width: 768px) {
+    .pol-nav-cell--col2 {
+      grid-column-start: 2;
+    }
+  }
+
+  /* Sidebar */
+  .pol-sidebar {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 0.25rem;
+    width: 280px;
+  }
+
+  @media (min-width: 1280px) {
+    .pol-sidebar {
+      display: block;
+    }
+  }
+
+  .pol-sidebar-inner {
+    top: 6rem;
+  }
+
+  .pol-sidebar-inner--toc > * + * {
+    margin-top: 1rem;
+  }
+
+  /* Comments */
+  .pol-comments {
+    margin-top: 4rem;
+  }
+</style>
