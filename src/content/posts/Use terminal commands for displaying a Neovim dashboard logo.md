@@ -9,9 +9,8 @@ tags:
   - dotfiles
   - fonts
 draft: false
-aliases:
-  - DRAFT Use terminal commands for displaying a Neovim dashboard logo
 ---
+
 When I first started really customising my Neovim config to my own personal preferences, one of the things I did to really make it feel like my own was to add a custom dashboard logo.
 
 I settled on the name `iainvim` for my config, being based obviously on my first name but also cheekily containing `nvim` within the name.
@@ -21,14 +20,14 @@ My initial logo was ~~shamelessly stolen~~ heavily inspired by [Josh Medeski](ht
 Here was mine (if you use [LazyVim](https://www.lazyvim.org/) or the [snacks.nvim dashboard](https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md), this will look familiar):
 
 ```txt
- 
- ██╗ █████╗ ██╗███╗   ██╗██╗   ██╗██╗███╗   ███╗ 
- ██║██╔══██╗██║████╗  ██║██║   ██║██║████╗ ████║ 
- ██║███████║██║██╔██╗ ██║██║   ██║██║██╔████╔██║ 
- ██║██╔══██║██║██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║ 
- ██║██║  ██║██║██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║ 
+
+ ██╗ █████╗ ██╗███╗   ██╗██╗   ██╗██╗███╗   ███╗
+ ██║██╔══██╗██║████╗  ██║██║   ██║██║████╗ ████║
+ ██║███████║██║██╔██╗ ██║██║   ██║██║██╔████╔██║
+ ██║██╔══██║██║██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
+ ██║██║  ██║██║██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
- 
+
 ```
 
 Back then I used [dashboard-nvim](https://github.com/nvimdev/dashboard-nvim) and here is what that code looked like:
@@ -69,11 +68,11 @@ And it looked a bit like this:
 
 ```txt
 
-  ▀▀▀             ▀▀▀                        ▀▀▀               
- ████   ██████▄  ████  ███▄████▄ ███   ███  ████  █████▄█████▄ 
-  ███  ▄▄▄▄▄███   ███   ███▀ ███ ███▄ ▄███   ███   ███ ███ ███ 
-  ███  ███▀▀███   ███   ███  ███  ███ ███    ███   ███ ███ ███ 
-  ▀███ ▀███████   ▀███  ███  ███   ▀███▀     ▀███  ███ ███ ███ 
+  ▀▀▀             ▀▀▀                        ▀▀▀
+ ████   ██████▄  ████  ███▄████▄ ███   ███  ████  █████▄█████▄
+  ███  ▄▄▄▄▄███   ███   ███▀ ███ ███▄ ▄███   ███   ███ ███ ███
+  ███  ███▀▀███   ███   ███  ███  ███ ███    ███   ███ ███ ███
+  ▀███ ▀███████   ▀███  ███  ███   ▀███▀     ▀███  ███ ███ ███
 
 ```
 

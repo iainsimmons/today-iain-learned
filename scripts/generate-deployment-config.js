@@ -12,12 +12,8 @@ const log = {
   warn: (...args) => console.warn(...args),
 };
 
-// Import deployment platform helper
-import getDeploymentPlatform from "./get-deployment-platform.js";
-
 // Deployment platform configuration - use config if no env var is set
-const DEPLOYMENT_PLATFORM =
-  process.env.DEPLOYMENT_PLATFORM || getDeploymentPlatform();
+const DEPLOYMENT_PLATFORM = process.env.DEPLOYMENT_PLATFORM || "cloudflare-workers";
 const DRY_RUN = process.argv.includes("--dry-run");
 const VALIDATE_ONLY = process.argv.includes("--validate");
 
@@ -136,9 +132,7 @@ function getContentUrl(filePath, isPost = false) {
 
   if (isPost) {
     // For posts: extract path after 'src/content/posts/' and remove '.md'
-    let postPath = normalizedPath
-      .replace(/^.*src\/content\/posts\//, "")
-      .replace(/\.md$/, "");
+    let postPath = normalizedPath.replace(/^.*src\/content\/posts\//, "").replace(/\.md$/, "");
     // Handle folder-based content: remove '/index' suffix
     if (postPath.endsWith("/index")) {
       postPath = postPath.replace("/index", "");
@@ -156,9 +150,7 @@ function getContentUrl(filePath, isPost = false) {
     return `/projects/${projectPath}`;
   } else if (normalizedPath.includes("src/content/docs/")) {
     // For docs: extract path after 'src/content/docs/' and remove '.md'
-    let docPath = normalizedPath
-      .replace(/^.*src\/content\/docs\//, "")
-      .replace(/\.md$/, "");
+    let docPath = normalizedPath.replace(/^.*src\/content\/docs\//, "").replace(/\.md$/, "");
     // Handle folder-based content: remove '/index' suffix
     if (docPath.endsWith("/index")) {
       docPath = docPath.replace("/index", "");
@@ -166,9 +158,7 @@ function getContentUrl(filePath, isPost = false) {
     return `/docs/${docPath}`;
   } else {
     // For pages: extract path after 'src/content/pages/' and remove '.md'
-    let pagePath = normalizedPath
-      .replace(/^.*src\/content\/pages\//, "")
-      .replace(/\.md$/, "");
+    let pagePath = normalizedPath.replace(/^.*src\/content\/pages\//, "").replace(/\.md$/, "");
     // Handle folder-based content: remove '/index' suffix
     if (pagePath.endsWith("/index")) {
       pagePath = pagePath.replace("/index", "");
@@ -292,10 +282,7 @@ async function updateAstroConfig(redirects) {
 
     // Format redirects with conditional dev-only check
     // Using process.env.NODE_ENV for reliable environment detection at config load time
-    const redirectsString = JSON.stringify(redirectsObj, null, 2).replace(
-      /"/g,
-      "'",
-    );
+    const redirectsString = JSON.stringify(redirectsObj, null, 2).replace(/"/g, "'");
     const newRedirectsSection = `redirects: (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'build') ? ${redirectsString} : {}`;
 
     // Remove ALL existing redirects entries (including any comments before them)
@@ -316,32 +303,21 @@ async function updateAstroConfig(redirects) {
     // Add redirects after devToolbar config
     const devToolbarRegex = /(devToolbar:\s*\{[^}]*\},)/;
     if (devToolbarRegex.test(astroContent)) {
-      astroContent = astroContent.replace(
-        devToolbarRegex,
-        `$1\n  ${newRedirectsSection},\n`,
-      );
+      astroContent = astroContent.replace(devToolbarRegex, `$1\n  ${newRedirectsSection},\n`);
     } else {
       // Fallback: add after deployment config if devToolbar not found
       const deploymentRegex = /(deployment:\s*\{[^}]*\},)/;
       if (deploymentRegex.test(astroContent)) {
-        astroContent = astroContent.replace(
-          deploymentRegex,
-          `$1\n  ${newRedirectsSection},\n`,
-        );
+        astroContent = astroContent.replace(deploymentRegex, `$1\n  ${newRedirectsSection},\n`);
       } else {
         // Last resort: add after site config
         const siteRegex = /(site:\s*[^,]+),/;
-        astroContent = astroContent.replace(
-          siteRegex,
-          `$1,\n  ${newRedirectsSection},\n`,
-        );
+        astroContent = astroContent.replace(siteRegex, `$1,\n  ${newRedirectsSection},\n`);
       }
     }
 
     await fs.writeFile(astroConfigPath, astroContent, "utf-8");
-    log.info(
-      `📝 Updated astro.config.mjs with ${redirects.length} redirects (dev-only)`,
-    );
+    log.info(`📝 Updated astro.config.mjs with ${redirects.length} redirects (dev-only)`);
   } catch (error) {
     log.error(`❌ Error updating astro.config.mjs:`, error.message);
   }
@@ -350,9 +326,7 @@ async function updateAstroConfig(redirects) {
 // Platform-specific configuration generators
 function generateVercelConfig(redirects) {
   // Filter out self-redirects (redirecting to the same URL causes infinite loops)
-  const validRedirects = redirects.filter(
-    (redirect) => redirect.from !== redirect.to,
-  );
+  const validRedirects = redirects.filter((redirect) => redirect.from !== redirect.to);
 
   const config = {
     redirects: validRedirects.map((redirect) => ({
@@ -410,14 +384,11 @@ function generateVercelConfig(redirects) {
 
 function generateGitHubPagesConfig(redirects) {
   // Filter out self-redirects (redirecting to the same URL causes infinite loops)
-  const validRedirects = redirects.filter(
-    (redirect) => redirect.from !== redirect.to,
-  );
+  const validRedirects = redirects.filter((redirect) => redirect.from !== redirect.to);
 
   // Note: Removed '!' suffix to avoid interstitial page - direct redirects like Netlify
   const redirectLines = validRedirects.map(
-    (redirect) =>
-      `${redirect.from}    ${redirect.to}    ${redirect.status || 301}`,
+    (redirect) => `${redirect.from}    ${redirect.to}    ${redirect.status || 301}`,
   );
 
   return redirectLines.join("\n") + "\n";
@@ -427,9 +398,7 @@ function generateNetlifyConfig(redirects) {
   const redirectLines = [];
 
   // Filter out self-redirects (redirecting to the same URL causes infinite loops)
-  const validRedirects = redirects.filter(
-    (redirect) => redirect.from !== redirect.to,
-  );
+  const validRedirects = redirects.filter((redirect) => redirect.from !== redirect.to);
 
   for (const redirect of validRedirects) {
     redirectLines.push("[[redirects]]");
@@ -475,24 +444,21 @@ async function cleanupOtherPlatformFiles(currentPlatform) {
   const projectRoot = path.join(__dirname, "..");
 
   // Clean up GitHub Pages/Cloudflare Workers files if not using those platforms
-  // (Both platforms use the same _redirects and _headers format)
+  // (Both platforms use redirects.txt and headers.txt format)
   // These files should ONLY exist for github-pages and cloudflare-workers
-  if (
-    currentPlatform !== "github-pages" &&
-    currentPlatform !== "cloudflare-workers"
-  ) {
+  if (currentPlatform !== "github-pages" && currentPlatform !== "cloudflare-workers") {
     const sharedFiles = [
-      path.join(projectRoot, "public", "_redirects"),
-      path.join(projectRoot, "public", "_headers"),
+      path.join(projectRoot, "public", "redirects.txt"),
+      path.join(projectRoot, "public", "headers.txt"),
+      path.join(projectRoot, "public", "_redirects"), // legacy cleanup
+      path.join(projectRoot, "public", "_headers"), // legacy cleanup
     ];
 
     for (const file of sharedFiles) {
       try {
         await fs.access(file);
         await fs.unlink(file);
-        log.info(
-          `🧹 Removed ${path.basename(file)} (not needed for ${currentPlatform})`,
-        );
+        log.info(`🧹 Removed ${path.basename(file)} (not needed for ${currentPlatform})`);
       } catch (error) {
         // File doesn't exist, nothing to clean up
       }
@@ -501,7 +467,7 @@ async function cleanupOtherPlatformFiles(currentPlatform) {
 
   // Note: We don't remove vercel.json, netlify.toml, or wrangler.toml as they may contain
   // custom configuration (serverless functions, environment variables, bindings, etc.)
-  // Only _redirects and _headers are platform-specific and should be cleaned up
+  // Only redirects.txt and headers.txt are platform-specific and should be cleaned up
 }
 
 // Platform-specific file writers
@@ -535,11 +501,7 @@ async function writeVercelConfig(redirects) {
       headers: newConfig.headers,
     };
 
-    await fs.writeFile(
-      vercelJsonPath,
-      JSON.stringify(mergedConfig, null, 2),
-      "utf-8",
-    );
+    await fs.writeFile(vercelJsonPath, JSON.stringify(mergedConfig, null, 2), "utf-8");
     log.info(`📝 Updated vercel.json with ${redirects.length} redirects`);
   } catch (error) {
     log.error(`❌ Error updating vercel.json:`, error.message);
@@ -548,11 +510,11 @@ async function writeVercelConfig(redirects) {
 
 async function writeGitHubPagesConfig(redirects) {
   const projectRoot = path.join(__dirname, "..");
-  const redirectsPath = path.join(projectRoot, "public", "_redirects");
-  const headersPath = path.join(projectRoot, "public", "_headers");
+  const redirectsPath = path.join(projectRoot, "public", "redirects.txt");
+  const headersPath = path.join(projectRoot, "public", "headers.txt");
 
   if (DRY_RUN) {
-    log.info("📝 [DRY RUN] Would generate public/_redirects:");
+    log.info("📝 [DRY RUN] Would generate public/redirects.txt:");
     console.log(generateGitHubPagesConfig(redirects));
     return;
   }
@@ -561,7 +523,7 @@ async function writeGitHubPagesConfig(redirects) {
     // Write redirects file
     const config = generateGitHubPagesConfig(redirects);
     await fs.writeFile(redirectsPath, config, "utf-8");
-    log.info(`📝 Updated public/_redirects with ${redirects.length} redirects`);
+    log.info(`📝 Updated public/redirects.txt with ${redirects.length} redirects`);
 
     // Write headers file (for GitHub Pages and Cloudflare Pages)
     // Note: Custom headers require GitHub Pages on a paid plan or GitHub Enterprise
@@ -666,7 +628,7 @@ async function writeGitHubPagesConfig(redirects) {
   X-Frame-Options: SAMEORIGIN
 `;
     await fs.writeFile(headersPath, headersContent, "utf-8");
-    log.info(`📝 Created public/_headers for GitHub Pages / Cloudflare Pages`);
+    log.info(`📝 Created public/headers.txt for GitHub Pages / Cloudflare Pages`);
   } catch (error) {
     log.error(`❌ Error updating GitHub Pages config:`, error.message);
   }
@@ -711,9 +673,7 @@ async function copyAssetsIgnoreFile() {
   const assetsIgnorePath = path.join(distPath, ".assetsignore");
 
   if (DRY_RUN) {
-    log.info(
-      "📝 [DRY RUN] Would copy .assetsignore.template to dist/.assetsignore",
-    );
+    log.info("📝 [DRY RUN] Would copy .assetsignore.template to dist/.assetsignore");
     return;
   }
 
@@ -849,9 +809,7 @@ async function writeCloudflareWorkersConfig(projectName) {
       );
 
       await fs.writeFile(wranglerTomlPath, updatedContent, "utf-8");
-      log.info(
-        `📝 Updated wrangler.toml (Workers format, preserved custom settings)`,
-      );
+      log.info(`📝 Updated wrangler.toml (Workers format, preserved custom settings)`);
     } else {
       // File doesn't exist, create new one with Workers format
       await fs.writeFile(wranglerTomlPath, newConfig, "utf-8");
@@ -906,9 +864,7 @@ function validateNetlifyConfig(redirects) {
 
 // Main function
 async function generateRedirects() {
-  log.info(
-    `🔄 Generating redirects from content aliases for ${DEPLOYMENT_PLATFORM}...`,
-  );
+  log.info(`🔄 Generating redirects from content aliases for ${DEPLOYMENT_PLATFORM}...`);
 
   if (VALIDATE_ONLY) {
     log.info("🔍 Validation mode - checking all platform configurations...");
@@ -981,7 +937,7 @@ async function generateRedirects() {
 
     // Update Astro config with redirects (only used in dev mode - instant HTTP redirects)
     // In production builds, redirects are set to {} to prevent HTML meta refresh files
-    await updateAstroConfig(allRedirects);
+    // await updateAstroConfig(allRedirects);
 
     // Generate platform-specific configs
     if (VALIDATE_ONLY) {
@@ -1031,9 +987,7 @@ async function generateRedirects() {
   }
 
   if (DRY_RUN) {
-    log.info(
-      "🎉 [DRY RUN] Redirect generation complete! No files were modified.",
-    );
+    log.info("🎉 [DRY RUN] Redirect generation complete! No files were modified.");
   } else {
     log.info(
       `🎉 Redirect generation complete! Created ${allRedirects.length} redirects for ${DEPLOYMENT_PLATFORM}.`,
