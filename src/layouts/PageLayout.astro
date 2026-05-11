@@ -74,10 +74,9 @@ const structuredData = {
     })()}
   </Fragment>
 
-  <div class="pl-wrapper">
-    <div class="pl-container" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <div class="layout-wrapper">
       <!-- Page content -->
-      <article class={`border-glow-top border-glow-top-permanent pl-article${page.data.image ? ' pl-article--cover' : ''}`}>
+      <article class={`border-glow-top border-glow-top-permanent layout-article${page.data.image ? ' layout-article--cover' : ''}`}>
         {page.data.image && (() => {
           // Process image path similar to PostLayout
           let rawImage = page.data.image;
@@ -130,12 +129,12 @@ const structuredData = {
           imageSrc = getOptimizedFormat(imageSrc);
           
           return (
-            <div class="pl-image-wrap">
+            <div class="layout-image-wrap">
               <ImageWrapper
                 src={imageSrc}
                 basePath={imageBasePath}
                 alt={page.data.imageAlt || `Featured image for page: ${page.data.title}`}
-                class="pl-image"
+                class="layout-image"
                 width={800}
                 height={450}
                 format="webp"
@@ -148,7 +147,7 @@ const structuredData = {
         })()}
 
         <!-- Page content wrapper -->
-        <div class={`pl-content${page.data.image ? ' pl-content--with-image' : ''}`}>
+        <div class={`layout-content${page.data.image ? ' layout-content--with-image' : ''}`}>
           <!-- Page header -->
           <header class="pl-header">
             <h1 class="pl-title">
@@ -165,14 +164,13 @@ const structuredData = {
 
       <!-- Desktop TOC - floats to the right of the content container -->
       {shouldShowTOC && (
-        <div class="pl-sidebar">
-          <div class="pl-sticky" id="toc">
+        <div class="layout-sidebar">
+          <div class="layout-sidebar-inner" id="toc">
             <TableOfContents headings={toc} />
           </div>
         </div>
       )}
     </div>
-  </div>
 
   <!-- Lightbox is handled globally by BaseLayout -->
 
@@ -213,78 +211,9 @@ const structuredData = {
         }
       });
 
-      // Process content after DOM loads
-      document.addEventListener('DOMContentLoaded', function() {
-        // Initialize image grid layouts (fallback for browsers without :has() support)
-        function initializeImageGrids() {
-          // Check if browser supports :has() selector
-          const supportsHas = CSS.supports('selector(:has(img))');
-
-          if (supportsHas) {
-            // Browser supports :has(), CSS will handle it automatically
-            return;
-          }
-
-          // Fallback for browsers without :has() support
-          const paragraphs = document.querySelectorAll('.prose p');
-
-          paragraphs.forEach(p => {
-            const images = p.querySelectorAll('img, picture');
-            const textNodes = Array.from(p.childNodes).filter((node) => {
-              return node.nodeType === Node.TEXT_NODE && (node.textContent || '').trim() !== '';
-            });
-            const otherElements = Array.from(p.childNodes).filter((node) => {
-              return node.nodeType === Node.ELEMENT_NODE && !['IMG', 'PICTURE', 'BR'].includes(((node as Element).tagName || ''));
-            });
-
-            // Only process if paragraph contains 2+ images and no other meaningful content
-            if (images.length >= 2 && textNodes.length === 0 && otherElements.length === 0) {
-              // Remove any existing image-grid classes first
-              p.classList.remove('image-grid', 'image-grid-2', 'image-grid-3', 'image-grid-4', 'image-grid-5', 'image-grid-6');
-
-              // Add the appropriate grid class
-              const gridClass = `image-grid-${Math.min(images.length, 6)}`;
-              p.classList.add('image-grid', gridClass);
-            }
-          });
-        }
-
-        // Initialize image grids
-        initializeImageGrids();
-
-        // Process all external links in content to open in new tabs (including reference links)
-        const allLinks = document.querySelectorAll('.prose a[href]');
-        allLinks.forEach(link => {
-          const href = link.getAttribute('href');
-          if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-            // Skip if already has target attribute (e.g., manually set)
-            if (!link.hasAttribute('target')) {
-              link.setAttribute('target', '_blank');
-              link.setAttribute('rel', 'noopener noreferrer');
-            }
-          }
-        });
-
-        // Wrap tables in responsive containers for better mobile experience
-        const tables = document.querySelectorAll('.prose table');
-        tables.forEach((table) => {
-          if (table.parentElement && !table.parentElement.classList.contains('table-wrapper')) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'table-wrapper';
-            // Let CSS handle the styling instead of inline styles
-
-            if (table.parentNode) {
-              (table.parentNode as Node & ParentNode).insertBefore(wrapper, table);
-            }
-            wrapper.appendChild(table);
-
-            // Reset table margin since wrapper handles it
-            (table as unknown as HTMLElement).style.margin = '0';
-          }
-        });
-
-
-      });
+      // Initialize layout-specific scripts (external links, table wrapping)
+      import { initializeLayout } from '@/utils/layout';
+      initializeLayout();
     </script>
   </Fragment>
 

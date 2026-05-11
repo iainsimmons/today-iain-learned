@@ -101,8 +101,6 @@ const structuredData = {
     )}
   </Fragment>
 
-  <main class="home-wrapper">
-    <div class="home-container" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       {onlyBlurbContent ? (
         <!-- Blurb-only homepage with page-like layout -->
         <article class="home-article">
@@ -211,38 +209,9 @@ const structuredData = {
         </section>
       )}
 
-    </div>
-  </main>
 </BaseLayout>
 
 <style>
-  .home-wrapper {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    position: relative;
-  }
-
-  .home-container {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .home-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .home-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
-
   .home-article {
     background-color: rgb(var(--color-primary-900));
     border-radius: 0.5rem;

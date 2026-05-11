@@ -28,26 +28,22 @@ const shouldShowTOC = toc.length > 1;
 ---
 
 <BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
-  <div class="page-container">
-    <div class="page-inner">
-      <RollPage
-        title="Podroll"
-        description="Here is an up-to-date collection of the podcasts that I listen to, grouped by topic."
-        seeAlsoLinkText="Blogroll"
-        seeAlsoLink="/blogroll/"
-        seeAlsoDescription="for a list of blogs I subscribe to"
-        toc={toc}
-        groups={groups}
-        lastUpdated={lastUpdated}
-        hasTOC={shouldShowTOC}
-      />
-      {shouldShowTOC && (
-        <div class="toc-sidebar">
-          <div class="toc-sticky" id="toc">
-            <TableOfContents headings={toc} />
-          </div>
-        </div>
-      )}
+  <RollPage
+    title="Podroll"
+    description="Here is an up-to-date collection of the podcasts that I listen to, grouped by topic."
+    seeAlsoLinkText="Blogroll"
+    seeAlsoLink="/blogroll/"
+    seeAlsoDescription="for a list of blogs I subscribe to"
+    toc={toc}
+    groups={groups}
+    lastUpdated={lastUpdated}
+    hasTOC={shouldShowTOC}
+  />
+  {shouldShowTOC && (
+    <div class="toc-sidebar">
+      <div class="toc-sticky" id="toc">
+        <TableOfContents headings={toc} />
+      </div>
     </div>
-  </div>
+  )}
 </BaseLayout>

@@ -104,10 +104,9 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
     )}
   </Fragment>
 
-  <div class="pol-wrapper">
-    <div class="pol-container" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <div class="layout-wrapper">
       <!-- Main content -->
-      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`border-glow-top border-glow-top-permanent pol-article ${showCoverImage ? 'pol-article--cover' : ''}`}>
+      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`border-glow-top border-glow-top-permanent layout-article ${showCoverImage ? 'layout-article--cover' : ''}`}>
         {/* Cover image - shown if global config allows and not hidden by frontmatter */}
         {showCoverImage && (() => {
           // Process image path similar to PostCard
@@ -295,8 +294,8 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
       </article>
 
       <!-- Desktop Sidebar - floats to the right of the content container -->
-      <div class="pol-sidebar">
-        <div class={`pol-sidebar-inner ${shouldShowTOC ? 'pol-sidebar-inner--toc' : ''}`} id="sidebar">
+      <div class="layout-sidebar">
+        <div class={`layout-sidebar-inner ${shouldShowTOC ? 'layout-sidebar-inner--toc' : ''}`} id="sidebar">
           {shouldShowTOC && (
             <div id="toc">
               <TableOfContents headings={toc} />
@@ -305,7 +304,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
         </div>
       </div>
     </div>
-  </div>
 
   <Fragment slot="scripts">
     <script define:vars={{ posts: visiblePosts, commentsEnabled: siteConfig.postOptions.comments.enabled, postTitle: post.data.title, postSlug: post.id }}>
@@ -442,10 +440,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
     border-radius: 0.5rem;
     border: 1px solid rgb(var(--color-primary-700));
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  }
-
-  .pol-article--cover {
-    overflow: hidden;
   }
 
   /* Image wrapper */
