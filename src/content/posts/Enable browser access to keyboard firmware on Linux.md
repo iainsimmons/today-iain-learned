@@ -1,7 +1,7 @@
 ---
 title: Enable browser access to keyboard firmware on Linux
 date: 2026-05-10
-description: "today iain learned: Enable browser access to keyboard firmware on Linux"
+description: "today iain learned: How to enable browser access to a keyboard's QMK firmware on Linux, via the USB HID interface and udev rules"
 tags:
   - terminal
   - linux
