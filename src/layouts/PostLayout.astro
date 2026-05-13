@@ -75,10 +75,8 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
 
 <BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
   <Fragment slot="head">
-    <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
-    <!-- Preload post cover image - only for posts that will definitely show the image immediately -->
     {(() => {
       if (!post.data.image || post.data.hideCoverImage === true) return false;
 
@@ -98,16 +96,13 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
       />
     )}
 
-    <!-- Post-specific meta tags -->
     {post.data.targetKeyword && (
       <meta name="keywords" content={post.data.targetKeyword}>
     )}
   </Fragment>
 
   <div class="layout-wrapper">
-      <!-- Main content -->
       <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`border-glow-top border-glow-top-permanent layout-article ${showCoverImage ? 'layout-article--cover' : ''}`}>
-        {/* Cover image - shown if global config allows and not hidden by frontmatter */}
         {showCoverImage && (() => {
           // Process image path similar to PostCard
           let rawImage = post.data.image;
@@ -160,12 +155,12 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
           imageSrc = getOptimizedFormat(imageSrc);
           
           return (
-            <div class="pol-image-wrap">
+            <div class="layout-image-wrap">
               <ImageWrapper
                 src={imageSrc}
                 basePath={imageBasePath}
                 alt={post.data.imageAlt || `Featured image for post: ${post.data.title}`}
-                class="pol-image"
+                class="layout-image"
                 width={800}
                 height={450}
                 format="webp"
@@ -177,20 +172,18 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
           );
         })()}
 
-        <!-- Post content wrapper -->
-        <div class={`pol-content ${showCoverImage ? 'pol-content--cover' : 'pol-content--no-cover'}`}>
-          <!-- Post header -->
-          <header class="pol-header">
-            <h1 class="pol-title">
+        <div class={`layout-content ${showCoverImage ? 'layout-content--with-image' : ''}`}>
+          <header class="layout-header">
+            <h1 class="layout-title">
             {post.data.title}
           </h1>
 
           <div class="pol-meta">
             <time datetime={post.data.date.toISOString()} class="pol-meta-date">
-              <span class="pol-desktop">
+              <span class="desktop-only">
                 {formatDate(post.data.date)}
               </span>
-              <span class="pol-mobile">
+              <span class="mobile-only">
                 {formatDateMobile(post.data.date)}
               </span>
             </time>
@@ -200,8 +193,8 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
                 <span class="pol-sep-desktop">•</span>
                 <span class="pol-sep-mobile">•</span>
                 <span>
-                  <span class="pol-desktop">{readingTime.text && readingTime.text !== 'read0' && readingTime.text !== '' ? readingTime.text : '1 min read'}</span>
-                  <span class="pol-mobile">{getReadingTimeMobile(readingTime)}</span>
+                  <span class="desktop-only">{readingTime.text && readingTime.text !== 'read0' && readingTime.text !== '' ? readingTime.text : '1 min read'}</span>
+                  <span class="mobile-only">{getReadingTimeMobile(readingTime)}</span>
                 </span>
               </>
             )}
@@ -211,8 +204,8 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
                 <span class="pol-sep-desktop">•</span>
                 <span class="pol-sep-mobile">•</span>
                 <span class="pol-meta-value-wrap">
-                  <span class="pol-desktop">{wordCount === 1 ? '1 word' : `${wordCount} words`}</span>
-                  <span class="pol-mobile">{wordCount === 1 ? '1 word' : `${wordCount.toLocaleString()} words`}</span>
+                  <span class="desktop-only">{wordCount === 1 ? '1 word' : `${wordCount} words`}</span>
+                  <span class="mobile-only">{wordCount === 1 ? '1 word' : `${wordCount.toLocaleString()} words`}</span>
                 </span>
               </>
             )}
@@ -232,7 +225,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
           )}
         </header>
 
-        <!-- Article content -->
         <div class="prose" id="post-content">
           <Content />
         </div>
@@ -241,7 +233,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
           <LinkedMentions currentSlug={post.id} />
         )}
 
-        <!-- Post navigation -->
         {siteConfig.postOptions.postNavigation && (prevPost || nextPost) && (
           <nav class={`pol-nav ${!siteConfig.postOptions.linkedMentions.enabled ? 'pol-nav-border' : ''}`}>
             <div class="pol-nav-grid">
@@ -280,7 +271,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
           </nav>
         )}
 
-        <!-- Giscus Comments -->
         {siteConfig.postOptions.comments.enabled && (
           <div class="pol-comments">
             <GiscusComments
@@ -293,7 +283,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
         </div>
       </article>
 
-      <!-- Desktop Sidebar - floats to the right of the content container -->
       <div class="layout-sidebar">
         <div class={`layout-sidebar-inner ${shouldShowTOC ? 'layout-sidebar-inner--toc' : ''}`} id="sidebar">
           {shouldShowTOC && (
@@ -400,110 +389,10 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
     </script>
   </Fragment>
 
-  <!-- Lightbox is handled globally by BaseLayout -->
 </BaseLayout>
 
 <style is:global>
-  /* Layout wrapper */
-  .pol-wrapper {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    position: relative;
-  }
-
-  /* Container */
-  .pol-container {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    position: relative;
-  }
-
-  @media (min-width: 640px) {
-    .pol-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .pol-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
-
-  /* Article card */
-  .pol-article {
-    background-color: rgb(var(--color-primary-900));
-    border-radius: 0.5rem;
-    border: 1px solid rgb(var(--color-primary-700));
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  }
-
-  /* Image wrapper */
-  .pol-image-wrap {
-    height: 10rem;
-    overflow: hidden;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    background-color: rgb(var(--color-primary-800));
-  }
-
-  @media (min-width: 640px) {
-    .pol-image-wrap {
-      height: 12rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .pol-image-wrap {
-      height: 14rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .pol-image-wrap {
-      height: 16rem;
-    }
-  }
-
-  /* Image */
-  .pol-image {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Content */
-  .pol-content {
-    padding: 1.5rem;
-  }
-
-  .pol-content--cover {
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-  }
-
-  .pol-content--no-cover {
-    border-radius: 0.5rem;
-  }
-
-  /* Post header */
-  .pol-header {
-    margin-bottom: 1rem;
-  }
-
-  /* Title */
-  .pol-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: rgb(var(--color-primary-50));
-    margin-bottom: 1.5rem;
-    line-height: 1.25;
-  }
-
-  /* Meta row */
+  /* Post meta row */
   .pol-meta {
     display: flex;
     flex-wrap: wrap;
@@ -517,28 +406,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
 
   .pol-meta-date {
     font-weight: 500;
-  }
-
-  /* Desktop-only */
-  .pol-desktop {
-    display: none;
-  }
-
-  @media (min-width: 640px) {
-    .pol-desktop {
-      display: inline;
-    }
-  }
-
-  /* Mobile-only */
-  .pol-mobile {
-    display: inline;
-  }
-
-  @media (min-width: 640px) {
-    .pol-mobile {
-      display: none;
-    }
   }
 
   /* Separator desktop */
@@ -685,30 +552,6 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
     .pol-nav-cell--col2 {
       grid-column-start: 2;
     }
-  }
-
-  /* Sidebar */
-  .pol-sidebar {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    margin-left: 0.25rem;
-    width: 280px;
-  }
-
-  @media (min-width: 1280px) {
-    .pol-sidebar {
-      display: block;
-    }
-  }
-
-  .pol-sidebar-inner {
-    top: 6rem;
-  }
-
-  .pol-sidebar-inner--toc > * + * {
-    margin-top: 1rem;
   }
 
   /* Comments */

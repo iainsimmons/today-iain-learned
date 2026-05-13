@@ -2301,3 +2301,37 @@ figure .video-player {
 .layout-sidebar-inner--toc > * + * {
   margin-top: 1rem;
 }
+
+/* Shared Layout Header & Title */
+.layout-header {
+  margin-bottom: 1rem;
+}
+
+.layout-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(var(--color-primary-50));
+  margin-bottom: 1.5rem;
+  line-height: 1.25;
+}
+
+/* Responsive Display Utilities */
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .desktop-only {
+    display: inline;
+  }
+}
+
+.mobile-only {
+  display: inline;
+}
+
+@media (min-width: 640px) {
+  .mobile-only {
+    display: none;
+  }
+}
