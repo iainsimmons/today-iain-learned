@@ -271,10 +271,9 @@ textarea:focus {
 ol,
 ul,
 menu {
-  list-style: none;
-  padding-inline-start: 0;
-
-  &:where(:not(.prose &)) {
+  &:where(:not(.prose &), .not-prose) {
+    list-style: none;
+    padding-inline-start: 0;
     margin: 0;
   }
 }
@@ -1197,6 +1196,11 @@ textarea:focus {
   border-radius: 0.25rem;
 }
 
+.prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  padding-inline-start: 1.625em;
+  list-style-type: disc;
+}
+
 .prose ul,
 .prose ol {
   margin-top: 0.25rem;
@@ -1213,8 +1217,8 @@ textarea:focus {
   margin-bottom: 0;
 }
 
-.prose ul > li,
-.prose ol > li {
+.prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)) > li,
+.prose :where(ol):not(:where([class~="not-prose"], [class~="not-prose"] *)) > li {
   padding-left: 0.25rem;
 }
 
