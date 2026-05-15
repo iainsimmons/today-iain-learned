@@ -28,7 +28,7 @@ const getProfilePictureClasses = (size: string, style: string) => {
 ---
 
 <footer class="site-footer">
-  <div class="site-footer-inner" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <div class="container-inner" style={`max-width: ${siteConfig.layout.contentWidth}`}>
     {showProfilePicture && footerEnabled && (
       <div class="footer-profile-row">
         {profilePicture.url ? (
@@ -102,19 +102,6 @@ const getProfilePictureClasses = (size: string, style: string) => {
   .site-footer {
     background-color: rgb(var(--color-primary-950));
     margin-top: auto;
-  }
-
-  .site-footer-inner {
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .site-footer-inner { padding: 2rem 1.5rem; }
-  }
-
-  @media (min-width: 1024px) {
-    .site-footer-inner { padding: 2rem 2rem; }
   }
 
   .footer-profile-row {

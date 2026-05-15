@@ -3,22 +3,22 @@ import { siteConfig } from "@/config";
 
 // Process images for responsive layouts
 export function processImageLayout(images: ImageInfo[]): {
-  layout: "single" | "grid-2" | "grid-3" | "grid-4";
+  layout: "image-gallery-1" | "image-gallery-2" | "image-gallery-3" | "image-gallery-4";
   images: ImageInfo[];
 } {
   const count = images.length;
 
   if (count === 1) {
-    return { layout: "single", images };
+    return { layout: "image-gallery-1", images };
   } else if (count === 2) {
-    return { layout: "grid-2", images };
+    return { layout: "image-gallery-2", images };
   } else if (count === 3) {
-    return { layout: "grid-3", images };
+    return { layout: "image-gallery-3", images };
   } else if (count >= 4) {
-    return { layout: "grid-4", images: images.slice(0, 4) };
+    return { layout: "image-gallery-4", images: images.slice(0, 4) };
   }
 
-  return { layout: "single", images };
+  return { layout: "image-gallery-1", images };
 }
 
 // Extract images from markdown content

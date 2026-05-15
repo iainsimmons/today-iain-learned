@@ -47,7 +47,7 @@ const processedImage = (() => {
 })();
 ---
 
-<div class="content-wrapper">
+<div class="container-inner">
   <div class="content-grid">
     <!-- Main content -->
     <div class="main-column">
@@ -95,7 +95,7 @@ const processedImage = (() => {
             {post.data.tags.map(tag => (
               <a
                 href={`/posts/tag/${encodeURIComponent(tag)}`}
-                class="tag-link"
+                class="tag tag--md"
               >
                 #{tag}
               </a>
@@ -234,25 +234,6 @@ const processedImage = (() => {
 </div>
 
 <style>
-  .content-wrapper {
-    max-width: 56rem;
-    margin: 0 auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  @media (min-width: 640px) {
-    .content-wrapper {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .content-wrapper {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
-
   .content-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -305,24 +286,6 @@ const processedImage = (() => {
     font-weight: 500;
   }
 
-  .desktop-only {
-    display: none;
-  }
-  @media (min-width: 640px) {
-    .desktop-only {
-      display: inline;
-    }
-  }
-
-  .mobile-only {
-    display: inline;
-  }
-  @media (min-width: 640px) {
-    .mobile-only {
-      display: none;
-    }
-  }
-
   .min-w-0-nowrap {
     min-width: 0;
   }
@@ -332,21 +295,6 @@ const processedImage = (() => {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 2rem;
-  }
-
-  .tag-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background-color: rgb(var(--color-primary-800));
-    color: rgb(var(--color-primary-200));
-    transition: background-color 0.15s, color 0.15s;
-  }
-  .tag-link:hover {
-    background-color: rgb(var(--color-primary-700));
   }
 
   .cover-image-wrap {
@@ -368,18 +316,6 @@ const processedImage = (() => {
     .sidebar-column {
       grid-column: span 3 / span 3;
     }
-  }
-
-  .sidebar-sticky {
-    position: sticky;
-    top: 6rem;
-    max-height: calc(100vh - 8rem);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 1.5rem;
-  }
-  .sidebar-sticky > * + * {
-    margin-top: 1.5rem;
   }
 
   .meta-panel {

@@ -14,10 +14,10 @@ export interface Props {
 const { title, description, seeAlsoLinkText, seeAlsoLink, seeAlsoDescription, toc, groups, lastUpdated, hasTOC } = Astro.props;
 ---
 
-<article class="roll-page border-glow-top border-glow-top-permanent">
+<article class="card roll-page border-glow-top border-glow-top-permanent">
   <div class="roll-page-content">
     <header class="roll-page-header">
-      <h1 class="roll-page-title">{title}</h1>
+      <h1 class="layout-title">{title}</h1>
     </header>
 
     <div class="roll-page-body prose" id="page-content">
@@ -52,27 +52,12 @@ const { title, description, seeAlsoLinkText, seeAlsoLink, seeAlsoDescription, to
 </article>
 
 <style>
-  .roll-page {
-    border: 1px solid rgb(var(--color-primary-700));
-    background-color: rgb(var(--color-primary-900));
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  }
-
   .roll-page-content {
     padding: 1.5rem;
   }
 
   .roll-page-header {
     margin-bottom: 2rem;
-  }
-
-  .roll-page-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: rgb(var(--color-primary-50));
-    margin-bottom: 1.5rem;
-    line-height: 1.25;
   }
 
   .roll-page-body {

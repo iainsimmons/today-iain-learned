@@ -102,7 +102,7 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
   </Fragment>
 
   <div class="layout-wrapper">
-      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`border-glow-top border-glow-top-permanent layout-article ${showCoverImage ? 'layout-article--cover' : ''}`}>
+      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`card border-glow-top border-glow-top-permanent layout-article ${showCoverImage ? 'layout-article--cover' : ''}`}>
         {showCoverImage && (() => {
           // Process image path similar to PostCard
           let rawImage = post.data.image;

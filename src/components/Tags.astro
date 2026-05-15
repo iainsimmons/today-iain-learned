@@ -14,7 +14,7 @@ const sortedTags = [...tags].sort();
 ---
 
 {siteConfig.postOptions.tags && sortedTags.length > 0 && (
-  <div class="tags-container">
+    <div class="card tags-container">
     <h3 class="tags-heading">
       <Icon name="tag" class="tags-heading-icon" />
       Tags
@@ -39,9 +39,7 @@ const sortedTags = [...tags].sort();
 <style is:global>
   .tags-container {
     padding: 1rem;
-    background-color: rgb(var(--color-primary-900));
     border-radius: 0.75rem;
-    border: 1px solid rgb(var(--color-primary-700));
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   }
 

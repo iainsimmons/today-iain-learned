@@ -72,7 +72,7 @@ const structuredData = {
   </Fragment>
 
   <div class="layout-wrapper">
-      <article class={`border-glow-top border-glow-top-permanent layout-article${page.data.image ? ' layout-article--cover' : ''}`}>
+      <article class={`card border-glow-top border-glow-top-permanent layout-article${page.data.image ? ' layout-article--cover' : ''}`}>
         {page.data.image && (() => {
           // Process image path similar to PostLayout
           let rawImage = page.data.image;

@@ -305,7 +305,7 @@ function processExcerptLinks(text: string, targetSlug: string): string {
           {linkedMentions.filter(mention => mention !== null).map(mention => (
             <a
               href={`/posts/${mention.slug}`}
-              class="mention-card-compact"
+              class="card mention-card-compact"
             >
               <span class="mention-card-compact-title">
                 {mention.title}
@@ -317,7 +317,7 @@ function processExcerptLinks(text: string, targetSlug: string): string {
       ) : (
         <div class="mentions-detailed-list">
           {linkedMentions.filter(mention => mention !== null).map(mention => (
-            <article class="mention-card-detailed">
+            <article class="card mention-card-detailed">
               <div class="mention-card-detailed-title">
                 <a
                   href={`/posts/${mention.slug}`}
@@ -501,8 +501,6 @@ function processExcerptLinks(text: string, targetSlug: string): string {
     justify-content: space-between;
     padding: 0.75rem;
     background: rgb(var(--color-primary-800) / 0.3);
-    border-radius: 0.5rem;
-    border: 1px solid rgb(var(--color-primary-700));
     transition: border-color 200ms, background 200ms;
     text-decoration: none;
   }
@@ -541,8 +539,6 @@ function processExcerptLinks(text: string, targetSlug: string): string {
   .mention-card-detailed {
     padding: 1rem;
     background: rgb(var(--color-primary-800) / 0.3);
-    border-radius: 0.5rem;
-    border: 1px solid rgb(var(--color-primary-700));
     transition: border-color 200ms, background 200ms;
   }
 

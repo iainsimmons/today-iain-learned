@@ -15,7 +15,7 @@ const shouldShowTOC = filteredHeadings.length > 1;
 ---
 
 {shouldShowTOC && (
-  <nav class="toc-container">
+  <nav class="card toc-container">
     <div class="toc-inner">
       <button
         class="toc-toggle"
@@ -108,9 +108,7 @@ const shouldShowTOC = filteredHeadings.length > 1;
   .toc-container {
     padding: 1rem;
     padding-right: 1.25rem;
-    background-color: rgb(var(--color-primary-900));
     border-radius: 0.75rem;
-    border: 1px solid rgb(var(--color-primary-700));
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 100%;

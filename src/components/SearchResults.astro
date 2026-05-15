@@ -15,139 +15,44 @@ const { results } = Astro.props;
 ---
 
 {results.length > 0 ? (
-  <div class="sr-divider">
-    <div class="sr-section">
-      <div class="sr-section-title">
+  <div style="border-top: 1px solid rgb(var(--color-primary-700));">
+    <div style="padding: 0.5rem;">
+      <div class="result-section-title">
         Results ({results.length})
       </div>
       {results.map((result, index) => (
         <a 
           href={result.url}
           data-index={index}
-          class="sr-result-item"
+          class="result-item"
         >
           <Icon 
             name={result.type === 'post' ? 'file-text' : result.type === 'page' ? 'file' : 'external-link'} 
-            class="sr-result-icon"
+            class="result-item-icon"
           />
-          <div class="sr-result-content">
-            <div class="sr-result-title">
+          <div class="result-item-content">
+            <div class="result-item-title">
               {result.title}
             </div>
             {result.description && (
-              <div class="sr-result-desc">
+              <div class="result-item-desc">
                 {result.description}
               </div>
             )}
           </div>
           {result.type === 'external' && (
-            <Icon name="external-link" class="sr-ext-icon" />
+            <Icon name="external-link" class="result-ext-icon" />
           )}
         </a>
       ))}
     </div>
   </div>
 ) : (
-  <div class="sr-empty">
-    <Icon name="search-x" class="sr-empty-icon" />
-    <p class="sr-empty-title">No results found</p>
-    <p class="sr-empty-subtitle">Try a different search term</p>
+  <div class="empty-state empty-state--compact">
+    <Icon name="search-x" class="empty-state-icon" />
+    <p class="empty-state-title" style="font-size: 1rem; margin-bottom: 0;">No results found</p>
+    <p class="result-item-desc" style="margin-top: 0.25rem;">Try a different search term</p>
   </div>
 )}
 
-<style>
-  .sr-divider {
-    border-top: 1px solid rgb(var(--color-primary-700));
-  }
 
-  .sr-section {
-    padding: 0.5rem;
-  }
-
-  .sr-section-title {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: rgb(var(--color-primary-400));
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-  }
-
-  .sr-result-item {
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-    text-decoration: none;
-    gap: 0.75rem;
-  }
-
-  .sr-result-item:hover {
-    background-color: rgb(var(--color-primary-800));
-  }
-
-  .sr-result-icon {
-    width: 1rem;
-    height: 1rem;
-    color: rgb(var(--color-primary-400));
-    margin-top: 0.125rem;
-    flex-shrink: 0;
-  }
-
-  .sr-result-item:hover .sr-result-icon {
-    color: rgb(var(--color-highlight-500));
-  }
-
-  .sr-result-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .sr-result-title {
-    color: rgb(var(--color-primary-50));
-    font-weight: 500;
-  }
-
-  .sr-result-desc {
-    font-size: 0.875rem;
-    color: rgb(var(--color-primary-300));
-    margin-top: 0.25rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .sr-ext-icon {
-    width: 0.75rem;
-    height: 0.75rem;
-    color: rgb(var(--color-primary-500));
-    margin-top: 0.25rem;
-    flex-shrink: 0;
-  }
-
-  .sr-empty {
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .sr-empty-icon {
-    width: 2rem;
-    height: 2rem;
-    color: rgb(var(--color-primary-500));
-    margin: 0 auto 0.5rem;
-    display: block;
-  }
-
-  .sr-empty-title {
-    color: rgb(var(--color-primary-300));
-    font-size: 1rem;
-  }
-
-  .sr-empty-subtitle {
-    font-size: 0.875rem;
-    color: rgb(var(--color-primary-400));
-    margin-top: 0.25rem;
-  }
-</style>
