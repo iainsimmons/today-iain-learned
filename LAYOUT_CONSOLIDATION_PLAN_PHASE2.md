@@ -5,242 +5,190 @@ Eliminate remaining CSS duplication identified across `src/pages/`, `src/compone
 
 ---
 
-## Critical Priority
+## ✅ Completed Items Summary
 
-### C1: Consolidate Card Pattern (11+ duplicate definitions)
-
-**Problem**: The "dark card" container pattern (`background: primary-900; border: 1px solid primary-700; border-radius: 0.5rem; box-shadow`) is independently redefined in 11+ locations.
-
-**Locations**:
-| File | Lines | Class |
-|------|-------|-------|
-| `src/styles/global.css` | 618-628 | `.card` |
-| `src/styles/global.css` | 1494-1509 | `.post-card` |
-| `src/styles/global.css` | 1511-1526 | `.featured-post` (exact duplicate of `.post-card`) |
-| `src/styles/global.css` | 2233-2238 | `.layout-article` |
-| `src/components/PostCard.astro` | 155-161 | `.post-card` (overrides global) |
-| `src/components/RollPage.astro` | 55-60 | `.roll-page` |
-| `src/components/Tags.astro` | 40-46 | `.tags-container` (`is:global`) |
-| `src/components/TableOfContents.astro` | 108-119 | `.toc-container` (`is:global`) |
-| `src/components/LinkedMentions.astro` | 498-512 | `.mention-card-compact` |
-| `src/components/LinkedMentions.astro` | 541-551 | `.mention-card-detailed` |
-| `src/components/PostContent.astro` | 385-389 | `.meta-panel` |
-
-**Action**:
-1. Create a single `.card` utility class in `global.css` that represents the shared dark card pattern.
-2. Remove `.featured-post` from `global.css` (exact duplicate of `.post-card`, just use `.post-card` class).
-3. Remove duplicate `.post-card` definition from `PostCard.astro` scoped CSS.
-4. Make `.roll-page`, `.tags-container`, `.toc-container`, `.mention-card-*` use `.card` base class.
-5. Reconcile `.meta-panel` (no border, opacity bg) to either extend `.card` or become independent.
+| Task | Description | Lines Removed |
+|------|-------------|---------------|
+| C1 | Card pattern consolidation (11+ locations → 1 `.card` class) | ~90 |
+| C2 | Image gallery CSS (2 components → shared `global.css`) | ~140 |
+| C3 | Duplicated page styles removed from `[...tag]/[page].astro` | ~200 |
+| H1 | Added undefined classes (`toc-sticky`, `button-group`) | ~15 |
+| H2 | Shared result-item classes in `global.css` + SearchResults | ~50 |
+| H3 | Empty state compact variant + SearchResults updates | ~40 |
+| H4 | Container padding (`container-inner` in Header/Footer/PostContent) | ~45 |
+| H5 | Sidebar-sticky reconciled (global + PostContent) | ~10 |
+| H6 | Desktop/mobile utilities removed from PostContent | ~10 |
+| M2 | RollPage title uses `.layout-title` | ~8 |
+| M4 | Unified `.tag` class (PostCard + PostContent) | ~25 |
+| M5 | Index page empty state uses `.empty-state-*` | ~30 |
+| M6 | Index page dev notice uses `.dev-notice` | ~10 |
+| **Total** | | **~673 lines** |
 
 ---
 
-### C2: Consolidate Image Gallery CSS (ImageGalleryManager + ImageGallery)
+## ✅ Completed
 
-**Problem**: Two files define near-identical gallery grid CSS (grid layouts, hover effects, overlays, icons, aspect ratios).
+### ✅ C1: Consolidate Card Pattern (11+ duplicate definitions)
 
-**Files**:
-- `src/components/ImageGalleryManager.astro` (`is:global`, lines 142-280)
-- `src/components/ImageGallery.astro` (scoped, lines 49-157)
+**Problem**: The "dark card" container pattern (`background: primary-900; border: 1px solid primary-700; border-radius: 0.5rem; box-shadow`) was independently redefined in 11+ locations.
 
-**Action**:
-1. Extract shared gallery CSS into `global.css` under a single namespace (`.image-gallery`).
-2. ImageGalleryManager provides the global styles; ImageGallery removes its duplicate scoped styles.
-3. Unify naming: ImageGalleryManager uses `.image-gallery-2` while ImageGallery uses `.image-gallery.grid-2`.
+**What was done**:
+1. Updated `.card` in `global.css` as the canonical dark card class.
+2. Removed `.featured-post` (unused, exact duplicate of `.post-card`).
+3. Removed duplicate base properties from `PostCard.astro` scoped `.post-card`.
+4. Added `card` class to `RollPage.astro`, `Tags.astro`, `TableOfContents.astro`, `LinkedMentions.astro`, `PostLayout.astro`, `PageLayout.astro`, `index.astro`.
+5. Simplified `.post-card` in `global.css` to only have transition/hover (base from `.card`).
+6. Removed `.layout-article` CSS definition (replaced by `.card`).
+7. `.meta-panel` left independent (semi-transparent bg, no border, different shape).
 
----
-
-### C3: Remove Duplicated global.css Classes from Page Styles
-
-**Problem**: `src/pages/posts/tag/[...tag]/[page].astro` (lines 212-418) redefines 16+ classes that already exist in `global.css` with slight light/dark mode variations.
-
-**Duplicated classes** (identical to global.css):
-- `.page-wrapper`, `.container-inner`, `.page-header`, `.header-row`, `.feed-buttons`, `.icon-feed`, `.icon-sm`, `.back-link-wrapper`, `.content-area`, `.mobile-sidebar`, `.desktop-sidebar`
-
-**Near-duplicated classes** (different light/dark approach):
-- `.page-title`, `.feed-button`, `.post-count`, `.tag-badge`, `.back-link`
-
-**Action**:
-1. Remove all exact-duplicate classes from `[...tag]/[page].astro`'s `<style>` block.
-2. Reconcile the near-duplicate classes by updating `global.css` to handle the light/dark variants properly (global.css uses "dark-mode-first"; page uses explicit light + `.dark` modifier).
-3. Move the unique classes (`.posts-list-lg`, `.sidebar-sticky-scroll`) to `global.css`.
+**Reduction**: ~90 lines
 
 ---
 
-## High Priority
+### ✅ C2: Consolidate Image Gallery CSS (ImageGalleryManager + ImageGallery)
 
-### H1: Fix Undefined CSS Classes
+**Problem**: Two files defined near-identical gallery grid CSS.
 
-**Problem**: Several classes are used in HTML but never defined in CSS.
+**What was done**:
+1. Added consolidated gallery CSS to `global.css` under `.image-gallery-1` through `.image-gallery-4` namespace.
+2. Removed entire `<style is:global>` block from `ImageGalleryManager.astro`.
+3. Removed entire scoped `<style>` block from `ImageGallery.astro`.
+4. Updated `processImageLayout()` in `images.ts` to return standardized class names.
+5. Updated `ImageGallery.astro` Props type to match new naming.
 
-| Class | Used In Files | Lines |
-|-------|--------------|-------|
-| `toc-sticky` | `podroll.astro`, `blogroll.astro` | 44 each |
-| `.button-group` | `posts/[page].astro` | 174 |
-| `.sidebar-sticky-scroll` | `posts/[page].astro`, `posts/tag/[...tag].astro` | 198, 190 (only defined in `posts/tag/[...tag]/[page].astro`) |
-
-**Action**: Add these classes to `global.css`.
-
----
-
-### H2: Consolidate Search Result Patterns (CommandPalette + SearchResults)
-
-**Problem**: CommandPalette and SearchResults have 7 nearly-identical sub-patterns: section titles, result items, icons, titles, descriptions, external icon indicators, and empty state.
-
-**Files**:
-- `src/components/CommandPalette.astro`
-- `src/components/SearchResults.astro`
-
-**Action**:
-1. Create shared list/result-* classes in `global.css` for the common result item pattern:
-   - `.result-section-title`, `.result-item`, `.result-item-icon`, `.result-item-content`, `.result-item-title`, `.result-item-desc`, `.result-ext-icon`
-2. Both components use these shared classes instead of component-prefixed ones.
-3. Alternatively, extract a shared `SearchResultItem.astro` component.
+**Reduction**: ~140 lines
 
 ---
 
-### H3: Consolidate Empty State Pattern (global.css + CommandPalette + SearchResults)
+### ✅ C3: Remove Duplicated global.css Classes from Page Styles
 
-**Problem**: Three empty state implementations with different naming but same structure.
+**Problem**: `src/pages/posts/tag/[...tag]/[page].astro` redefined 16+ classes already in `global.css`.
 
-**Files**:
-- `global.css` lines 2095-2129: `.empty-state`, `.empty-state-icon`, `.empty-state-title`, `.empty-state-text`
-- `CommandPalette.astro` lines 150-168: `.cp-no-results`, `.cp-no-results-icon`, `.cp-no-results-title`, `.cp-no-results-subtitle`
-- `SearchResults.astro` lines 130-152: `.sr-empty`, `.sr-empty-icon`, `.sr-empty-title`, `.sr-empty-subtitle`
-- `index.astro` lines 306-350: `.home-empty`, `.home-empty-icon`, `.home-empty-title`, `.home-empty-text` (duplicates `.empty-state-*`)
+**What was done**:
+1. Removed entire 200-line `<style>` block from `[...tag]/[page].astro`.
+2. Moved unique classes (`.posts-list-lg`, `.sidebar-sticky-scroll`) to `global.css`.
+3. Near-duplicate classes with light/dark overrides removed — global's "dark-mode-first" versions are correct.
 
-**Action**:
-1. Extend `global.css` `.empty-state-*` classes to also support the compact variant (2rem icon, used by CommandPalette/SearchResults).
-2. Add `.empty-state` class variant `.empty-state--compact` for the 2rem icon version.
-3. Update CommandPalette and SearchResults to use global `.empty-state-*` classes.
-4. Update `index.astro` to use `.empty-state-*` instead of `.home-empty-*`.
+**Reduction**: ~200 lines
 
 ---
 
-### H4: Consolidate Responsive Container Padding (5 definitions)
+## ✅ High Priority
 
-**Problem**: The same responsive padding pattern (1rem/1.5rem/2rem breakpoints) is defined in 5 locations.
+### ✅ H1: Fix Undefined CSS Classes
 
-**Files**:
-- `global.css` lines 1971-1991: `.container-inner`
-- `global.css` lines 2218-2231: `.layout-container`
-- `Header.astro` lines 140-153: `.site-header-inner`
-- `Footer.astro` lines 107-118: `.site-footer-inner`
-- `PostContent.astro` lines 237-254: `.content-wrapper`
+**What was done**:
+- Added `.toc-sticky` (position: sticky, top: 6rem) to `global.css`.
+- Added `.button-group` (flex, wrap, gap) to `global.css`.
+- `.sidebar-sticky-scroll` moved to `global.css` as part of C3.
 
-**Action**:
-1. Update `.container-inner` in `global.css` to be the canonical responsive container class.
-2. Change `Header.astro` to use `.container-inner` instead of `.site-header-inner`.
-3. Change `Footer.astro` to use `.container-inner` instead of `.site-footer-inner`.
-4. Change `PostContent.astro` to use `.container-inner` instead of `.content-wrapper`.
-5. Remove duplicate definitions.
+**Reduction**: ~15 lines
 
 ---
 
-### H5: Move `.sidebar-sticky` to Single Definition
+### ✅ H2/H3: Search Result & Empty State Patterns
 
-**Problem**: `.sidebar-sticky` is defined in both `global.css` (lines 2199-2207) and `PostContent.astro` (lines 373-383) with different values for child spacing and overflow.
+**What was done**:
+1. Added shared `.result-item`, `.result-item-icon`, `.result-item-content`, `.result-item-title`, `.result-item-desc`, `.result-ext-icon`, `.result-section-title` classes to `global.css`.
+2. Updated `SearchResults.astro` to use global classes and removed its entire `<style>` block.
+3. Added `.empty-state--compact` variant to `global.css` (2rem icon, 2rem padding).
+4. `CommandPalette.astro` not updated (JS-generated HTML — lower ROI for now).
 
-**Files**:
-- `global.css`: `top: 6rem; padding-bottom: 1.5rem; > * + * { margin-top: 0.75rem; }`
-- `PostContent.astro`: `top: 6rem; max-height: calc(100vh - 8rem); overflow-y: auto; padding-bottom: 1.5rem; > * + * { margin-top: 1.5rem; }`
-
-**Action**:
-1. Reconcile the differences: update `global.css` to include `max-height` and `overflow-y` (more complete).
-2. Remove definition from `PostContent.astro`.
-3. Use `.sidebar-sticky` directly in PostContent (it already is, just its scoped styles override the global).
+**Reduction**: ~90 lines
 
 ---
 
-### H6: Remove `.desktop-only`/`.mobile-only` from PostContent.astro
+### ✅ H4: Consolidate Responsive Container Padding (5 definitions)
 
-**Problem**: `PostContent.astro` (lines 308-324) defines `.desktop-only`/`.mobile-only` identically to `global.css` (lines 2319-2337). Since PostContent uses scoped styles, these override the global ones.
+**What was done**:
+1. Updated `.container-inner` in `global.css` to include `max-width: var(--container-max-width)` and `position: relative`, removed `margin-bottom` (page-specific).
+2. Changed `Header.astro` to use `.container-inner` instead of `.site-header-inner`.
+3. Changed `Footer.astro` to use `.container-inner` instead of `.site-footer-inner`.
+4. Changed `PostContent.astro` to use `.container-inner` instead of `.content-wrapper`.
+5. Removed all 3 duplicate definitions.
 
-**Action**: Remove `.desktop-only`/`.mobile-only` from `PostContent.astro`'s scoped `<style>`. Since PostContent is rendered within the global scope (inside `.prose`), the global classes will apply.
+**Reduction**: ~45 lines
 
 ---
 
-## Medium Priority
+### ✅ H5: Move `.sidebar-sticky` to Single Definition
+
+**What was done**:
+1. Updated global `.sidebar-sticky` to include `max-height: calc(100vh - 8rem)` and `overflow-y: auto; overflow-x: hidden` from PostContent's version.
+2. Removed `.sidebar-sticky` definition from PostContent's scoped CSS.
+
+**Reduction**: ~10 lines
+
+---
+
+### ✅ H6: Remove `.desktop-only`/`.mobile-only` from PostContent.astro
+
+**What was done**: Removed the duplicate responsive display utility definitions from PostContent.astro (global.css already has identical definitions).
+
+**Reduction**: ~10 lines
+
+---
+
+## ✅ Medium Priority
+
+### ✅ M2: RollPage Title Pattern
+
+**Done**: Changed `RollPage.astro` to use `.layout-title` instead of `.roll-page-title`, removed `.roll-page-title` CSS definition.
+
+---
+
+### ✅ M4: Tag Styling Inconsistency
+
+**Done**: Added unified `.tag` class (pill shape, 0.75rem) and `.tag--md` modifier to `global.css`. Updated `PostCard.astro` and `PostContent.astro` to use `.tag` class. Kept `Tags.astro` separate (different visual: rounded rect).
+
+---
+
+### ✅ M5: Index Page Empty State Pattern
+
+**Done**: Replaced `.home-empty-*` classes with `.empty-state-*` from `global.css`. Removed 45 lines of duplicate CSS.
+
+---
+
+### ✅ M6: Index Page Dev Notice
+
+**Done**: Replaced `.home-dev-notice-*` classes with `.dev-notice-*` from `global.css`. Removed 20 lines of duplicate CSS.
+
+---
+
+## Remaining (Future)
 
 ### M1: Posts Listing Page Pattern (4 near-identical files)
+**Files**: `src/pages/posts/index.astro`, `[page].astro`, `tag/[...tag].astro`, `tag/[...tag]/[page].astro`
 
-**Files**:
-- `src/pages/posts/index.astro`
-- `src/pages/posts/[page].astro`
-- `src/pages/posts/tag/[...tag].astro`
-- `src/pages/posts/tag/[...tag]/[page].astro`
-
-**Shared structure**: Each has `.page-header` > `.header-row` > `.page-title` + `.feed-buttons` + `.post-count` (+ optional `.tag-badge`) + `.back-link-wrapper` + `.content-area` + posts listing + mobile sidebar + desktop sidebar.
-
-**Action**:
-1. Extract a shared `PostsPageHeader` component for the `.page-header` block.
-2. Extract a shared `PostsSidebar` component for the mobile/desktop sidebar pattern.
-3. This reduces 4 files from ~60-70 lines each to ~20-30 lines each.
-
----
-
-### M2: RollPage Title Pattern
-
-**Problem**: `RollPage.astro`'s `.roll-page-title` (lines 70-76) is identical to `global.css`'s `.layout-title` (lines 2310-2316).
-
-**Action**: Change `RollPage.astro` to use `.layout-title` instead of `.roll-page-title` and remove the duplicate definition.
-
----
+**Status**: Deferred — requires extracting shared components (HTML refactoring, not just CSS). All 4 files now rely on global.css for their styling, but the HTML structure duplication remains.
 
 ### M3: podroll.astro / blogroll.astro Structural Duplication
+**Status**: Deferred — low ROI, both files are small (<50 lines each).
 
-**Problem**: These 2 files are structurally near-identical (both use `BaseLayout` + `TableOfContents` + `RollPage` with the same TOC generation logic).
+### CommandPalette.astro Consolidation
+**Status**: Deferred — HTML generated via client-side JS, making shared class migration more complex.
 
-**Action**: Consider extracting a shared `RollPageLayout.astro` or having one be a wrapper around the other, but this has lower ROI since both are small files.
-
----
-
-### M4: Tag Styling Inconsistency
-
-**Problem**: Three different tag visual treatments across the codebase.
-
-**Files**:
-- `PostCard.astro` `.post-card-tag`: pill shape, 0.75rem
-- `PostContent.astro` `.tag-link`: pill shape, 0.875rem  
-- `Tags.astro` `.tags-item`: rounded rect, 0.875rem
-
-**Action**: Create a unified `.tag` class in `global.css` (pill shape, 0.75rem) and update all three components to use it with optional size modifiers (`.tag--sm`, `.tag--md`).
+### Tags.astro `.tags-item` Visual Alignment
+**Status**: Deferred — uses rounded-rect style (different from `.tag` pill shape). Consider aligning in future.
 
 ---
 
-### M5: Index Page Empty State Pattern
+## Implementation Results
 
-**Problem**: `index.astro` defines `.home-empty-*` (lines 306-350) which duplicates the `.empty-state-*` pattern in `global.css` (lines 2095-2129).
+| Priority | Task | Lines Removed | Status |
+|----------|------|---------------|--------|
+| C1 | Consolidate card pattern | ~90 | ✅ |
+| C2 | Consolidate gallery CSS | ~140 | ✅ |
+| C3 | Remove duplicated page styles | ~200 | ✅ |
+| H1 | Fix undefined CSS classes | ~15 | ✅ |
+| H2/H3 | Search result + empty state patterns | ~90 | ✅ |
+| H4 | Container padding consolidation | ~45 | ✅ |
+| H5 | Sidebar sticky consolidation | ~10 | ✅ |
+| H6 | Desktop/mobile utilities | ~10 | ✅ |
+| M2 | RollPage title | ~8 | ✅ |
+| M4 | Tag styling | ~25 | ✅ |
+| M5 | Index page empty state | ~30 | ✅ |
+| M6 | Index page dev notice | ~10 | ✅ |
+| **Total** | | **~673 lines** | |
 
-**Action**: Replace `.home-empty-*` classes with `.empty-state-*` from `global.css` and remove the duplicate definitions.
-
----
-
-### M6: Index Page Dev Notice
-
-**Problem**: `index.astro` `.home-dev-notice` (lines 352-371) duplicates `global.css` `.dev-notice` (lines 2140-2153).
-
-**Action**: Use `.dev-notice` class in `index.astro` and remove `.home-dev-notice` definition.
-
----
-
-## Implementation Order
-
-| Priority | Task | Expected CSS Reduction |
-|----------|------|----------------------|
-| C1 | Consolidate card pattern | ~100 lines |
-| C2 | Consolidate gallery CSS | ~140 lines |
-| C3 | Remove duplicated page styles | ~200 lines |
-| H1 | Fix undefined CSS classes | ~15 lines |
-| H2 | Search result patterns | ~80 lines |
-| H3 | Empty state consolidation | ~70 lines |
-| H4 | Container padding consolidation | ~60 lines |
-| H5 | Sidebar sticky consolidation | ~15 lines |
-| H6 | Desktop/mobile utilities | ~15 lines |
-| M1 | Posts page header/sidebar component | N/A (HTML only) |
-| M2 | RollPage title | ~10 lines |
-| M4 | Tag styling | ~30 lines |
-| M5 | Index page empty state | ~25 lines |
-| M6 | Index page dev notice | ~10 lines |
-
-**Total estimated CSS reduction**: ~770 lines from component `<style>` blocks into reusable `global.css` classes.
+**Total CSS reduction**: ~673 lines from component `<style>` blocks into reusable `global.css` classes.
