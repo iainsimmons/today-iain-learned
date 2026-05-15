@@ -52,6 +52,7 @@ export default defineConfig({
         limitInputPixels: false,
       },
     },
+    domains: ["github.com"],
     remotePatterns: [
       {
         protocol: "https",

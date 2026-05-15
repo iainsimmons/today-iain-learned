@@ -4,10 +4,7 @@ import { getCollection } from 'astro:content';
 import { siteConfig } from '@/config';
 import { shouldShowPost, sortPostsByDate, extractTags } from '@/utils/markdown';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PostCard from '@/components/PostCard.astro';
-import Tags from '@/components/Tags.astro';
-import Pagination from '@/components/Pagination.astro';
-import Icon from '@/components/Icon.astro';
+import PostsPageLayout from '@/components/PostsPageLayout.astro';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const isDev = import.meta.env.DEV;
@@ -20,9 +17,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     // Extract all unique tags with error handling
     const allTags = extractTags(sortedPosts);
-
-    if (isDev && allTags.length === 0) {
-    }
 
     const postsPerPage = siteConfig.postOptions.postsPerPage;
     const paths: any[] = [];
@@ -45,17 +39,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
             props: { tag, allPosts: sortedPosts, allTags, currentPage: page }
           });
         }
-        } catch (error) {
-          if (isDev) {
-          }
-          // Continue with other tags
-        }
+      } catch (error) {
+        // Continue with other tags
+      }
     }
 
     return paths;
   } catch (error) {
-    if (isDev) {
-    }
     return [];
   }
 };
@@ -70,9 +60,6 @@ const isDev = import.meta.env.DEV;
 
 // Validate tag parameter
 if (!tag || typeof tag !== 'string') {
-  if (isDev) {
-  }
-  // Return 404 or redirect in production, show error in dev
   if (!isDev) {
     return Astro.redirect('/404');
   }
@@ -91,8 +78,6 @@ try {
     );
   });
 } catch (error) {
-  if (isDev) {
-  }
   filteredPosts = [];
 }
 
@@ -125,86 +110,24 @@ const pagination = {
   nextUrl: currentPage < totalPages ? `${baseUrl}/${currentPage + 1}` : undefined,
   prevUrl: currentPage > 1 ? (currentPage === 2 ? baseUrl : `${baseUrl}/${currentPage - 1}`) : undefined
 };
+
+const postCountLabel = `Page ${currentPage} of ${totalPages} · ${filteredPosts.length} posts tagged with #${tag}`;
 ---
 
 <BaseLayout seoData={seoData}>
   <div class="page-wrapper">
     <div class="container-inner" style={`max-width: ${siteConfig.layout.contentWidth}`}>
-      <!-- Header -->
-      <header class="page-header">
-        <div class="header-row">
-          <h1 class="page-title">
-            Posts tagged "{tag}"
-          </h1>
-          <div class="feed-buttons">
-            <a 
-              href="/rss.xml"
-              class="feed-button"
-              title="Subscribe to RSS feed"
-            >
-              <Icon name="rss" class="icon-feed" />
-              RSS Feed
-            </a>
-            <a 
-              href="/feed.xml"
-              class="feed-button"
-              title="Subscribe to Atom feed"
-            >
-              <Icon name="atom" class="icon-feed" />
-              Atom Feed
-            </a>
-          </div>
-        </div>
-        <p class="post-count">
-          Page {currentPage} of {totalPages} • <strong>{filteredPosts.length}</strong> posts tagged with 
-          <span class="tag-badge">
-            #{tag}
-          </span>
-        </p>
-
-        <div class="back-link-wrapper">
-          <a 
-            href="/posts"
-            class="back-link"
-          >
-            <Icon name="arrow-left" class="icon-sm" />
-            Show all posts
-          </a>
-        </div>
-      </header>
-
-      <div class="content-area">
-        <!-- Main content -->
-        <div>
-          <!-- Posts list -->
-          <div class="posts-list-lg">
-            {paginatedPosts.map((post, index) => (
-              <PostCard post={post} context="tags" eager={index < 2} />
-            ))}
-          </div>
-
-          <!-- Pagination -->
-          <Pagination pagination={pagination} baseUrl={baseUrl} />
-        </div>
-
-        <!-- Mobile sidebar - appears below content on mobile/tablet -->
-        <div class="mobile-sidebar">
-          <!-- Tags -->
-          {siteConfig.postOptions.tags && allTags.length > 0 && (
-            <Tags tags={allTags} currentTag={tag} />
-          )}
-        </div>
-
-        <!-- Desktop sidebar - floats to the right of the content container -->
-        <div class="desktop-sidebar">
-          <div class="sidebar-sticky-scroll">
-            <!-- Tags -->
-            {siteConfig.postOptions.tags && allTags.length > 0 && (
-              <Tags tags={allTags} currentTag={tag} />
-            )}
-          </div>
-        </div>
-      </div>
+      <PostsPageLayout
+        title={`Posts tagged "${tag}"`}
+        postCountLabel={postCountLabel}
+        posts={paginatedPosts}
+        pagination={pagination}
+        baseUrl={baseUrl}
+        allTags={allTags}
+        selectedTag={tag}
+        postCardContext="tags"
+        useLargeList={true}
+      />
     </div>
   </div>
 </BaseLayout>
