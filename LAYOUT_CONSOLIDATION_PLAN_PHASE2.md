@@ -155,25 +155,44 @@ Eliminate remaining CSS duplication identified across `src/pages/`, `src/compone
 
 ---
 
-## Remaining (Future)
+## ✅ Phase 2 Completed
 
-### M1: Posts Listing Page Pattern (4 near-identical files)
+### ✅ M1: Posts Listing Page Pattern (4 near-identical files → 1 shared component)
 **Files**: `src/pages/posts/index.astro`, `[page].astro`, `tag/[...tag].astro`, `tag/[...tag]/[page].astro`
 
-**Status**: Deferred — requires extracting shared components (HTML refactoring, not just CSS). All 4 files now rely on global.css for their styling, but the HTML structure duplication remains.
+**What was done**:
+1. Created `src/components/PostsPageLayout.astro` — shared component encapsulating page-header, posts-list, pagination, sidebar, and empty-state slot.
+2. Refactored all 4 files to use `PostsPageLayout`:
+   - `index.astro` — tag query param support, empty state for no-tag/no-posts
+   - `[page].astro` — paginated with tag filter, empty state for empty page
+   - `tag/[...tag].astro` — tag page (page 1), empty state for no posts
+   - `tag/[...tag]/[page].astro` — tag paginated, uses `useLargeList` and `page-wrapper > container-inner` wrapper
+3. Removed duplicate imports (PostCard, Tags, Pagination) from all 4 files.
+4. Cleaned up dead `if (isDev) {}` blocks from tag route files.
 
-### M3: podroll.astro / blogroll.astro Structural Duplication
-**Status**: Deferred — low ROI, both files are small (<50 lines each).
+**Reduction**: ~150+ lines of template duplication
+
+### ✅ M3: podroll.astro / blogroll.astro Structural Duplication
+**What was done**:
+1. Created `src/pages/[rolltype].astro` — dynamic route handling both podroll and blogroll.
+2. Deleted `src/pages/podroll.astro` and `src/pages/blogroll.astro`.
+
+**Reduction**: ~98 lines
+
+### ✅ Tags.astro `.tags-item` Visual Alignment
+**What was done**:
+1. Removed unused `showCount` and `variant` props and their conditional logic.
+2. Removed dead `<script>` block.
+3. Changed `border-radius` from `0.375rem` to `9999px` (full pill shape).
+
+**Reduction**: ~34 lines
 
 ### CommandPalette.astro Consolidation
-**Status**: Deferred — HTML generated via client-side JS, making shared class migration more complex.
-
-### Tags.astro `.tags-item` Visual Alignment
-**Status**: Deferred — uses rounded-rect style (different from `.tag` pill shape). Consider aligning in future.
+**Status**: Deferred — HTML generated via client-side JS, making shared class migration more complex. See `LAYOUT_CONSOLIDATION_FUTURE.md`.
 
 ---
 
-## Implementation Results
+## Implementation Results (Phase 2)
 
 | Priority | Task | Lines Removed | Status |
 |----------|------|---------------|--------|
@@ -189,6 +208,10 @@ Eliminate remaining CSS duplication identified across `src/pages/`, `src/compone
 | M4 | Tag styling | ~25 | ✅ |
 | M5 | Index page empty state | ~30 | ✅ |
 | M6 | Index page dev notice | ~10 | ✅ |
-| **Total** | | **~673 lines** | |
+| M1 | Post listing page pattern (1 shared component) | ~150+ | ✅ |
+| M3 | Podroll/blogroll consolidation (dynamic route) | ~98 | ✅ |
+| Tags | Tags.astro cleanup + pill alignment | ~34 | ✅ |
+| **Total** | | **~955+ lines** | |
 
-**Total CSS reduction**: ~673 lines from component `<style>` blocks into reusable `global.css` classes.
+**Total reduction**: ~955+ lines removed, 1 shared component created, 2 files deleted.
+**Pre-existing issue**: Remote image redirect error during build (unrelated to consolidation).

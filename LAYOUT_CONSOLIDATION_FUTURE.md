@@ -1,6 +1,6 @@
 # Future Layout Consolidation Opportunities
 
-Found during Phase 2 implementation — items not in the original plan that could further reduce duplication.
+Found during Phase 2 implementation — items not in the original plan that could further reduce duplication, plus deferred items.
 
 ---
 
@@ -37,49 +37,33 @@ Found during Phase 2 implementation — items not in the original plan that coul
 - `.container-inner` (line ~1945): `margin: auto; max-width: var(--container-max-width); position: relative; padding: 0 1rem;` with responsive breakpoints
 - `.layout-container` (line ~2200): `margin: auto; padding: 1rem; position: relative;` with responsive breakpoints
 
-**Problem**: Both define responsive container patterns with the same breakpoints but slightly different values. `.container-inner` has `max-width` and `position: relative`; `.layout-container` uses `padding` shorthand instead of left/right.
+**Problem**: Both define responsive container patterns with the same breakpoints but slightly different values.
 
 **Lines**: ~20
 
-**Action**: Either eliminate `.layout-container` in favor of `.container-inner`, or vice versa. Check usage of `.layout-container` (likely in PostLayout/PageLayout).
+**Action**: Either eliminate `.layout-container` in favor of `.container-inner`, or vice versa.
 
 ---
 
 ## F4: `CommandPalette.astro` — JS-Generated HTML Classes
 
-**Location**: `src/components/CommandPalette.astro`
+**Problem**: Command palette generates HTML via client-side JavaScript, making shared CSS class migration complex. ~150 lines of scoped CSS.
 
-**Problem**: Multiple CSS classes are only used in JS-generated HTML (`.command-palette-item`, `.cp-result-item-search`, etc.) and have no equivalent global classes. Component defines ~150 lines of scoped CSS.
+**Lines**: ~100
 
-**Lines**: ~150
-
-**Action**: The most impactful remaining refactor. Convert CommandPalette to use shared `.result-item-*` and `.empty-state--compact` classes from `global.css`. Requires updating both the Astro template and the inline `<script>` JS code. Higher risk due to client-side rendering.
-
-**Estimated reduction**: ~80-100 lines
+**Action**: Highest ROI remaining. Convert to use shared `.result-item-*` and `.empty-state--compact` from `global.css`. Higher risk due to client-side rendering.
 
 ---
 
-## F5: `Tags.astro` `.tags-item` — Visual Alignment with `.tag`
+## F5: `.toc-sticky` Duplicates `.sidebar-sticky` Pattern
 
-**Location**: `src/components/Tags.astro`
+**Location**: `src/pages/[rolltype].astro`
 
-**Problem**: `.tags-item` uses rounded-rect style (border-radius: 0.375rem, 0.875rem font), while the new unified `.tag` class uses pill shape (border-radius: 9999px, 0.75rem font). These serve different contexts (sidebar vs inline), but the inconsistency may be intentional or accidental.
-
-**Lines**: ~30
-
-**Action**: If sidebar tags should match inline tags, update `.tags-item` to use `.tag` class with size modifier. If they should remain visually distinct (sidebar is smaller, denser), document the rationale.
-
----
-
-## F6: `.toc-sticky` Duplicates `.sidebar-sticky` Pattern
-
-**Location**: `src/pages/podroll.astro`, `src/pages/blogroll.astro`
-
-**Problem**: `.toc-sticky` (position: sticky, top: 6rem, padding-bottom: 1.5rem) is identical to the base `.sidebar-sticky` properties. Used in a wrapper div inside `.toc-sidebar`.
+**Problem**: `.toc-sticky` (position: sticky, top: 6rem) is essentially `.sidebar-sticky`.
 
 **Lines**: ~5
 
-**Action**: Replace `.toc-sticky` with `.sidebar-sticky` class. Note: `.sidebar-sticky` now has `max-height` and `overflow-y` which may not be desired in this context — but since it wraps the TOC component (which handles its own overflow), it should be fine.
+**Action**: Replace `.toc-sticky` with `.sidebar-sticky` class.
 
 ---
 
@@ -90,8 +74,18 @@ Found during Phase 2 implementation — items not in the original plan that coul
 | F1 | index.astro `.home-title` | ~12 | Low | Replace with `.layout-title` |
 | F2 | index.astro `.home-section-title` | ~10 | Low | Add `.layout-title--sm` or leave |
 | F3 | global.css `.layout-container` | ~20 | Medium | Consolidate with `.container-inner` |
-| F4 | CommandPalette.astro | ~100 | High | Migrate to shared `.result-item-*`/`.empty-state--compact` |
-| F5 | Tags.astro `.tags-item` | ~30 | Low | Align with `.tag` or document rationale |
-| F6 | podroll/blogroll `.toc-sticky` | ~5 | Low | Replace with `.sidebar-sticky` |
+| F4 | CommandPalette.astro | ~100 | High | Migrate to shared classes |
+| F5 | [rolltype].astro `.toc-sticky` | ~5 | Low | Replace with `.sidebar-sticky` |
 
-**Total estimated additional reduction**: ~170 lines
+**Total estimated additional reduction**: ~150 lines
+
+---
+
+## Pre-existing Build Issue
+
+**Issue**: Remote image redirect error during `astro build`:
+```
+Error: Failed to load remote image https://github.com/gaearon.png. The request was redirected.
+```
+
+**Potential fix**: Update stargazed data to use non-redirected image URLs, or configure Astro to skip/allow redirects for remote images.
