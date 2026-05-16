@@ -50,6 +50,12 @@ const { title, description, seeAlsoLinkText, seeAlsoLink, seeAlsoDescription, to
   </div>
 </article>
 
+<script>
+  document.querySelectorAll(".roll-page-feed-image").forEach((img) => {
+    img.addEventListener("error", () => { img.outerHTML = '<svg class="roll-page-feed-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="32" height="32"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M13 19a8 8 0 0 0-8-8M19 19c0-7.732-6.268-14-14-14"/><circle cx="6" cy="18" r="2" fill="currentColor"/></svg>'; });
+  });
+</script>
+
 <style>
   .roll-page-content {
     padding: 1.5rem;
