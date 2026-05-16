@@ -45,19 +45,13 @@ export default defineConfig({
       fallbacks: ["monospace"],
     },
   ],
-  image: {
-    service: {
+  service: {
+    image: {
       entrypoint: "astro/assets/services/sharp",
       config: {
         limitInputPixels: false,
       },
     },
-    domains: ["github.com"],
-    remotePatterns: [
-      {
-        protocol: "https",
-      },
-    ],
   },
   integrations: [
     sitemap(),
