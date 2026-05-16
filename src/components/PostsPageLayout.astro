@@ -47,13 +47,15 @@ const {
     <h1 class="page-title">{title}</h1>
     {showFeedButtons && (
       <div class="feed-buttons">
-        <a href="/rss.xml" class="feed-button" title="Subscribe to RSS feed">
+        <a href="/rss.xml" class="feed-button" aria-label="Subscribe to RSS feed">
           <Icon name="rss" class="icon-feed" />
-          RSS Feed
+        <span>RSS</span>
+        <span class="hide-on-mobile">Feed</span>
         </a>
-        <a href="/feed.xml" class="feed-button" title="Subscribe to Atom feed">
+        <a href="/feed.xml" class="feed-button" aria-label="Subscribe to Atom feed">
           <Icon name="atom" class="icon-feed" />
-          Atom Feed
+        <span>Atom</span>
+        <span class="hide-on-mobile">Feed</span>
         </a>
       </div>
     )}
