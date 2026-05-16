@@ -108,7 +108,7 @@ const structuredData = {
             <!-- Page header -->
             {homeBlurbContent?.data.title && (
               <header class="home-header">
-                <h1 class="home-title">
+                <h1 class="layout-title">
                   {homeBlurbContent.data.title}
                 </h1>
               </header>
@@ -133,9 +133,9 @@ const structuredData = {
           {siteConfig.homeOptions.featuredPost.enabled && featuredPost && (
             <section class="home-section">
               <div class="home-section-header">
-                <h2 class="home-section-title">
-                  {siteConfig.homeOptions.featuredPost.type === "latest" ? "Latest Post" : "Featured Post"}
-                </h2>
+                  <h2 class="layout-title layout-title--sm">
+                    {siteConfig.homeOptions.featuredPost.type === "latest" ? "Latest Post" : "Featured Post"}
+                  </h2>
               </div>
 
               <PostCard post={featuredPost} featured={true} eager={true} context="featured" />
@@ -147,7 +147,7 @@ const structuredData = {
             <section class="home-section">
               {!useSpecialTreatment && (
                 <div class="home-section-header">
-                  <h2 class="home-section-title">
+                  <h2 class="layout-title layout-title--sm">
                     Recent Posts
                   </h2>
                   <a
@@ -217,22 +217,6 @@ const structuredData = {
     border-radius: 0.5rem;
   }
 
-  .home-header {
-    margin-bottom: 1rem;
-  }
-
-  .home-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: rgb(var(--color-primary-50));
-    margin-bottom: 1.5rem;
-    line-height: 1.25;
-  }
-
-  :root:not(.dark) .home-title {
-    color: rgb(var(--color-primary-900));
-  }
-
   .home-blurb-above {
     margin-bottom: 4rem;
   }
@@ -246,16 +230,6 @@ const structuredData = {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
-  }
-
-  .home-section-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: rgb(var(--color-primary-50));
-  }
-
-  :root:not(.dark) .home-section-title {
-    color: rgb(var(--color-primary-900));
   }
 
   .home-link {

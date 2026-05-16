@@ -537,19 +537,32 @@ function processExcerptLinks(text: string, targetSlug: string): string {
   }
 
   .mention-card-detailed {
+    position: relative;
     padding: 1rem;
     background: rgb(var(--color-primary-800) / 0.3);
     transition: border-color 200ms, background 200ms;
   }
 
   .mention-card-detailed:hover {
-    border-color: rgb(var(--color-primary-600));
+    border-color: rgb(var(--color-highlight-600));
+
+    .mention-card-detailed-link {
+      color: rgb(var(--color-highlight-400));
+    }
   }
 
   .mention-card-detailed-title {
     font-weight: 500;
     color: rgb(var(--color-primary-50));
     margin-bottom: 0.5rem;
+
+    &::after {
+      content: "";
+      display: block;
+      inset: 0;
+      position: absolute;
+      cursor: pointer;
+    }
   }
 
   .mention-card-detailed-link {

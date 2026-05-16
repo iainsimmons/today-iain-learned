@@ -106,6 +106,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
   .main-content {
     max-width: var(--container-max-width, 45rem);
     margin: 0 auto;
+    padding-block: 2rem;
     position: relative;
     min-height: calc(100vh - 4rem);
   }
@@ -129,7 +130,7 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
   <Header />
 
-  <main id="main-content" class="main-content layout-container">
+  <main id="main-content" class="main-content container-inner">
     <slot />
   </main>
 

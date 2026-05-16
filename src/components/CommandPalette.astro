@@ -146,27 +146,6 @@ import Icon from './Icon.astro';
     color: rgb(var(--color-primary-400));
   }
 
-  /* No results */
-  .cp-no-results { padding: 2rem; text-align: center; }
-
-  .cp-no-results-icon {
-    width: 2rem;
-    height: 2rem;
-    color: rgb(var(--color-primary-500));
-    margin: 0 auto 0.5rem;
-  }
-
-  .cp-no-results-title {
-    color: rgb(var(--color-primary-300));
-  }
-
-  .cp-no-results-subtitle {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: rgb(var(--color-primary-400));
-    margin-top: 0.25rem;
-  }
-
   /* Default section */
   .cp-default-section > * + * {
     border-top-width: 1px;
@@ -175,49 +154,6 @@ import Icon from './Icon.astro';
 
   /* Section padding */
   .cp-section { padding: 0.5rem; }
-
-  /* Section title */
-  .cp-section-title {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 500;
-    color: rgb(var(--color-primary-400));
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-  }
-
-  /* Result item (default items) */
-  .cp-result-item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-  }
-
-  .cp-result-item:hover {
-    background-color: rgb(var(--color-primary-800));
-  }
-
-  .cp-result-item-icon {
-    width: 1rem;
-    height: 1rem;
-    color: rgb(var(--color-primary-400));
-    transition: color 0.2s;
-  }
-
-  .cp-result-item-title {
-    color: rgb(var(--color-primary-50));
-  }
-
-  .cp-result-item-ext {
-    width: 0.75rem;
-    height: 0.75rem;
-    color: rgb(var(--color-primary-500));
-  }
 
   /* Search results */
   .cp-search-results { transition: opacity 200ms var(--default-easing); }
@@ -243,52 +179,12 @@ import Icon from './Icon.astro';
     color: rgb(var(--color-primary-400));
   }
 
-  /* Search result items (created by JS) */
-  .command-palette-item,
-  .cp-result-item-search {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-  }
-  .command-palette-item:hover,
-  .cp-result-item-search:hover {
+  .command-palette-item:hover {
     background-color: rgb(var(--color-primary-800));
   }
 
   .cp-selected {
     background-color: rgb(var(--color-primary-800));
-  }
-
-  .cp-result-item-search-icon {
-    width: 1rem;
-    height: 1rem;
-    color: rgb(var(--color-primary-400));
-    margin-top: 0.125rem;
-    transition: color 0.2s;
-  }
-
-  .cp-result-item-search-content {
-    flex: 1 1 0%;
-    min-width: 0;
-  }
-
-  .cp-result-item-search-title {
-    color: rgb(var(--color-primary-50));
-    font-weight: 500;
-  }
-
-  .cp-result-item-search-desc {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: rgb(var(--color-primary-300));
-    margin-top: 0.25rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   /* Mark highlighting */
@@ -302,9 +198,6 @@ import Icon from './Icon.astro';
 
   /* Virtual scroll container */
   .cp-scroll-container { overflow-y: auto; }
-
-  /* Hidden utility */
-  .cp-hidden { display: none; }
 </style>
 
 <!-- Make site configuration available to client-side JavaScript -->
@@ -350,7 +243,7 @@ import Icon from './Icon.astro';
           <Icon name="search" class="cp-search-icon" size={16} />
           </div>
           <!-- Inline loading indicator -->
-          <div id="command-palette-inline-loading" class="cp-inline-loading cp-hidden">
+          <div id="command-palette-inline-loading" class="cp-inline-loading hidden">
             <div class="cp-spinner"></div>
           </div>
         </div>
@@ -359,7 +252,7 @@ import Icon from './Icon.astro';
       <!-- Results -->
       <div id="command-palette-results" class="cp-results-container">
         <!-- Loading state -->
-        <div id="command-palette-loading" class="cp-loading cp-hidden">
+        <div id="command-palette-loading" class="cp-loading hidden">
           <div class="cp-loading-content">
             <span>Searching...</span>
             <div class="cp-spinner"></div>
@@ -367,10 +260,10 @@ import Icon from './Icon.astro';
         </div>
 
         <!-- No results -->
-        <div id="command-palette-no-results" class="cp-no-results cp-hidden">
-          <Icon name="search-x" class="cp-no-results-icon" />
-          <p class="cp-no-results-title">No results found</p>
-          <p class="cp-no-results-subtitle">Try a different search term</p>
+        <div id="command-palette-no-results" class="empty-state empty-state--compact hidden">
+          <Icon name="search-x" class="empty-state-icon" />
+          <p class="empty-state-title">No results found</p>
+          <p class="empty-state-text">Try a different search term</p>
         </div>
 
         <!-- Default items (shown when no search) -->
@@ -378,41 +271,41 @@ import Icon from './Icon.astro';
 
           <!-- Pages -->
           {siteConfig.commandPalette.sections.pages && siteConfig.navigation.pages.length > 0 && (
-            <div class="cp-section">
-              <div class="cp-section-title">
-                Pages
+              <div class="cp-section">
+                <div class="result-section-title">
+                  Pages
+                </div>
+                {siteConfig.navigation.pages.map(page => (
+                  <a 
+                    href={page.url || '#'}
+                    class="result-item"
+                    target={page.url?.startsWith('http') ? '_blank' : undefined}
+                  >
+                    <Icon name="file-text" class="result-item-icon" />
+                    <span class="result-item-title">{page.title}</span>
+                    {page.url?.startsWith('http') && (
+                      <Icon name="external-link" class="result-ext-icon" />
+                    )}
+                  </a>
+                ))}
               </div>
-              {siteConfig.navigation.pages.map(page => (
-                <a 
-                  href={page.url || '#'}
-                  class="cp-result-item"
-                  target={page.url?.startsWith('http') ? '_blank' : undefined}
-                >
-                  <Icon name="file-text" class="cp-result-item-icon" />
-                  <span class="cp-result-item-title">{page.title}</span>
-                  {page.url?.startsWith('http') && (
-                    <Icon name="external-link" class="cp-result-item-ext" />
-                  )}
-                </a>
-              ))}
-            </div>
           )}
 
           <!-- Social Links -->
           {siteConfig.commandPalette.sections.social && (siteConfig.navigation.social || []).filter((social) => social && social.url && social.icon).length > 0 && (
             <div class="cp-section">
-              <div class="cp-section-title">
+              <div class="result-section-title">
                 Social
               </div>
               {(siteConfig.navigation.social || []).filter((social) => social && social.url && social.icon).map(social => (
                 <a 
                   href={social.url}
                   target="_blank"
-                  class="cp-result-item"
+                  class="result-item result-item--center"
                 >
-                  <Icon name={social.icon} class="cp-result-item-icon" />
-                  <span class="cp-result-item-title">{social.title}</span>
-                  <Icon name="external-link" class="cp-result-item-ext" />
+                  <Icon name={social.icon} class="result-item-icon" />
+                  <span class="result-item-title">{social.title}</span>
+                  <Icon name="external-link" class="result-ext-icon" />
                 </a>
               ))}
             </div>
@@ -420,7 +313,7 @@ import Icon from './Icon.astro';
         </div>
 
         <!-- Search results will be populated here -->
-        <div id="command-palette-search-results" class="cp-search-results cp-hidden">
+        <div id="command-palette-search-results" class="cp-search-results hidden">
         </div>
 
       </div>
@@ -688,8 +581,8 @@ import Icon from './Icon.astro';
 
     private applyPreservedSelection() {
       if (this.selectedIndex >= 0 && this.isOpen) {
-        const searchResultsVisible = !this.searchResults.classList.contains('cp-hidden');
-        const defaultItemsVisible = !this.defaultItems.classList.contains('cp-hidden');
+        const searchResultsVisible = !this.searchResults.classList.contains('hidden');
+        const defaultItemsVisible = !this.defaultItems.classList.contains('hidden');
         
         let items: NodeListOf<Element>;
         
@@ -729,47 +622,47 @@ import Icon from './Icon.astro';
     }
 
     private showDefault() {
-      this.loading.classList.add('cp-hidden');
-      this.inlineLoading.classList.add('cp-hidden');
-      this.noResults.classList.add('cp-hidden');
-      this.searchResults.classList.add('cp-hidden');
-      this.defaultItems.classList.remove('cp-hidden');
+      this.loading.classList.add('hidden');
+      this.inlineLoading.classList.add('hidden');
+      this.noResults.classList.add('hidden');
+      this.searchResults.classList.add('hidden');
+      this.defaultItems.classList.remove('hidden');
     }
 
     private showLoading() {
-      this.defaultItems.classList.add('cp-hidden');
-      this.noResults.classList.add('cp-hidden');
-      this.searchResults.classList.add('cp-hidden');
-      this.loading.classList.add('cp-hidden');
-      this.inlineLoading.classList.remove('cp-hidden');
+      this.defaultItems.classList.add('hidden');
+      this.noResults.classList.add('hidden');
+      this.searchResults.classList.add('hidden');
+      this.loading.classList.add('hidden');
+      this.inlineLoading.classList.remove('hidden');
     }
 
     private showNoResults() {
-      this.defaultItems.classList.add('cp-hidden');
-      this.loading.classList.add('cp-hidden');
-      this.inlineLoading.classList.add('cp-hidden');
-      this.searchResults.classList.add('cp-hidden');
-      this.noResults.classList.remove('cp-hidden');
+      this.defaultItems.classList.add('hidden');
+      this.loading.classList.add('hidden');
+      this.inlineLoading.classList.add('hidden');
+      this.searchResults.classList.add('hidden');
+      this.noResults.classList.remove('hidden');
     }
 
     private showSearchResults() {
-      this.defaultItems.classList.add('cp-hidden');
-      this.loading.classList.add('cp-hidden');
-      this.inlineLoading.classList.add('cp-hidden');
-      this.noResults.classList.add('cp-hidden');
-      this.searchResults.classList.remove('cp-hidden');
+      this.defaultItems.classList.add('hidden');
+      this.loading.classList.add('hidden');
+      this.inlineLoading.classList.add('hidden');
+      this.noResults.classList.add('hidden');
+      this.searchResults.classList.remove('hidden');
     }
 
     private showThemeSelection() {
-      this.defaultItems.classList.add('cp-hidden');
-      this.loading.classList.add('cp-hidden');
-      this.inlineLoading.classList.add('cp-hidden');
-      this.noResults.classList.add('cp-hidden');
-      this.searchResults.classList.add('cp-hidden');
+      this.defaultItems.classList.add('hidden');
+      this.loading.classList.add('hidden');
+      this.inlineLoading.classList.add('hidden');
+      this.noResults.classList.add('hidden');
+      this.searchResults.classList.add('hidden');
     }
 
     private showInlineLoading() {
-      this.inlineLoading.classList.remove('cp-hidden');
+      this.inlineLoading.classList.remove('hidden');
     }
 
     private handleSearch(query: string) {
@@ -816,7 +709,7 @@ import Icon from './Icon.astro';
 
       this.manageCache(cacheKey, [...this.filteredItems]);
 
-      this.inlineLoading.classList.add('cp-hidden');
+      this.inlineLoading.classList.add('hidden');
       this.displaySearchResults();
     }
 
@@ -903,7 +796,7 @@ import Icon from './Icon.astro';
           container.className = 'cp-section';
 
           const header = document.createElement('div');
-          header.className = 'cp-section-title';
+          header.className = 'result-section-title';
           
           const sectionTitles: Record<string, string> = {
             posts: 'Posts',
@@ -992,7 +885,7 @@ import Icon from './Icon.astro';
       const anchor = document.createElement('a');
       anchor.href = item.url;
       anchor.dataset.index = index.toString();
-      anchor.className = `command-palette-item cp-result-item-search ${index === this.selectedIndex ? 'cp-selected' : ''}`;
+      anchor.className = `command-palette-item result-item ${index === this.selectedIndex ? 'cp-selected' : ''}`;
       
       anchor.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1008,7 +901,7 @@ import Icon from './Icon.astro';
       });
       
       const iconDiv = document.createElement('div');
-      iconDiv.className = 'cp-result-item-search-icon';
+      iconDiv.className = 'result-item-icon';
       
       let iconPath = '';
       switch (item.type) {
@@ -1033,16 +926,16 @@ import Icon from './Icon.astro';
       anchor.appendChild(iconDiv);
 
       const contentDiv = document.createElement('div');
-      contentDiv.className = 'cp-result-item-search-content';
+      contentDiv.className = 'result-item-content';
 
       const titleSpan = document.createElement('div');
-      titleSpan.className = 'cp-result-item-search-title';
+      titleSpan.className = 'result-item-title';
       titleSpan.innerHTML = this.highlightSearchTerm(item.title, this.input.value);
       contentDiv.appendChild(titleSpan);
 
       if (item.description) {
         const descriptionPara = document.createElement('div');
-        descriptionPara.className = 'cp-result-item-search-desc';
+        descriptionPara.className = 'result-item-desc';
         descriptionPara.innerHTML = this.highlightSearchTerm(item.description, this.input.value);
         contentDiv.appendChild(descriptionPara);
       }
@@ -1059,8 +952,8 @@ import Icon from './Icon.astro';
     }
 
     private handleKeyDown(e: KeyboardEvent) {
-      const searchResultsVisible = !this.searchResults.classList.contains('cp-hidden');
-      const defaultItemsVisible = !this.defaultItems.classList.contains('cp-hidden');
+      const searchResultsVisible = !this.searchResults.classList.contains('hidden');
+      const defaultItemsVisible = !this.defaultItems.classList.contains('hidden');
       
       let items: NodeListOf<Element>;
       
