@@ -2565,3 +2565,7 @@ figure .video-player {
     display: none !important;
   }
 }
+
+:where(:target) {
+  scroll-margin-top: 4rem;
+}
