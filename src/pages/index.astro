@@ -120,7 +120,7 @@ const structuredData = {
             </div>
           </div>
         </article>
-      ) : processedPosts.length > 0 ? (
+      ) : (
         <>
           <!-- Home blurb above posts -->
           {siteConfig.homeOptions.blurb.placement === 'above' && HomeBlurbContent && (
@@ -187,26 +187,6 @@ const structuredData = {
           )}
 
         </>
-      ) : (
-        <!-- Empty state -->
-        <section class="empty-state">
-          <div style="max-width: 28rem; margin: 0 auto;">
-            <Icon name="file-text" class="empty-state-icon" />
-            <h2 class="empty-state-title-lg">
-              No Posts Yet
-            </h2>
-            <p class="empty-state-text">
-              This blog is just getting started. Check back soon for new content!
-            </p>
-            {isDev && (
-              <div class="dev-notice">
-                <p class="dev-notice-text">
-                  <strong>Dev Mode:</strong> Add some posts to the <code>content/posts/</code> directory to see them here.
-                </p>
-              </div>
-            )}
-          </div>
-        </section>
       )}
 
 </BaseLayout>
