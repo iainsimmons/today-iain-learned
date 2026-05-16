@@ -6,4 +6,4 @@
 - [x] Hide "Feed" text on mobile viewport widths for RSS/Atom feed button links on `/posts` page
 - [x] Make RSS/Atom icons fixed/consistent size (`flex: 0 0 auto` perhaps?)
 - [x] Wrap RSS/Atom feed button links onto their own line on mobile viewport widths, rather than next to the page title
-- [ ] Make table of contents actually sticky (staying at the top right, inline with the article/content container) as the user scrolls down (possibly an issue with `overflow: hidden` being applied to an ascendent element or something)
+- [x] Make table of contents actually sticky (staying at the top right, inline with the article/content container) as the user scrolls down (possibly an issue with `overflow: hidden` being applied to an ascendant element or something)

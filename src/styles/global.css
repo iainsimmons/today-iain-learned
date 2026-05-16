@@ -2247,6 +2247,7 @@ figure .video-player {
   left: 100%;
   margin-left: 2rem;
   width: 16rem;
+  height: 100%;
 }
 
 .toc-sidebar {
@@ -2264,9 +2265,6 @@ figure .video-player {
 .sidebar-sticky {
   position: sticky;
   top: 6rem;
-  max-height: calc(100vh - 8rem);
-  overflow-y: auto;
-  overflow-x: hidden;
   padding-bottom: 1.5rem;
 }
 
@@ -2278,8 +2276,6 @@ figure .video-player {
   position: sticky;
   top: 6rem;
   padding-bottom: 1.5rem;
-  max-height: calc(100vh - 12rem);
-  overflow-y: auto;
 }
 
 .sidebar-sticky-scroll > * + * {
@@ -2358,6 +2354,7 @@ figure .video-player {
   left: 100%;
   margin-left: 2rem;
   width: 16rem;
+  height: 100%;
 }
 
 @media (min-width: 1280px) {
