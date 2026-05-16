@@ -556,6 +556,13 @@ function processExcerptLinks(text: string, targetSlug: string): string {
     color: rgb(var(--color-primary-50));
     margin-bottom: 0.5rem;
 
+  }
+
+  .mention-card-detailed-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 200ms var(--default-easing);
+
     &::after {
       content: "";
       display: block;
@@ -563,12 +570,6 @@ function processExcerptLinks(text: string, targetSlug: string): string {
       position: absolute;
       cursor: pointer;
     }
-  }
-
-  .mention-card-detailed-link {
-    color: inherit;
-    text-decoration: none;
-    transition: color 200ms var(--default-easing);
   }
 
   .mention-card-detailed-link:hover {
