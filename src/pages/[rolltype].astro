@@ -1,0 +1,81 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
+import RollPage from '@/components/RollPage.astro';
+import { generateCustomPageSEO } from '@/utils/seo';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const podRollProps = {
+    rollType: 'podroll',
+    title: 'Podroll',
+    description: 'A collection of the podcasts that I listen to.' ,
+    pageDescription: 'Here is an up-to-date collection of the podcasts that I listen to, grouped by topic.' ,
+    seeAlsoLinkText: 'Blogroll',
+    seeAlsoLink: '/blogroll/',
+    seeAlsoDescription: 'for a list of blogs I subscribe to',
+  };
+
+  const blogRollProps = {
+    rollType: 'blogroll',
+    title: 'Blogroll',
+    description: 'A collection of the RSS feeds that I subscribe to.',
+    pageDescription: 'Here is an up-to-date collection of the RSS feeds that I subscribe to, grouped by topic.',
+    seeAlsoLinkText:  'Podroll',
+    seeAlsoLink: '/podroll/',
+    seeAlsoDescription:  'for a list of podcasts I listen to',
+  };
+  return [
+    {
+      params: { rolltype: 'podroll' },
+      props: podRollProps
+    },
+    {
+      params: { rolltype: 'blogroll' },
+      props: blogRollProps
+    }
+  ];
+};
+
+
+const { rollType, title, description, pageDescription, seeAlsoLinkText, seeAlsoLink, seeAlsoDescription } = Astro.props as RollProps;
+
+const entries = await getCollection(rollType);
+const groups = entries[0]?.data.groups || [];
+const lastUpdated = entries[0]?.data.lastUpdated;
+
+const seoData = generateCustomPageSEO(
+  { title, description },
+  Astro.url.pathname
+);
+
+const toc = groups.map(group => ({
+  depth: 2 as number,
+  slug: group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
+  text: group.title
+}));
+
+const shouldShowTOC = toc.length > 1;
+---
+
+<BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
+  <RollPage
+    title={title}
+    description={pageDescription}
+    seeAlsoLinkText={seeAlsoLinkText}
+    seeAlsoLink={seeAlsoLink}
+    seeAlsoDescription={seeAlsoDescription}
+    toc={toc}
+    groups={groups}
+    lastUpdated={lastUpdated}
+    hasTOC={shouldShowTOC}
+  />
+  {shouldShowTOC && (
+    <div class="toc-sidebar">
+      <div class="sidebar-sticky" id="toc">
+        <TableOfContents headings={toc} />
+      </div>
+    </div>
+  )}
+</BaseLayout>

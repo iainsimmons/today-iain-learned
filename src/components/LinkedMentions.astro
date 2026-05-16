@@ -305,7 +305,7 @@ function processExcerptLinks(text: string, targetSlug: string): string {
           {linkedMentions.filter(mention => mention !== null).map(mention => (
             <a
               href={`/posts/${mention.slug}`}
-              class="mention-card-compact"
+              class="card mention-card-compact"
             >
               <span class="mention-card-compact-title">
                 {mention.title}
@@ -317,7 +317,7 @@ function processExcerptLinks(text: string, targetSlug: string): string {
       ) : (
         <div class="mentions-detailed-list">
           {linkedMentions.filter(mention => mention !== null).map(mention => (
-            <article class="mention-card-detailed">
+            <article class="card mention-card-detailed">
               <div class="mention-card-detailed-title">
                 <a
                   href={`/posts/${mention.slug}`}
@@ -501,8 +501,6 @@ function processExcerptLinks(text: string, targetSlug: string): string {
     justify-content: space-between;
     padding: 0.75rem;
     background: rgb(var(--color-primary-800) / 0.3);
-    border-radius: 0.5rem;
-    border: 1px solid rgb(var(--color-primary-700));
     transition: border-color 200ms, background 200ms;
     text-decoration: none;
   }
@@ -539,27 +537,39 @@ function processExcerptLinks(text: string, targetSlug: string): string {
   }
 
   .mention-card-detailed {
+    position: relative;
     padding: 1rem;
     background: rgb(var(--color-primary-800) / 0.3);
-    border-radius: 0.5rem;
-    border: 1px solid rgb(var(--color-primary-700));
     transition: border-color 200ms, background 200ms;
   }
 
   .mention-card-detailed:hover {
-    border-color: rgb(var(--color-primary-600));
+    border-color: rgb(var(--color-highlight-600));
+
+    .mention-card-detailed-link {
+      color: rgb(var(--color-highlight-400));
+    }
   }
 
   .mention-card-detailed-title {
     font-weight: 500;
     color: rgb(var(--color-primary-50));
     margin-bottom: 0.5rem;
+
   }
 
   .mention-card-detailed-link {
     color: inherit;
     text-decoration: none;
     transition: color 200ms var(--default-easing);
+
+    &::after {
+      content: "";
+      display: block;
+      inset: 0;
+      position: absolute;
+      cursor: pointer;
+    }
   }
 
   .mention-card-detailed-link:hover {

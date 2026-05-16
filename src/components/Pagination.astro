@@ -89,6 +89,7 @@ const nextUrl = hasNext
 <style is:global>
   .pagination-nav {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     padding: 2rem 0;
@@ -217,8 +218,12 @@ const nextUrl = hasNext
   .pagination-mobile-info {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 0.875rem;
     color: rgb(var(--color-primary-300));
+    order: -1;
+    flex: 0 0 100%;
+    margin-bottom: 1rem;
   }
 
   @media (min-width: 768px) {

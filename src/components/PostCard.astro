@@ -49,7 +49,7 @@ const shouldShowCoverImage = (() => {
 })();
 ---
 
-<article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`post-card ${featured ? 'post-card--featured' : ''} border-glow-top`} role="article" aria-labelledby={`post-title-${post.id}`}>
+<article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`card post-card ${featured ? 'post-card--featured' : ''} border-glow-top`} role="article" aria-labelledby={`post-title-${post.id}`}>
 <div class="post-card-inner">
     {image && shouldShowCoverImage && (
       <div class="post-card-image-wrap" style={`aspect-ratio: ${getPostCardAspectRatio()};`}>
@@ -141,7 +141,7 @@ const shouldShowCoverImage = (() => {
       {tags && tags.length > 0 && siteConfig.postOptions.tags && (
         <div class="post-card-tags">
           {tags.map((tag) => (
-            <a href={`/posts/tag/${tag}`} class="post-card-tag" aria-label={`View posts tagged with ${tag}`}>
+            <a href={`/posts/tag/${tag}`} class="tag post-card-tag" aria-label={`View posts tagged with ${tag}`}>
               {tag}
             </a>
           ))}
@@ -153,15 +153,7 @@ const shouldShowCoverImage = (() => {
 
 <style>
   .post-card {
-    border: 1px solid rgb(var(--color-primary-700));
-    background-color: rgb(var(--color-primary-900));
-    border-radius: 0.5rem;
     overflow: hidden;
-    transition: box-shadow 0.2s;
-  }
-
-  .post-card:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
 
   .post-card--featured {
@@ -272,22 +264,7 @@ const shouldShowCoverImage = (() => {
   }
 
   .post-card-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    line-height: calc(1 / 0.75);
-    color: rgb(var(--color-primary-300));
-    background-color: rgb(var(--color-primary-800));
-    padding: 0.25rem 0.625rem;
-    border-radius: 9999px;
-    border: 1px solid rgb(var(--color-primary-700));
-    transition: background-color 0.2s, color 0.2s;
     margin-right: 0.5rem;
     margin-bottom: 0.25rem;
-    text-decoration: none;
-  }
-
-  .post-card-tag:hover {
-    background-color: rgb(var(--color-highlight-800));
-    color: rgb(var(--color-highlight-200));
   }
 </style>

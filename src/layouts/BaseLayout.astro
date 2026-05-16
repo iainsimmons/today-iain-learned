@@ -28,17 +28,14 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO Meta Tags -->
   <title>{seoData.title}</title>
   <meta name="description" content={seoData.description}>
   <link rel="canonical" href={seoData.canonical}>
 
-  <!-- Robots meta tag -->
   {seoData.noIndex && (
     <meta name="robots" content="noindex, nofollow">
   )}
 
-  <!-- Open Graph -->
   <meta property="og:title" content={seoData.title}>
   <meta property="og:description" content={seoData.description}>
   <meta property="og:url" content={seoData.canonical}>
@@ -56,13 +53,11 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     <>
       <meta property="og:image" content="/open-graph.png">
       <meta property="og:image:alt" content={siteConfig.defaultOgImageAlt}>
-      {/* Assuming default image dimensions, adjust if known */}
       <meta property="og:image:width" content="1200">
       <meta property="og:image:height" content="630">
     </>
   )}
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={seoData.title}>
   <meta name="twitter:description" content={seoData.description}>
@@ -78,7 +73,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     </>
   )}
 
-  <!-- Article specific meta tags -->
   {seoData.ogType === 'article' && (
     <>
       {seoData.publishedTime && <meta property="article:published_time" content={seoData.publishedTime}>}
@@ -89,12 +83,10 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     </>
   )}
 
-  <!-- Default favicon (will be updated by JavaScript) -->
   <link rel="icon" href="/favicon.png" />
 
   <Font cssVariable="--font-jetbrains-mono" />
 
-  <!-- Font CSS Variables -->
   <style>
   .skip-link {
     position: absolute;
@@ -112,16 +104,14 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
     top: 1rem;
   }
   .main-content {
-    max-width: var(--content-width, 45rem);
+    max-width: var(--container-max-width, 45rem);
     margin: 0 auto;
+    padding-block: 2rem;
     position: relative;
     min-height: calc(100vh - 4rem);
   }
   </style>
 
-  <!-- Native CSS view transitions enabled via CSS -->
-
-  <!-- Additional head content -->
   <slot name="head" />
   <script>
     import 'invokers-polyfill';
@@ -129,7 +119,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 </head>
 
 <body class={`${scrollbarClass} ${bodyClass}`}>
-  <!-- Skip to main content -->
   <a href="#main-content" class="skip-link">
     Skip to main content
   </a>
@@ -139,29 +128,20 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
   </a>}
 
 
-  <!-- Header -->
   <Header />
 
-  <!-- Main content -->
-  <main id="main-content" class="main-content" style={`max-width: ${siteConfig.layout.contentWidth}`}>
+  <main id="main-content" class="main-content container-inner">
     <slot />
   </main>
 
-  <!-- Footer -->
   <Footer />
 
-  <!-- Command Palette -->
   {siteConfig.commandPalette.enabled && <CommandPalette />}
 
-
-  <!-- Scroll to Top -->
   {siteConfig.scrollToTop && <ScrollToTop />}
 
-  <!-- Image Gallery Manager -->
   <ImageGalleryManager />
 
-
-    <!-- Mermaid diagrams handled by client script -->
     <script>
       try { await import('../scripts/base-embeds-client.ts'); } catch (_) {}
     </script>
@@ -169,7 +149,6 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
       try { await import('../scripts/mermaid-client.ts'); } catch (_) {}
     </script>
 
-  <!-- Global scripts - Defer non-critical JavaScript -->
   <script define:vars={{ commentsEnabled: siteConfig.postOptions.comments.enabled }} defer>
     
     // Set window.commentsEnabled for client-side access
@@ -226,10 +205,8 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
 
 
-  <!-- Lightbox for images (global) -->
   <Lightbox />
 
-  <!-- Additional body scripts -->
   <slot name="scripts" />
 </body>
 </html>

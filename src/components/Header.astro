@@ -21,7 +21,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
 ---
 
 <header id="main-header" class="site-header">
-  <div class="site-header-inner">
+  <div class="container-inner">
     <div class="site-header-bar">
       <div class="site-header-brand">
         <a href="/">
@@ -135,21 +135,6 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
     width: 100%;
     background-color: rgb(var(--color-primary-950));
     transition: box-shadow 0.2s var(--default-easing);
-  }
-
-  .site-header-inner {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: 0 1rem;
-    position: relative;
-  }
-
-  @media (min-width: 640px) {
-    .site-header-inner { padding: 0 1.5rem; }
-  }
-
-  @media (min-width: 1024px) {
-    .site-header-inner { padding: 0 2rem; }
   }
 
   .site-header-bar {

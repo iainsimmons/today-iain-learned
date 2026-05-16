@@ -101,16 +101,14 @@ const structuredData = {
     )}
   </Fragment>
 
-  <main class="home-wrapper">
-    <div class="home-container" style={`max-width: ${siteConfig.layout.contentWidth}`}>
       {onlyBlurbContent ? (
         <!-- Blurb-only homepage with page-like layout -->
-        <article class="home-article">
+        <article class="card home-article">
           <div class="home-article-inner">
             <!-- Page header -->
             {homeBlurbContent?.data.title && (
               <header class="home-header">
-                <h1 class="home-title">
+                <h1 class="layout-title">
                   {homeBlurbContent.data.title}
                 </h1>
               </header>
@@ -122,7 +120,7 @@ const structuredData = {
             </div>
           </div>
         </article>
-      ) : processedPosts.length > 0 ? (
+      ) : (
         <>
           <!-- Home blurb above posts -->
           {siteConfig.homeOptions.blurb.placement === 'above' && HomeBlurbContent && (
@@ -135,9 +133,9 @@ const structuredData = {
           {siteConfig.homeOptions.featuredPost.enabled && featuredPost && (
             <section class="home-section">
               <div class="home-section-header">
-                <h2 class="home-section-title">
-                  {siteConfig.homeOptions.featuredPost.type === "latest" ? "Latest Post" : "Featured Post"}
-                </h2>
+                  <h2 class="layout-title layout-title--sm">
+                    {siteConfig.homeOptions.featuredPost.type === "latest" ? "Latest Post" : "Featured Post"}
+                  </h2>
               </div>
 
               <PostCard post={featuredPost} featured={true} eager={true} context="featured" />
@@ -149,7 +147,7 @@ const structuredData = {
             <section class="home-section">
               {!useSpecialTreatment && (
                 <div class="home-section-header">
-                  <h2 class="home-section-title">
+                  <h2 class="layout-title layout-title--sm">
                     Recent Posts
                   </h2>
                   <a
@@ -189,91 +187,14 @@ const structuredData = {
           )}
 
         </>
-      ) : (
-        <!-- Empty state -->
-        <section class="home-empty">
-          <div class="home-empty-inner">
-            <Icon name="file-text" class="home-empty-icon" />
-            <h2 class="home-empty-title">
-              No Posts Yet
-            </h2>
-            <p class="home-empty-text">
-              This blog is just getting started. Check back soon for new content!
-            </p>
-            {isDev && (
-              <div class="home-dev-notice">
-                <p class="home-dev-notice-text">
-                  <strong>Dev Mode:</strong> Add some posts to the <code>content/posts/</code> directory to see them here.
-                </p>
-              </div>
-            )}
-          </div>
-        </section>
       )}
 
-    </div>
-  </main>
 </BaseLayout>
 
 <style>
-  .home-wrapper {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    position: relative;
-  }
-
-  .home-container {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .home-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .home-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
-
-  .home-article {
-    background-color: rgb(var(--color-primary-900));
-    border-radius: 0.5rem;
-    border: 1px solid rgb(var(--color-primary-700));
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  }
-
-  :root:not(.dark) .home-article {
-    background-color: rgb(var(--color-primary-50));
-    border-color: rgb(var(--color-primary-200));
-  }
-
   .home-article-inner {
     padding: 1.5rem;
     border-radius: 0.5rem;
-  }
-
-  .home-header {
-    margin-bottom: 1rem;
-  }
-
-  .home-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: rgb(var(--color-primary-50));
-    margin-bottom: 1.5rem;
-    line-height: 1.25;
-  }
-
-  :root:not(.dark) .home-title {
-    color: rgb(var(--color-primary-900));
   }
 
   .home-blurb-above {
@@ -289,16 +210,6 @@ const structuredData = {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
-  }
-
-  .home-section-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: rgb(var(--color-primary-50));
-  }
-
-  :root:not(.dark) .home-section-title {
-    color: rgb(var(--color-primary-900));
   }
 
   .home-link {
@@ -334,70 +245,4 @@ const structuredData = {
     margin-top: 4rem;
   }
 
-  .home-empty {
-    text-align: center;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  }
-
-  .home-empty-inner {
-    max-width: 28rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .home-empty-icon {
-    display: block;
-    width: 4rem;
-    height: 4rem;
-    color: rgb(var(--color-primary-500));
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.5rem;
-  }
-
-  :root:not(.dark) .home-empty-icon {
-    color: rgb(var(--color-primary-400));
-  }
-
-  .home-empty-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: rgb(var(--color-primary-50));
-    margin-bottom: 1rem;
-  }
-
-  :root:not(.dark) .home-empty-title {
-    color: rgb(var(--color-primary-900));
-  }
-
-  .home-empty-text {
-    color: rgb(var(--color-primary-300));
-    margin-bottom: 2rem;
-  }
-
-  :root:not(.dark) .home-empty-text {
-    color: rgb(var(--color-primary-600));
-  }
-
-  .home-dev-notice {
-    padding: 1rem;
-    background-color: rgb(23 37 84);
-    border-radius: 0.5rem;
-    border: 1px solid rgb(30 64 175);
-  }
-
-  :root:not(.dark) .home-dev-notice {
-    background-color: rgb(239 246 255);
-    border-color: rgb(191 219 254);
-  }
-
-  .home-dev-notice-text {
-    font-size: 0.875rem;
-    color: rgb(191 219 254);
-  }
-
-  :root:not(.dark) .home-dev-notice-text {
-    color: rgb(30 64 175);
-  }
 </style>
