@@ -2570,17 +2570,9 @@ figure .video-player {
   .hide-on-touch {
     display: none !important;
   }
-
-  .show-on-touch {
-    display: unset !important;
-  }
 }
 
 @media not (pointer: coarse) {
-  .hide-on-touch {
-    display: unset !important;
-  }
-
   .show-on-touch {
     display: none !important;
   }
