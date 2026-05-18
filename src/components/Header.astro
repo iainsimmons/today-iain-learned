@@ -28,10 +28,11 @@ import Icon from './Icon.astro';
       </div>
 
       <div class="site-header-actions">
-        <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger" aria-label="Open command palette">
-          <kbd class="cmd-trigger-kbd narrow">Ctrl</kbd>
-          <span>+</span>
-          <kbd class="cmd-trigger-kbd">K</kbd>
+        <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger" aria-label="Open command palette, search">
+          <span class="show-on-touch">search</span>
+          <kbd class="cmd-trigger-kbd narrow hide-on-touch">Ctrl</kbd>
+          <span class="hide-on-touch">+</span>
+          <kbd class="cmd-trigger-kbd hide-on-touch">K</kbd>
         </button>
 
         <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle mobile navigation menu" aria-expanded="false">
