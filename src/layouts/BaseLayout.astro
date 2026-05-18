@@ -169,11 +169,10 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
     // Command Palette Keyboard Shortcut Handler
     function setupCommandPaletteShortcut() {
-      const isMac = typeof navigator !== 'undefined' && (/mac/i.test(navigator.platform) || /mac os x/i.test(navigator.userAgent));
       // Add global keyboard listener
       document.addEventListener('keydown', (e) => {
         // Check modifiers with cross-platform primary mapping (Ctrl on Win/Linux, Cmd on macOS)
-        const primaryPressed = isMac ? e.metaKey : e.ctrlKey;
+        const primaryPressed = e.ctrlKey;
 
         // Check if the key matches (case insensitive)
         const keyMatch = e.key.toLowerCase() === 'k';

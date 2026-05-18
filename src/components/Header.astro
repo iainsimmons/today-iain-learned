@@ -1,23 +1,6 @@
 ---
 import { siteConfig } from '../config';
 import Icon from './Icon.astro';
-
-const currentPath = Astro.url.pathname;
-
-function isLinkActive(linkUrl: string | undefined): boolean {
-  if (!linkUrl || linkUrl === '#') return false;
-  if (linkUrl.startsWith('http://') || linkUrl.startsWith('https://')) return false;
-  const normalizedLink = linkUrl.endsWith('/') ? linkUrl : linkUrl + '/';
-  const normalizedCurrent = currentPath.endsWith('/') ? currentPath : currentPath + '/';
-  return normalizedLink === normalizedCurrent;
-}
-
-const hasShortcut = siteConfig.commandPalette.shortcut && siteConfig.commandPalette.shortcut.trim();
-const shortcutKey = hasShortcut ? siteConfig.commandPalette.shortcut.split('+').pop()?.toUpperCase() || 'K' : '';
-const allSectionsDisabled = !siteConfig.commandPalette.sections.quickActions && 
-                             !siteConfig.commandPalette.sections.pages && 
-                             !siteConfig.commandPalette.sections.social;
-const paletteIcon = allSectionsDisabled ? 'search' : 'command';
 ---
 
 <header id="main-header" class="site-header">
@@ -46,8 +29,9 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
 
       <div class="site-header-actions">
         <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger" aria-label="Open command palette">
-          <Icon name={paletteIcon} class="cmd-trigger-icon" size={20} />
-          <kbd class="cmd-trigger-kbd">{shortcutKey}</kbd>
+          <kbd class="cmd-trigger-kbd narrow">Ctrl</kbd>
+          <span>+</span>
+          <kbd class="cmd-trigger-kbd">K</kbd>
         </button>
 
         <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle mobile navigation menu" aria-expanded="false">
@@ -216,7 +200,7 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
   .cmd-trigger {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     color: rgb(var(--color-primary-400));
@@ -253,6 +237,11 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
     font-size: 0.75rem;
     font-weight: 500;
     color: rgb(var(--color-primary-300));
+
+    &.narrow {
+      padding: 0.25rem;
+      letter-spacing: -1px;
+    }
   }
 
   .mobile-toggle {
