@@ -9,6 +9,7 @@ main = "./dist/_worker.js"
 compatibility_date = "2026-05-29"
 
 [assets]
-  directory = "./dist"
-  not_found_handling = "404-page"  # Serve custom 404 page from src/pages/404.astro
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "404-page" # Serve custom 404 page from src/pages/404.astro
 
