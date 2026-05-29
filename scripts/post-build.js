@@ -35,3 +35,15 @@ try {
   console.error("❌ Error renaming headers file:", err);
   process.exit(1);
 }
+
+// Copy .assetsignore.template to dist/.assetsignore
+const assetsIgnoreTemplate = path.join(__dirname, "..", ".assetsignore.template");
+const assetsIgnoreDest = path.join(buildDir, ".assetsignore");
+try {
+  if (fs.existsSync(assetsIgnoreTemplate)) {
+    fs.copyFileSync(assetsIgnoreTemplate, assetsIgnoreDest);
+    console.log("✅ Successfully copied .assetsignore to dist/");
+  }
+} catch (err) {
+  console.warn("⚠️  Could not copy .assetsignore file:", err.message);
+}

@@ -2,6 +2,9 @@
 # This file is copied to dist/.assetsignore during build
 # See: https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/
 
+# Worker entry point (must not be uploaded as asset)
+_worker.js
+
 # Dependencies (shouldn't be in dist, but exclude for safety)
 **/node_modules
 **/.pnpm-store
