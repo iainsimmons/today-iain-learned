@@ -5,7 +5,8 @@
 # You can rename this to your desired project name (e.g., "my-blog", "my-website")
 # This name will be used for your Cloudflare Worker deployment
 name = "today-iain-learned"
-compatibility_date = "2026-05-18"
+main = "./dist/_worker.js"
+compatibility_date = "2026-05-29"
 
 [assets]
   directory = "./dist"

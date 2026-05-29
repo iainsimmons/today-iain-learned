@@ -7,6 +7,7 @@ dist/
 .astro/
 public/headers.txt
 public/redirects.txt
+.wrangler
 
 # Environment variables
 .env

@@ -429,6 +429,7 @@ function generateCloudflareWorkersConfig(projectName) {
   const configLines = [];
   configLines.push(`name = "${projectName}"`);
   configLines.push(`compatibility_date = "${compatibilityDate}"`);
+  configLines.push(`main = "./dist/_worker.js"`);
   configLines.push(``);
   configLines.push(`[assets]`);
   configLines.push(`  directory = "./dist"`);
@@ -742,6 +743,14 @@ async function writeCloudflareWorkersConfig(projectName) {
       if (!updatedContent.match(/^name\s*=/m)) {
         // name doesn't exist, add it at the beginning
         updatedContent = `name = "${projectName}"\n${updatedContent}`;
+      }
+
+      // Ensure main field exists (Worker entrypoint)
+      if (!updatedContent.match(/^main\s*=/m)) {
+        updatedContent = updatedContent.replace(
+          /^name\s*=\s*[^\n]+/m,
+          `$&\nmain = "./dist/_worker.js"`,
+        );
       }
 
       // Migrate from Pages format to Workers format
