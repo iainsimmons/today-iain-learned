@@ -63,6 +63,8 @@
     "@types/unist": "^3.0.3",
     "cross-env": "^10.0.0",
     "fast-xml-parser": "^5.7.2",
+    "prettier": "3.8.3",
+    "prettier-plugin-astro": "0.14.1",
     "vite": "^7.1.12",
     "wrangler": "^4.95.0"
   },
@@ -70,4 +72,3 @@
     "vite": "^7"
   }
 }
-
