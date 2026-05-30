@@ -7,7 +7,7 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/random") {
-      const resp = await fetch(new URL("/random-posts.json", request.url));
+      const resp = await env.ASSETS.fetch(new URL("/random-posts.json", request.url));
       if (!resp.ok) {
         return new Response("Failed to load posts", { status: 500 });
       }
@@ -18,4 +18,4 @@ export default {
 
     return env.ASSETS.fetch(request);
   },
-};
+} satisfies ExportedHandler<Env>;
