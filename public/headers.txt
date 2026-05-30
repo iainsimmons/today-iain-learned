@@ -1,0 +1,94 @@
+# Custom Headers for Cloudflare Pages
+
+# HTML files
+/*.html
+  Cache-Control: public, max-age=3600, s-maxage=86400
+
+# CSS files
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# JavaScript files
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# JSON files
+/*.json
+  Cache-Control: public, max-age=3600
+
+# XML files
+/*.xml
+  Cache-Control: public, max-age=3600
+
+# Text files
+/*.txt
+  Cache-Control: public, max-age=3600
+
+# Pre-compressed files
+/*.gz
+  Content-Encoding: gzip
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.br
+  Content-Encoding: br
+  Cache-Control: public, max-age=31536000, immutable
+
+# Static assets with long-term caching
+/_assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# WebP images
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+# Font files
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.eot
+  Cache-Control: public, max-age=31536000, immutable
+
+# Image files
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+# Favicon files
+/favicon*
+  Cache-Control: public, max-age=31536000, immutable
+
+# All pages - Security headers and Content Security Policy
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Embedder-Policy: unsafe-none
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://static.cloudflareinsights.com https://cdn.jsdelivr.net https://giscus.app https://platform.twitter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://giscus.app; frame-src 'self' https://www.youtube.com https://giscus.app https://platform.twitter.com; object-src 'none'; base-uri 'self';
+
+# PDF files - allow iframe embedding (override X-Frame-Options for PDFs)
+/*.pdf
+  Cache-Control: public, max-age=3600
+  X-Frame-Options: SAMEORIGIN

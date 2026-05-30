@@ -6,8 +6,6 @@ node_modules/
 dist/
 .astro/
 .wrangler/
-public/headers.txt
-public/redirects.txt
 
 # Environment variables
 .env
