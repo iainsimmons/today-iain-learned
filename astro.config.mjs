@@ -1,5 +1,6 @@
 import { defineConfig, fontProviders } from "astro/config";
 import expressiveCode from "astro-expressive-code";
+import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import {
@@ -33,6 +34,7 @@ const DEPLOYMENT_PLATFORM = process.env.DEPLOYMENT_PLATFORM || "cloudflare-worke
 
 export default defineConfig({
   site: siteConfig.site,
+  adapter: cloudflare(),
   deployment: {
     platform: DEPLOYMENT_PLATFORM,
   },

@@ -423,21 +423,21 @@ function generateCloudflareWorkersConfig(projectName) {
   const today = new Date();
   const compatibilityDate = today.toISOString().split("T")[0];
 
-  // Generate Workers-compatible config (recommended by Cloudflare)
-  // Workers uses assets.directory instead of pages_build_output_dir
+  // Generate Workers-compatible JSONC config (recommended by Cloudflare)
   // See: https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/
-  const configLines = [];
-  configLines.push(`name = "${projectName}"`);
-  configLines.push(`compatibility_date = "${compatibilityDate}"`);
-  configLines.push(`main = "./dist/_worker.js"`);
-  configLines.push(``);
-  configLines.push(`[assets]`);
-  configLines.push(`  directory = "./dist"`);
-  configLines.push(
-    `  not_found_handling = "404-page"  # Serve custom 404 page from src/pages/404.astro`,
-  );
+  const config = {
+    $schema: "./node_modules/wrangler/config-schema.json",
+    name: projectName,
+    compatibility_date: compatibilityDate,
+    main: "./dist/_worker.js",
+    assets: {
+      directory: "./dist/",
+      binding: "ASSETS",
+      not_found_handling: "404-page",
+    },
+  };
 
-  return configLines.join("\n") + "\n";
+  return JSON.stringify(config, null, 2) + "\n";
 }
 
 // Clean up platform-specific files that don't match the selected platform
@@ -466,7 +466,7 @@ async function cleanupOtherPlatformFiles(currentPlatform) {
     }
   }
 
-  // Note: We don't remove vercel.json, netlify.toml, or wrangler.toml as they may contain
+  // Note: We don't remove vercel.json, netlify.toml, or wrangler.jsonc as they may contain
   // custom configuration (serverless functions, environment variables, bindings, etc.)
   // Only redirects.txt and headers.txt are platform-specific and should be cleaned up
 }
@@ -710,122 +710,55 @@ async function copyAssetsIgnoreFile() {
 
 async function writeCloudflareWorkersConfig(projectName) {
   const projectRoot = path.join(__dirname, "..");
-  const wranglerTomlPath = path.join(projectRoot, "wrangler.toml");
+  const wranglerJsoncPath = path.join(projectRoot, "wrangler.jsonc");
 
   if (DRY_RUN) {
-    log.info("📝 [DRY RUN] Would generate wrangler.toml:");
+    log.info("📝 [DRY RUN] Would generate wrangler.jsonc:");
     console.log(generateCloudflareWorkersConfig(projectName));
     return;
   }
 
+  // Clean up legacy wrangler.toml if it exists
+  const wranglerTomlPath = path.join(projectRoot, "wrangler.toml");
   try {
-    // Read existing wrangler.toml to preserve custom settings
-    let existingContent = "";
-    try {
-      existingContent = await fs.readFile(wranglerTomlPath, "utf-8");
-    } catch (error) {
-      // File doesn't exist, create new one
-    }
-
-    // Generate new config with managed fields (Workers format)
-    const newConfig = generateCloudflareWorkersConfig(projectName);
-
-    if (existingContent) {
-      // Update only the fields we manage while preserving everything else
-      // Migrate from Pages format (pages_build_output_dir) to Workers format (assets.directory)
-      let updatedContent = existingContent;
-
-      // Update name field
-      updatedContent = updatedContent.replace(
-        /^name\s*=\s*["'][^"']*["']/m,
-        `name = "${projectName}"`,
-      );
-      if (!updatedContent.match(/^name\s*=/m)) {
-        // name doesn't exist, add it at the beginning
-        updatedContent = `name = "${projectName}"\n${updatedContent}`;
-      }
-
-      // Ensure main field exists (Worker entrypoint)
-      if (!updatedContent.match(/^main\s*=/m)) {
-        updatedContent = updatedContent.replace(
-          /^name\s*=\s*[^\n]+/m,
-          `$&\nmain = "./dist/_worker.js"`,
-        );
-      }
-
-      // Migrate from Pages format to Workers format
-      // Remove old pages_build_output_dir if it exists
-      updatedContent = updatedContent.replace(
-        /^pages_build_output_dir\s*=\s*["'][^"']*["']\s*\n?/m,
-        "",
-      );
-
-      // Update or add assets.directory (Workers format)
-      if (updatedContent.match(/^\[assets\]/m)) {
-        // [assets] section exists, update directory
-        updatedContent = updatedContent.replace(
-          /^(\[assets\]\s*\n\s*)directory\s*=\s*["'][^"']*["']/m,
-          `$1directory = "./dist"`,
-        );
-        if (!updatedContent.match(/^\[assets\]\s*\n\s*directory\s*=/m)) {
-          // directory doesn't exist in [assets], add it
-          updatedContent = updatedContent.replace(
-            /^(\[assets\]\s*\n)/m,
-            `$1  directory = "./dist"\n`,
-          );
-        }
-        // Ensure not_found_handling is set
-        if (!updatedContent.match(/not_found_handling\s*=/m)) {
-          updatedContent = updatedContent.replace(
-            /^(\[assets\]\s*\n\s*directory\s*=[^\n]+)/m,
-            `$1\n  not_found_handling = "404-page"  # Serve custom 404 page from src/pages/404.astro`,
-          );
-        }
-      } else {
-        // [assets] section doesn't exist, add it after compatibility_date
-        const today = new Date();
-        const compatibilityDate = today.toISOString().split("T")[0];
-        updatedContent = updatedContent.replace(
-          /^compatibility_date\s*=\s*["'][^"']*["']/m,
-          `compatibility_date = "${compatibilityDate}"`,
-        );
-        if (!updatedContent.match(/^compatibility_date\s*=/m)) {
-          // compatibility_date doesn't exist, add both
-          updatedContent = updatedContent.replace(
-            /^(name\s*=[^\n]+)/m,
-            `$1\ncompatibility_date = "${compatibilityDate}"`,
-          );
-        }
-        // Add [assets] section
-        updatedContent = updatedContent.replace(
-          /^(compatibility_date\s*=[^\n]+)/m,
-          `$1\n\n[assets]\n  directory = "./dist"\n  not_found_handling = "404-page"  # Serve custom 404 page from src/pages/404.astro`,
-        );
-      }
-
-      // Update compatibility_date field
-      const today = new Date();
-      const compatibilityDate = today.toISOString().split("T")[0];
-      updatedContent = updatedContent.replace(
-        /^compatibility_date\s*=\s*["'][^"']*["']/m,
-        `compatibility_date = "${compatibilityDate}"`,
-      );
-
-      // Remove old [build] section if it exists (not needed for Workers)
-      updatedContent = updatedContent.replace(
-        /\n*\[build\]\s*\n\s*command\s*=\s*["'][^"']*["']\s*\n*/g,
-        "\n",
-      );
-
-      await fs.writeFile(wranglerTomlPath, updatedContent, "utf-8");
-      log.info(`📝 Updated wrangler.toml (Workers format, preserved custom settings)`);
-    } else {
-      // File doesn't exist, create new one with Workers format
-      await fs.writeFile(wranglerTomlPath, newConfig, "utf-8");
-      log.info(`📝 Created wrangler.toml (Workers format)`);
-    }
+    await fs.access(wranglerTomlPath);
+    await fs.unlink(wranglerTomlPath);
+    log.info("🗑️ Removed legacy wrangler.toml (migrated to wrangler.jsonc)");
   } catch (error) {
-    log.error(`❌ Error updating wrangler.toml:`, error.message);
+    // Legacy file doesn't exist, nothing to clean up
+  }
+
+  try {
+    // Read existing wrangler.jsonc to preserve custom settings
+    let existingConfig = {};
+    try {
+      const existingContent = await fs.readFile(wranglerJsoncPath, "utf-8");
+      // Strip // comments and trailing commas for JSON parsing
+      const stripped = existingContent
+        .replace(/\/\/.*$/gm, "")
+        .replace(/,\s*([}\]])/g, "$1");
+      existingConfig = JSON.parse(stripped);
+    } catch (error) {
+      // File doesn't exist or is invalid JSON, create new one
+    }
+
+    // Generate managed config fields
+    const managedConfig = JSON.parse(generateCloudflareWorkersConfig(projectName));
+
+    // Merge configs - managed fields override existing ones, preserve custom settings (bindings, etc.)
+    const mergedConfig = {
+      ...existingConfig,
+      $schema: managedConfig.$schema,
+      name: managedConfig.name,
+      compatibility_date: managedConfig.compatibility_date,
+      main: managedConfig.main,
+      assets: managedConfig.assets,
+    };
+
+    await fs.writeFile(wranglerJsoncPath, JSON.stringify(mergedConfig, null, 2) + "\n", "utf-8");
+    log.info(`📝 Updated wrangler.jsonc (preserved custom settings)`);
+  } catch (error) {
+    log.error(`❌ Error updating wrangler.jsonc:`, error.message);
   }
 }
 
@@ -981,7 +914,7 @@ async function generateRedirects() {
         // Cloudflare Workers: Uses _redirects file for instant HTTP redirects
         // See migration guide: https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/
         // No Astro config needed - would create slow meta refresh HTML files
-        // Generate Workers-compatible wrangler.toml (uses assets.directory instead of pages_build_output_dir)
+        // Generate Workers-compatible wrangler.jsonc (uses assets.directory instead of pages_build_output_dir)
         await writeGitHubPagesConfig(allRedirects); // Uses same _redirects/_headers format
         await writeCloudflareWorkersConfig(projectName); // Generate Workers-compatible config
         await copyAssetsIgnoreFile(); // Copy .assetsignore to dist/ for Workers
