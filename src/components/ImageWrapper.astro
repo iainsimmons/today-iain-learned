@@ -1,5 +1,4 @@
 ---
-import path from "node:path";
 import { Image } from "astro:assets";
 import { devConfig, isDev } from "@/config/dev";
 
@@ -95,9 +94,14 @@ if (isLocal) {
       cleanSrc = cleanSrc.slice(12);
     }
     
-    let normalizedPath = path
-      .normalize(path.join("/public", basePath, cleanSrc))
-      .replace(/\\/g, "/");
+    const rawPath = `/public${basePath}${cleanSrc}`.replace(/\/+/g, "/");
+    const normalizedParts: string[] = [];
+    for (const part of rawPath.split("/")) {
+      if (part === "" || part === ".") continue;
+      if (part === "..") { if (normalizedParts.length > 0) normalizedParts.pop(); continue; }
+      normalizedParts.push(part);
+    }
+    let normalizedPath = "/" + normalizedParts.join("/");
     
     if (!normalizedPath.startsWith("/public")) {
       normalizedPath = `/public${normalizedPath}`;

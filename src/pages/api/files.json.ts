@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
+export const prerender = true;
+
 // Recursively list all files under src/content
 function listAllFiles(dir: string): string[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });

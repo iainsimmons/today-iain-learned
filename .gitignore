@@ -5,6 +5,7 @@ node_modules/
 # Build
 dist/
 .astro/
+.wrangler/
 public/headers.txt
 public/redirects.txt
 

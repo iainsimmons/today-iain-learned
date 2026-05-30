@@ -2,6 +2,7 @@ import { defineConfig, fontProviders } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
+import { unified } from "@astrojs/markdown-remark";
 import {
   remarkInternalLinks,
   remarkFolderImages,
@@ -28,14 +29,18 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { siteConfig } from "./src/config.ts";
 import { fileURLToPath } from "url";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // Deployment platform configuration
 const DEPLOYMENT_PLATFORM = process.env.DEPLOYMENT_PLATFORM || "cloudflare-workers";
 
 export default defineConfig({
   site: siteConfig.site,
+
   deployment: {
     platform: DEPLOYMENT_PLATFORM,
   },
+
   fonts: [
     {
       provider: fontProviders.fontsource(),
@@ -45,6 +50,7 @@ export default defineConfig({
       fallbacks: ["monospace"],
     },
   ],
+
   service: {
     image: {
       entrypoint: "astro/assets/services/sharp",
@@ -53,6 +59,7 @@ export default defineConfig({
       },
     },
   },
+
   integrations: [
     sitemap(),
     expressiveCode({
@@ -63,63 +70,65 @@ export default defineConfig({
         uiFontFamily: "var(--font-jetbrains-mono)",
       },
     }),
-    mdx(),
+    mdx({
+      processor: unified({
+        remarkPlugins: [
+          remarkInternalLinks,
+          remarkObsidianComments, // Remove Obsidian comments (%%...%%) early in processing
+          remarkFolderImages,
+          remarkObsidianEmbeds,
+          // Bases directive (table-only v1)
+          remarkBases,
+          remarkImageCaptions,
+          remarkMath,
+          remarkCallouts,
+          remarkBreaks,
+          remarkImageGrids,
+          remarkMermaid,
+          [remarkReadingTime, {}],
+          [
+            remarkToc,
+            {
+              tight: true,
+              ordered: false,
+              maxDepth: 3,
+              heading: "contents|table[ -]of[ -]contents?|toc",
+            },
+          ],
+        ],
+        rehypePlugins: [
+          rehypeExternalLinks,
+          rehypeTableWrappers,
+          rehypeKatex,
+          rehypeMark,
+          rehypeImageAttributes,
+          [
+            rehypeSlug,
+            {
+              test: (node) => node.tagName !== "h1",
+            },
+          ],
+          [
+            rehypeAutolinkHeadings,
+            {
+              behavior: "wrap",
+              test: (node) => node.tagName !== "h1",
+              properties: {
+                className: ["anchor-link"],
+                ariaLabel: "Link to this section",
+              },
+            },
+          ],
+          rehypeNormalizeAnchors, // Run LAST to ensure className and href fixes aren't overridden
+        ],
+      }),
+      shikiConfig: {
+        theme: "github-dark",
+        wrap: true,
+      },
+    }),
   ],
-  markdown: {
-    remarkPlugins: [
-      remarkInternalLinks,
-      remarkObsidianComments, // Remove Obsidian comments (%%...%%) early in processing
-      remarkFolderImages,
-      remarkObsidianEmbeds,
-      // Bases directive (table-only v1)
-      remarkBases,
-      remarkImageCaptions,
-      remarkMath,
-      remarkCallouts,
-      remarkBreaks,
-      remarkImageGrids,
-      remarkMermaid,
-      [remarkReadingTime, {}],
-      [
-        remarkToc,
-        {
-          tight: true,
-          ordered: false,
-          maxDepth: 3,
-          heading: "contents|table[ -]of[ -]contents?|toc",
-        },
-      ],
-    ],
-    rehypePlugins: [
-      rehypeExternalLinks,
-      rehypeTableWrappers,
-      rehypeKatex,
-      rehypeMark,
-      rehypeImageAttributes,
-      [
-        rehypeSlug,
-        {
-          test: (node) => node.tagName !== "h1",
-        },
-      ],
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: "wrap",
-          test: (node) => node.tagName !== "h1",
-          properties: {
-            className: ["anchor-link"],
-            ariaLabel: "Link to this section",
-          },
-        },
-      ],
-      rehypeNormalizeAnchors, // Run LAST to ensure className and href fixes aren't overridden
-    ],
-    shikiConfig: {
-      theme: "github-dark",
-      wrap: true,
-    },
-  },
+
   vite: {
     resolve: {
       alias: {
@@ -157,17 +166,24 @@ export default defineConfig({
     },
     exclude: ["**/_redirects"],
   },
+
   build: {
     assets: "_assets",
   },
+
   server: {
     host: true,
     port: 5000,
   },
+
   experimental: {
     rustCompiler: true,
     queuedRendering: {
       enabled: true,
     },
   },
+
+  adapter: cloudflare({
+    prerenderEnvironment: "node",
+  }),
 });

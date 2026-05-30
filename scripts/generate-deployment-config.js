@@ -974,7 +974,7 @@ async function generateRedirects() {
         // No Astro config needed - would create slow meta refresh HTML files
         // Generate Workers-compatible wrangler.toml (uses assets.directory instead of pages_build_output_dir)
         await writeGitHubPagesConfig(allRedirects); // Uses same _redirects/_headers format
-        await writeCloudflareWorkersConfig(projectName); // Generate Workers-compatible config
+        // await writeCloudflareWorkersConfig(projectName); // Generate Workers-compatible config
         await copyAssetsIgnoreFile(); // Copy .assetsignore to dist/ for Workers
         break;
       case "netlify":
