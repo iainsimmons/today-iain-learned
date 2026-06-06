@@ -8,6 +8,7 @@ tags:
 hideTOC: false
 draft: false
 aliases:
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxqjwbu2l"
 ---
 I recently saw a nice top border glow effect from a site shared on the [Astro blog post from March 2026](https://astro.build/blog/whats-new-march-2026/#community), coincidentally made by [David V Kimball](https://davidvkimball.com/), author of the [Astro Modular](https://github.com/davidvkimball/astro-modular) template used to build this site. The site is no longer up (it was built for a challenge), but I nabbed a screenshot and used that as a reference:
 

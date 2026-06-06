@@ -6,6 +6,7 @@ tags:
   - terminal
   - dotfiles
   - kitty
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxyxxhk22"
 ---
 The [kitty terminal](https://sw.kovidgoyal.net/kitty/) has a relatively new [sessions](https://sw.kovidgoyal.net/kitty/sessions/#sessions) feature, which is very well implemented and pretty straightforward to set up.
 

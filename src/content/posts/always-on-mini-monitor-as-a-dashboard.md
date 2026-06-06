@@ -11,6 +11,7 @@ tags:
   - workflow
 hideTOC: false
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxuejht25"
 ---
 Recently I've wanted to be more organised with my to-do list, especially at work, but also for this blog.
 

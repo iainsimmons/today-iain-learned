@@ -9,6 +9,7 @@ tags:
   - dotfiles
   - fonts
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxyblek2a"
 ---
 
 When I first started really customising my Neovim config to my own personal preferences, one of the things I did to really make it feel like my own was to add a custom dashboard logo.

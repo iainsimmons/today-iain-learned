@@ -7,6 +7,7 @@ tags:
   - security
 draft: false
 aliases:
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxvbuwd25"
 ---
 While looking at an implementation of the [Content-Security-Policy-Report-Only](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy-Report-Only) HTTP header with a colleague at work, we saw mention of a reporting endpoint.
 

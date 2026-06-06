@@ -4,6 +4,7 @@ description: "today iain learned: The difference between the words Learned and L
 date: 2025-10-25
 tags:
   - misc
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxzvloc2j"
 ---
 **Both!**
 

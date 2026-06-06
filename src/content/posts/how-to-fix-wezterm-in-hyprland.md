@@ -8,6 +8,7 @@ tags:
   - linux
   - dotfiles
   - wezterm
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxyqgvv2d"
 ---
 
 I was having issues with opening WezTerm in Hyprland until I added the following to the configuration:

@@ -6,6 +6,7 @@ tags:
   - Raycast
   - extension
   - security
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxy264l25"
 ---
 While trying to use a [custom Raycast extension](https://developers.raycast.com) that I built for work, it kept throwing a fetch error, something like this:
 

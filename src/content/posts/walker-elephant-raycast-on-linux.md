@@ -6,6 +6,7 @@ tags:
   - linux
   - tools
   - workflow
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxzgo5j2q"
 ---
 
 > [!Note]

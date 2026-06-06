@@ -9,6 +9,7 @@ tags:
   - Neovim
 hideTOC: false
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxpmexf25"
 ---
 
 Recently I switched back to using [tmux](https://github.com/tmux/tmux), along with moving from [WezTerm](https://wezterm.org/) to [Ghostty](https://ghostty.org/). This was mostly because WezTerm was becoming increasingly buggy, and didn't seem to be well maintained any longer (understandable, given how much a terminal emulator is expected to do these days). Also, I missed using [sesh](https://github.com/joshmedeski/sesh), my favourite tool for managing sessions in a terminal.

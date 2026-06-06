@@ -10,6 +10,7 @@ tags:
   - safety
   - security
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxkmsjm2l"
 ---
 
 I'm a big fan of [Cloudflare](https://www.cloudflare.com/) (this blog is hosted on [Cloudflare Workers](https://developers.cloudflare.com/workers/)). I'm also a big fan of protecting my children from stumbling across adult content, malware, and any other "bad" content while using the internet.

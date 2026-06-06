@@ -6,6 +6,7 @@ tags:
   - hyprland
   - linux
   - dotfiles
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxyixfn25"
 ---
 I recently added some [keybinds](https://wiki.hypr.land/Configuring/Binds/) to my Hyprland config so I could get `Super + Left` and `Super + Right` to send the `Home` and `End` keys, respectively.
 

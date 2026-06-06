@@ -11,6 +11,7 @@ tags:
 hideTOC: false
 draft: false
 aliases:
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxw7aet25"
 ---
 While building out this blog, I realised I hadn't thought much about branding beyond the name "today iain learned" (a personal spin on "Today I Learned" or TIL) and didn't have a favicon or other images for sharing on social media (not that I'm very active on any social networks at the moment).
 

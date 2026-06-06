@@ -12,6 +12,7 @@ tags:
 hideTOC: false
 draft: false
 aliases:
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxsfsn325"
 ---
 Prior to this week I was using the default [Shiki](https://shiki.style/) integration that comes out of the box with [Astro](https://astro.build/), for [syntax highlighting and styling code blocks in Markdown files](https://docs.astro.build/en/guides/syntax-highlighting/#markdown-code-blocks).
 

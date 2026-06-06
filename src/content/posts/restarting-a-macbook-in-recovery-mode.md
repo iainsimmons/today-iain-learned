@@ -4,6 +4,7 @@ description: "today iain learned: How to restart a MacBook in recovery mode"
 date: 2025-10-27
 tags:
   - macos
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxzo3hs22"
 ---
 ## Why?
 

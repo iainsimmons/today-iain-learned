@@ -6,6 +6,7 @@ tags:
   - linux
   - ricing
   - hyprland
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxz7ccj2p"
 ---
 Using the really nice [Bibata](https://www.bibata.live/) (here via the AUR) and [setting via hyprctl](https://wiki.hypr.land/Configuring/Using-hyprctl/#setcursor):
 

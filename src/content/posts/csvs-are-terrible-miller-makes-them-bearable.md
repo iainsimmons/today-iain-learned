@@ -10,6 +10,7 @@ tags:
 hideTOC: false
 draft: false
 aliases:
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxtgxtx23"
 ---
 CSVs are terrible. If you're a web developer like me, or have worked with computers for a long time, then I'm sure you've come across them at one point.
 

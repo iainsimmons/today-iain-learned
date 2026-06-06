@@ -11,6 +11,7 @@ tags:
 hideTOC: false
 draft: false
 aliases:
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxoosow2l"
 ---
 Recently my [Keychron V5](https://www.keychron.com/collections/keychron-v-series-keyboard/products/keychron-v5-qmk-custom-mechanical-keyboard) keyboard suddenly reset all the key mappings for no particular reason, which was strange, but thankfully my mappings are not too elaborate and I could still function enough to get to the web app I usually use for configuring it.
 

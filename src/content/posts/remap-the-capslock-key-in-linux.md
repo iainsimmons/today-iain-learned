@@ -6,6 +6,7 @@ tags:
   - linux
   - CLI
   - dotfiles
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxx4ilp23"
 ---
 Today (or recently) I found out that the awesome Wez Furlong (creator of WezTerm) also made this great key remapping tool for Linux called [evremap](https://github.com/wez/evremap).
 
