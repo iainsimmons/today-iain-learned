@@ -1,7 +1,6 @@
 import { defineConfig, fontProviders } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
-import mdx from "@astrojs/mdx";
 import { unified } from "@astrojs/markdown-remark";
 import {
   remarkInternalLinks,
@@ -60,6 +59,63 @@ export default defineConfig({
     },
   },
 
+  markdown: {
+    processor: unified({
+      remarkPlugins: [
+        remarkInternalLinks,
+        remarkObsidianComments,
+        remarkFolderImages,
+        remarkObsidianEmbeds,
+        remarkBases,
+        remarkImageCaptions,
+        remarkMath,
+        remarkCallouts,
+        remarkBreaks,
+        remarkImageGrids,
+        remarkMermaid,
+        [remarkReadingTime, {}],
+        [
+          remarkToc,
+          {
+            tight: true,
+            ordered: false,
+            maxDepth: 3,
+            heading: "contents|table[ -]of[ -]contents?|toc",
+          },
+        ],
+      ],
+      rehypePlugins: [
+        rehypeExternalLinks,
+        rehypeTableWrappers,
+        rehypeKatex,
+        rehypeMark,
+        rehypeImageAttributes,
+        [
+          rehypeSlug,
+          {
+            test: (node) => node.tagName !== "h1",
+          },
+        ],
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: "wrap",
+            test: (node) => node.tagName !== "h1",
+            properties: {
+              className: ["anchor-link"],
+              ariaLabel: "Link to this section",
+            },
+          },
+        ],
+        rehypeNormalizeAnchors,
+      ],
+    }),
+    shikiConfig: {
+      theme: "github-dark",
+      wrap: true,
+    },
+  },
+
   integrations: [
     sitemap(),
     expressiveCode({
@@ -68,63 +124,6 @@ export default defineConfig({
         codeBackground: "#1a1b26",
         codeFontFamily: "var(--font-jetbrains-mono)",
         uiFontFamily: "var(--font-jetbrains-mono)",
-      },
-    }),
-    mdx({
-      processor: unified({
-        remarkPlugins: [
-          remarkInternalLinks,
-          remarkObsidianComments, // Remove Obsidian comments (%%...%%) early in processing
-          remarkFolderImages,
-          remarkObsidianEmbeds,
-          // Bases directive (table-only v1)
-          remarkBases,
-          remarkImageCaptions,
-          remarkMath,
-          remarkCallouts,
-          remarkBreaks,
-          remarkImageGrids,
-          remarkMermaid,
-          [remarkReadingTime, {}],
-          [
-            remarkToc,
-            {
-              tight: true,
-              ordered: false,
-              maxDepth: 3,
-              heading: "contents|table[ -]of[ -]contents?|toc",
-            },
-          ],
-        ],
-        rehypePlugins: [
-          rehypeExternalLinks,
-          rehypeTableWrappers,
-          rehypeKatex,
-          rehypeMark,
-          rehypeImageAttributes,
-          [
-            rehypeSlug,
-            {
-              test: (node) => node.tagName !== "h1",
-            },
-          ],
-          [
-            rehypeAutolinkHeadings,
-            {
-              behavior: "wrap",
-              test: (node) => node.tagName !== "h1",
-              properties: {
-                className: ["anchor-link"],
-                ariaLabel: "Link to this section",
-              },
-            },
-          ],
-          rehypeNormalizeAnchors, // Run LAST to ensure className and href fixes aren't overridden
-        ],
-      }),
-      shikiConfig: {
-        theme: "github-dark",
-        wrap: true,
       },
     }),
   ],
