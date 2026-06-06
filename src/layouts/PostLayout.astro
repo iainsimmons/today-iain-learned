@@ -1,16 +1,26 @@
 ---
-import type { Post } from '@/types';
-import { siteConfig } from '@/config';
-import { generatePostSEO } from '@/utils/seo';
-import { optimizePostImagePath, getOptimizedFormat } from '@/utils/images';
-import { getCollection } from 'astro:content';
-import { shouldShowPost, processPost, calculateReadingTime, generateTOC, getAdjacentPosts, formatDate, formatDateMobile, getReadingTimeMobile } from '@/utils/markdown';
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import TableOfContents from '@/components/TableOfContents.astro';
-import LinkedMentions from '@/components/LinkedMentions.astro';
-import GiscusComments from '@/components/GiscusComments.astro';
-import Icon from '@/components/Icon.astro';
-import ImageWrapper from '@/components/ImageWrapper.astro';
+import sequoiaConfig from "../../sequoia.json";
+import type { Post, AtProtoLinks } from "@/types";
+import { siteConfig } from "@/config";
+import { generatePostSEO } from "@/utils/seo";
+import { optimizePostImagePath, getOptimizedFormat } from "@/utils/images";
+import { getCollection } from "astro:content";
+import {
+  shouldShowPost,
+  processPost,
+  calculateReadingTime,
+  generateTOC,
+  getAdjacentPosts,
+  formatDate,
+  formatDateMobile,
+  getReadingTimeMobile,
+} from "@/utils/markdown";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import LinkedMentions from "@/components/LinkedMentions.astro";
+import GiscusComments from "@/components/GiscusComments.astro";
+import Icon from "@/components/Icon.astro";
+import ImageWrapper from "@/components/ImageWrapper.astro";
 
 export interface Props {
   post: Post;
@@ -23,158 +33,212 @@ const id = post.id;
 const isDev = import.meta.env.DEV;
 
 // Generate SEO data
-const seoData = generatePostSEO(post, import.meta.env.SITE || '');
+const seoData = generatePostSEO(post, import.meta.env.SITE || "");
 
-
+const atProtoLinks: AtProtoLinks = [
+  { rel: "site.standard.document", href: post.data.atUri || "" },
+  { rel: "site.standard.publication", href: sequoiaConfig.publicationUri },
+];
 
 // Generate structured data for the post
 const structuredData = {
   "@context": "https://schema.schema.org",
   "@type": "BlogPosting",
-  "headline": post.data.title,
-  "description": post.data.description,
-  "author": {
+  headline: post.data.title,
+  description: post.data.description,
+  author: {
     "@type": "Person",
-    "name": siteConfig.author
+    name: siteConfig.author,
   },
-  "publisher": {
+  publisher: {
     "@type": "Organization",
-    "name": siteConfig.title,
-    "logo": {
+    name: siteConfig.title,
+    logo: {
       "@type": "ImageObject",
-      "url": siteConfig.site + "/favicon.ico"
-    }
+      url: siteConfig.site + "/favicon.ico",
+    },
   },
-  "datePublished": post.data.date.toISOString(),
-  "dateModified": post.data.date.toISOString(),
-  "mainEntityOfPage": {
+  datePublished: post.data.date.toISOString(),
+  dateModified: post.data.date.toISOString(),
+  mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": Astro.url.href
-  }
+    "@id": Astro.url.href,
+  },
 };
 
 // Get all posts for wikilink resolution
-const allPosts = await getCollection('posts');
-const visiblePosts = allPosts.filter(p => shouldShowPost(p, isDev));
+const allPosts = await getCollection("posts");
+const visiblePosts = allPosts.filter((p) => shouldShowPost(p, isDev));
 
 // Process the post content and get processed data including word count
-const { Content, headings, wordCount, remarkPluginFrontmatter } = await processPost(post);
+const { Content, headings, wordCount, remarkPluginFrontmatter } =
+  await processPost(post);
 const readingTime = calculateReadingTime(post.body);
 
 // Generate table of contents if enabled
 const hideTOC = post.data.hideTOC === true;
-const shouldShowTOC = !hideTOC && siteConfig.tableOfContents.enabled && headings.length > 0;
+const shouldShowTOC =
+  !hideTOC && siteConfig.tableOfContents.enabled && headings.length > 0;
 const toc = shouldShowTOC ? await generateTOC(headings) : [];
 
 // Get adjacent posts for navigation
-const { prev: prevPost, next: nextPost } = getAdjacentPosts(visiblePosts, post.id);
+const { prev: prevPost, next: nextPost } = getAdjacentPosts(
+  visiblePosts,
+  post.id,
+);
 
-const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none' && post.data.image && post.data.hideCoverImage !== true;
-
+const showCoverImage =
+  siteConfig.postOptions.showPostCardCoverImages !== "none" &&
+  post.data.image &&
+  post.data.hideCoverImage !== true;
 ---
 
-<BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
+<BaseLayout
+  atProtoLinks={atProtoLinks}
+  seoData={seoData}
+  hasTOC={shouldShowTOC}
+>
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
 
-    {(() => {
-      if (!post.data.image || post.data.hideCoverImage === true) return false;
+    {
+      (() => {
+        if (!post.data.image || post.data.hideCoverImage === true) return false;
 
-      const showCoverImages = siteConfig.postOptions.showPostCardCoverImages;
-      // Only preload for posts that are likely to show the image immediately
-      // Skip preload for complex posts that might have delayed rendering
-      const shouldPreload = ['all', 'posts', 'featured-and-posts'].includes(showCoverImages) &&
-                           post.id !== 'formatting-reference';
+        const showCoverImages = siteConfig.postOptions.showPostCardCoverImages;
+        // Only preload for posts that are likely to show the image immediately
+        // Skip preload for complex posts that might have delayed rendering
+        const shouldPreload =
+          ["all", "posts", "featured-and-posts"].includes(showCoverImages) &&
+          post.id !== "formatting-reference";
 
-      return shouldPreload;
-    })() && (
-      <link
-        rel="preload"
-        as="image"
-        href={post.data.image?.startsWith('http') ? post.data.image : (post.data.image ? optimizePostImagePath(post.data.image, post.id, post.id) : '')}
-        fetchpriority="high"
-      />
-    )}
+        return shouldPreload;
+      })() && (
+        <link
+          rel="preload"
+          as="image"
+          href={
+            post.data.image?.startsWith("http")
+              ? post.data.image
+              : post.data.image
+                ? optimizePostImagePath(post.data.image, post.id, post.id)
+                : ""
+          }
+          fetchpriority="high"
+        />
+      )
+    }
 
-    {post.data.targetKeyword && (
-      <meta name="keywords" content={post.data.targetKeyword}>
-    )}
+    {
+      post.data.targetKeyword && (
+        <meta name="keywords" content={post.data.targetKeyword} />
+      )
+    }
   </Fragment>
 
   <div class="layout-wrapper">
-      <article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`card border-glow-top border-glow-top-permanent layout-article ${showCoverImage ? 'layout-article--cover' : ''}`}>
-        {showCoverImage && (() => {
-          // Process image path similar to PostCard
-          let rawImage = post.data.image;
-          if (Array.isArray(rawImage)) {
-            rawImage = rawImage[0];
-          }
-          
-          // Clean Obsidian brackets
-          let cleanImagePath = typeof rawImage === 'string' ? rawImage : '';
-          if (cleanImagePath.startsWith('[[') && cleanImagePath.endsWith(']]')) {
-            cleanImagePath = cleanImagePath.slice(2, -2);
-          }
-          
-          // Determine src and basePath for ImageWrapper
-          let imageSrc = cleanImagePath;
-          let imageBasePath = '';
-          
-          if (typeof cleanImagePath === 'string' && cleanImagePath.startsWith('http')) {
-            // External URL - pass as-is
-            imageSrc = cleanImagePath;
-            imageBasePath = '';
-          } else {
-            // Detect folder-based vs file-based: if image path starts with 'attachments/',
-            // it's a single-file post (shared attachments folder)
-            const isFileBased = typeof cleanImagePath === 'string' && cleanImagePath.startsWith('attachments/');
-            
-            if (isFileBased) {
-              // Single-file post - remove attachments/ prefix
-              imageSrc = cleanImagePath.replace('attachments/', '');
-              imageBasePath = '/posts/attachments/';
+    <article
+      id={`post-article-${id}`}
+      style={`view-transition-name: post-article-${id}`}
+      class={`card border-glow-top border-glow-top-permanent layout-article ${showCoverImage ? "layout-article--cover" : ""}`}
+    >
+      {
+        showCoverImage &&
+          (() => {
+            // Process image path similar to PostCard
+            let rawImage = post.data.image;
+            if (Array.isArray(rawImage)) {
+              rawImage = rawImage[0];
+            }
+
+            // Clean Obsidian brackets
+            let cleanImagePath = typeof rawImage === "string" ? rawImage : "";
+            if (
+              cleanImagePath.startsWith("[[") &&
+              cleanImagePath.endsWith("]]")
+            ) {
+              cleanImagePath = cleanImagePath.slice(2, -2);
+            }
+
+            // Determine src and basePath for ImageWrapper
+            let imageSrc = cleanImagePath;
+            let imageBasePath = "";
+
+            if (
+              typeof cleanImagePath === "string" &&
+              cleanImagePath.startsWith("http")
+            ) {
+              // External URL - pass as-is
+              imageSrc = cleanImagePath;
+              imageBasePath = "";
             } else {
-              // Folder-based post - sync script copies images to post folder root
-              // Remove 'images/' or 'attachments/' prefixes if present (sync script removes them)
-              if (cleanImagePath.startsWith('images/') || cleanImagePath.startsWith('attachments/')) {
-                imageSrc = cleanImagePath.replace(/^(images|attachments)\//, '');
+              // Detect folder-based vs file-based: if image path starts with 'attachments/',
+              // it's a single-file post (shared attachments folder)
+              const isFileBased =
+                typeof cleanImagePath === "string" &&
+                cleanImagePath.startsWith("attachments/");
+
+              if (isFileBased) {
+                // Single-file post - remove attachments/ prefix
+                imageSrc = cleanImagePath.replace("attachments/", "");
+                imageBasePath = "/posts/attachments/";
               } else {
-                imageSrc = cleanImagePath;
-              }
-              // Safety check: ensure post.id exists before using it
-              if (post.id) {
-                imageBasePath = `/posts/${post.id}/`;
-              } else {
-                // Fallback to attachments directory if post.id is undefined
-                imageBasePath = '/posts/attachments/';
+                // Folder-based post - sync script copies images to post folder root
+                // Remove 'images/' or 'attachments/' prefixes if present (sync script removes them)
+                if (
+                  cleanImagePath.startsWith("images/") ||
+                  cleanImagePath.startsWith("attachments/")
+                ) {
+                  imageSrc = cleanImagePath.replace(
+                    /^(images|attachments)\//,
+                    "",
+                  );
+                } else {
+                  imageSrc = cleanImagePath;
+                }
+                // Safety check: ensure post.id exists before using it
+                if (post.id) {
+                  imageBasePath = `/posts/${post.id}/`;
+                } else {
+                  // Fallback to attachments directory if post.id is undefined
+                  imageBasePath = "/posts/attachments/";
+                }
               }
             }
-          }
-          
-          // Convert to WebP if applicable (sync-images.js creates WebP versions)
-          imageSrc = getOptimizedFormat(imageSrc);
-          
-          return (
-            <div class="layout-image-wrap">
-              <ImageWrapper
-                src={imageSrc}
-                basePath={imageBasePath}
-                alt={post.data.imageAlt || `Featured image for post: ${post.data.title}`}
-                class="layout-image"
-                width={800}
-                height={450}
-                format="webp"
-                quality={85}
-                loading="eager"
-                fetchpriority="high"
-              />
-            </div>
-          );
-        })()}
 
-        <div class={`layout-content ${showCoverImage ? 'layout-content--with-image' : ''}`}>
-          <header class="layout-header">
-            <h1 class="layout-title">
+            // Convert to WebP if applicable (sync-images.js creates WebP versions)
+            imageSrc = getOptimizedFormat(imageSrc);
+
+            return (
+              <div class="layout-image-wrap">
+                <ImageWrapper
+                  src={imageSrc}
+                  basePath={imageBasePath}
+                  alt={
+                    post.data.imageAlt ||
+                    `Featured image for post: ${post.data.title}`
+                  }
+                  class="layout-image"
+                  width={800}
+                  height={450}
+                  format="webp"
+                  quality={85}
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+            );
+          })()
+      }
+
+      <div
+        class={`layout-content ${showCoverImage ? "layout-content--with-image" : ""}`}
+      >
+        <header class="layout-header">
+          <h1 class="layout-title">
             {post.data.title}
           </h1>
 
@@ -188,160 +252,197 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
               </span>
             </time>
 
-            {siteConfig.postOptions.readingTime && readingTime && (
-              <>
-                <span class="pol-sep-desktop">•</span>
-                <span class="pol-sep-mobile">•</span>
-                <span>
-                  <span class="desktop-only">{readingTime.text && readingTime.text !== 'read0' && readingTime.text !== '' ? readingTime.text : '1 min read'}</span>
-                  <span class="mobile-only">{getReadingTimeMobile(readingTime)}</span>
-                </span>
-              </>
-            )}
+            {
+              siteConfig.postOptions.readingTime && readingTime && (
+                <>
+                  <span class="pol-sep-desktop">•</span>
+                  <span class="pol-sep-mobile">•</span>
+                  <span>
+                    <span class="desktop-only">
+                      {readingTime.text &&
+                      readingTime.text !== "read0" &&
+                      readingTime.text !== ""
+                        ? readingTime.text
+                        : "1 min read"}
+                    </span>
+                    <span class="mobile-only">
+                      {getReadingTimeMobile(readingTime)}
+                    </span>
+                  </span>
+                </>
+              )
+            }
 
-            {siteConfig.postOptions.wordCount && wordCount !== undefined && (
-              <>
-                <span class="pol-sep-desktop">•</span>
-                <span class="pol-sep-mobile">•</span>
-                <span class="pol-meta-value-wrap">
-                  <span class="desktop-only">{wordCount === 1 ? '1 word' : `${wordCount} words`}</span>
-                  <span class="mobile-only">{wordCount === 1 ? '1 word' : `${wordCount.toLocaleString()} words`}</span>
-                </span>
-              </>
-            )}
+            {
+              siteConfig.postOptions.wordCount && wordCount !== undefined && (
+                <>
+                  <span class="pol-sep-desktop">•</span>
+                  <span class="pol-sep-mobile">•</span>
+                  <span class="pol-meta-value-wrap">
+                    <span class="desktop-only">
+                      {wordCount === 1 ? "1 word" : `${wordCount} words`}
+                    </span>
+                    <span class="mobile-only">
+                      {wordCount === 1
+                        ? "1 word"
+                        : `${wordCount.toLocaleString()} words`}
+                    </span>
+                  </span>
+                </>
+              )
+            }
           </div>
 
-          {siteConfig.postOptions.tags && post.data.tags && post.data.tags.length > 0 && (
-            <div class="pol-tags">
-              {post.data.tags.map(tag => (
-                <a
-                  href={`/posts/tag/${encodeURIComponent(tag)}`}
-                  class="pol-tag"
-                >
-                  {tag}
-                </a>
-              ))}
-            </div>
-          )}
+          {
+            siteConfig.postOptions.tags &&
+              post.data.tags &&
+              post.data.tags.length > 0 && (
+                <div class="pol-tags">
+                  {post.data.tags.map((tag) => (
+                    <a
+                      href={`/posts/tag/${encodeURIComponent(tag)}`}
+                      class="pol-tag"
+                    >
+                      {tag}
+                    </a>
+                  ))}
+                </div>
+              )
+          }
         </header>
 
         <div class="prose" id="post-content">
           <Content />
         </div>
 
-        {siteConfig.postOptions.linkedMentions.enabled && (
-          <LinkedMentions currentSlug={post.id} />
-        )}
+        {
+          siteConfig.postOptions.linkedMentions.enabled && (
+            <LinkedMentions currentSlug={post.id} />
+          )
+        }
 
-        {siteConfig.postOptions.postNavigation && (prevPost || nextPost) && (
-          <nav class={`pol-nav ${!siteConfig.postOptions.linkedMentions.enabled ? 'pol-nav-border' : ''}`}>
-            <div class="pol-nav-grid">
-              {prevPost && (
-                <div class="pol-nav-cell">
-                  <a
-                    href={`/posts/${prevPost.id}`}
-                    class="pol-nav-card"
-                  >
-                    <h3 class="pol-nav-title">
-                      {prevPost.data.title}
-                    </h3>
-                    <div class="pol-nav-left">
-                      <Icon name="arrow-left" class="pol-nav-icon" />
-                    </div>
-                  </a>
-                </div>
-              )}
+        {
+          siteConfig.postOptions.postNavigation && (prevPost || nextPost) && (
+            <nav
+              class={`pol-nav ${!siteConfig.postOptions.linkedMentions.enabled ? "pol-nav-border" : ""}`}
+            >
+              <div class="pol-nav-grid">
+                {prevPost && (
+                  <div class="pol-nav-cell">
+                    <a href={`/posts/${prevPost.id}`} class="pol-nav-card">
+                      <h3 class="pol-nav-title">{prevPost.data.title}</h3>
+                      <div class="pol-nav-left">
+                        <Icon name="arrow-left" class="pol-nav-icon" />
+                      </div>
+                    </a>
+                  </div>
+                )}
 
-              {nextPost && (
-                <div class={`pol-nav-cell--right ${!prevPost ? 'pol-nav-cell--col2' : ''}`}>
-                  <a
-                    href={`/posts/${nextPost.id}`}
-                    class="pol-nav-card"
+                {nextPost && (
+                  <div
+                    class={`pol-nav-cell--right ${!prevPost ? "pol-nav-cell--col2" : ""}`}
                   >
-                    <h3 class="pol-nav-title">
-                      {nextPost.data.title}
-                    </h3>
-                    <div class="pol-nav-right">
-                      <Icon name="arrow-right" class="pol-nav-icon" />
-                    </div>
-                  </a>
-                </div>
-              )}
+                    <a href={`/posts/${nextPost.id}`} class="pol-nav-card">
+                      <h3 class="pol-nav-title">{nextPost.data.title}</h3>
+                      <div class="pol-nav-right">
+                        <Icon name="arrow-right" class="pol-nav-icon" />
+                      </div>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </nav>
+          )
+        }
+
+        {
+          siteConfig.postOptions.comments.enabled && (
+            <div class="pol-comments">
+              <GiscusComments
+                postTitle={post.data.title}
+                postSlug={post.id}
+                postUrl={Astro.url.href}
+              />
             </div>
-          </nav>
-        )}
+          )
+        }
+      </div>
+    </article>
 
-        {siteConfig.postOptions.comments.enabled && (
-          <div class="pol-comments">
-            <GiscusComments
-              postTitle={post.data.title}
-              postSlug={post.id}
-              postUrl={Astro.url.href}
-            />
-          </div>
-        )}
-        </div>
-      </article>
-
-      <div class="layout-sidebar">
-        <div class={`layout-sidebar-inner ${shouldShowTOC ? 'layout-sidebar-inner--toc' : ''}`} id="sidebar">
-          {shouldShowTOC && (
+    <div class="layout-sidebar">
+      <div
+        class={`layout-sidebar-inner ${shouldShowTOC ? "layout-sidebar-inner--toc" : ""}`}
+        id="sidebar"
+      >
+        {
+          shouldShowTOC && (
             <div id="toc">
               <TableOfContents headings={toc} />
             </div>
-          )}
-        </div>
+          )
+        }
       </div>
     </div>
+  </div>
 
   <Fragment slot="scripts">
-    <script define:vars={{ posts: visiblePosts, commentsEnabled: siteConfig.postOptions.comments.enabled, postTitle: post.data.title, postSlug: post.id }}>
-
+    <script
+      define:vars={{
+        posts: visiblePosts,
+        commentsEnabled: siteConfig.postOptions.comments.enabled,
+        postTitle: post.data.title,
+        postSlug: post.id,
+      }}
+    >
       // Process wikilinks - unified logic for all wikilink types
       function initializeWikilinks() {
-        const wikilinks = document.querySelectorAll('.wikilink[data-wikilink]');
+        const wikilinks = document.querySelectorAll(".wikilink[data-wikilink]");
 
-        wikilinks.forEach(link => {
+        wikilinks.forEach((link) => {
           const linkText = link.dataset.wikilink;
-          
+
           // Skip same-page anchors (empty data-wikilink) - they're already properly formatted
-          if (!linkText || linkText === '') {
+          if (!linkText || linkText === "") {
             return;
           }
-          
+
           const displayOverride = link.dataset.displayOverride;
           const currentDisplayText = link.textContent;
 
           // Find the matching post - use id (not slug, which is deprecated in Astro v6)
-          const slug = linkText.toLowerCase()
-            .replace(/[^a-z0-9\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-+|-+$/g, '');
+          const slug = linkText
+            .toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/-+/g, "-")
+            .replace(/^-+|-+$/g, "");
 
           // Helper function to create slug from title (same as resolveWikilink logic)
           const createSlugFromTitle = (title) => {
-            return title.toLowerCase()
-              .replace(/[^a-z0-9\s-]/g, '')
-              .replace(/\s+/g, '-')
-              .replace(/-+/g, '-')
-              .replace(/^-+|-+$/g, '');
+            return title
+              .toLowerCase()
+              .replace(/[^a-z0-9\s-]/g, "")
+              .replace(/\s+/g, "-")
+              .replace(/-+/g, "-")
+              .replace(/^-+|-+$/g, "");
           };
 
           // First try exact id match (Astro v6 uses id, not slug)
-          let post = posts.find(p => p.id === slug);
-          
+          let post = posts.find((p) => p.id === slug);
+
           // If not found, try title match (for wikilinks that use post titles)
           if (!post) {
-            post = posts.find(p => createSlugFromTitle(p.data.title) === slug);
+            post = posts.find(
+              (p) => createSlugFromTitle(p.data.title) === slug,
+            );
           }
 
           if (post) {
             // Update href - preserve anchor if present
-            const currentHref = link.href || link.getAttribute('href') || '';
+            const currentHref = link.href || link.getAttribute("href") || "";
             const anchorMatch = currentHref.match(/#(.+)$/);
             const anchor = anchorMatch ? anchorMatch[1] : null;
-            
+
             if (anchor) {
               link.href = `/posts/${post.id}#${anchor}`;
             } else {
@@ -353,10 +454,19 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
             // - If displayOverride is null/undefined, it's a standard markdown link [text](url) - NEVER change the text
             // - If displayOverride is empty string, it's a naked wikilink [[link]] - use post title
 
-            if (displayOverride && displayOverride !== 'null' && displayOverride !== 'undefined') {
+            if (
+              displayOverride &&
+              displayOverride !== "null" &&
+              displayOverride !== "undefined"
+            ) {
               // Wikilink with custom display: [[link|display]]
               link.textContent = displayOverride;
-            } else if (displayOverride === 'null' || displayOverride === null || displayOverride === 'undefined' || displayOverride === undefined) {
+            } else if (
+              displayOverride === "null" ||
+              displayOverride === null ||
+              displayOverride === "undefined" ||
+              displayOverride === undefined
+            ) {
               // Standard markdown link: [text](url) - NEVER change the display text
               // Keep currentDisplayText as-is
             } else {
@@ -365,8 +475,8 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
             }
           } else {
             // Mark as broken link
-            link.classList.add('wikilink-broken');
-            link.title = 'Link not found';
+            link.classList.add("wikilink-broken");
+            link.title = "Link not found";
           }
         });
       }
@@ -374,7 +484,7 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
       window.initializeWikilinks = initializeWikilinks;
 
       // Process wikilinks and initialize layouts after content loads
-      document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener("DOMContentLoaded", () => {
         // Process external links - handled by BaseLayout, but call here as backup for initial load
         if (window.processExternalLinks) {
           window.processExternalLinks();
@@ -385,10 +495,8 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
       });
 
       // External links are now handled globally by BaseLayout
-
     </script>
   </Fragment>
-
 </BaseLayout>
 
 <style is:global>
@@ -456,7 +564,9 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
     padding-bottom: 0.25rem;
     border-radius: 9999px;
     border: 1px solid rgb(var(--color-primary-700));
-    transition: background-color 0.2s, color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
   }
 
   .pol-tag:hover {
@@ -499,7 +609,9 @@ const showCoverImage = siteConfig.postOptions.showPostCardCoverImages !== 'none'
 
   .pol-nav-card:hover {
     border-color: rgb(var(--color-highlight-600));
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
 
   /* Nav titles */

@@ -55,6 +55,7 @@ const postsCollection = defineCollection({
     targetKeyword: z.string().nullable().optional(),
     author: z.string().nullable().optional(),
     noIndex: z.boolean().optional(),
+    atUri: z.string().optional(),
   }),
 });
 
@@ -136,7 +137,7 @@ const blogrollLoader = {
     const opmlPath = new URL("./data/blogroll.opml", import.meta.url);
     const content = readFileSync(opmlPath, "utf-8");
     const groups = parseOpmlContent(content);
-    const lastUpdated = getFileLastModifiedDate('./data/blogroll.opml', import.meta.url);
+    const lastUpdated = getFileLastModifiedDate("./data/blogroll.opml", import.meta.url);
 
     store.clear();
 
@@ -158,7 +159,7 @@ const podrollLoader = {
     const opmlPath = new URL("./data/podroll.opml", import.meta.url);
     const content = readFileSync(opmlPath, "utf-8");
     const opml = parser.parse(content);
-    const lastUpdated = getFileLastModifiedDate('./data/podroll.opml', import.meta.url);
+    const lastUpdated = getFileLastModifiedDate("./data/podroll.opml", import.meta.url);
 
     const bodyOutlines = Array.isArray(opml.opml.body.outline)
       ? opml.opml.body.outline
@@ -212,10 +213,12 @@ const podrollLoader = {
 };
 
 const opmlSchema = z.object({
-  lastUpdated: z.object({
-    datetime: z.string(),
-    formatted: z.string(),
-  }).nullable(),
+  lastUpdated: z
+    .object({
+      datetime: z.string(),
+      formatted: z.string(),
+    })
+    .nullable(),
   groups: z.array(
     z.object({
       title: z.string(),
