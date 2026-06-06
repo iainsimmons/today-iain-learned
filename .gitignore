@@ -43,3 +43,5 @@ ehthumbs.db
 # Obsidian workspace files
 src/content/.obsidian/workspace.json
 src/content/.obsidian/workspace-mobile.json
+
+.sequoia-state.json
