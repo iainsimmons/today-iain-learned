@@ -1,6 +1,6 @@
-
 ---
-import type { Page } from '@/types';
+import sequoiaConfig from "../../sequoia.json";
+import type { Page, AtProtoLinks } from '@/types';
 import { siteConfig } from '@/config';
 import { render } from 'astro:content';
 import { generatePageSEO } from '@/utils/seo';
@@ -8,6 +8,9 @@ import { optimizeContentImagePath, getOptimizedFormat } from '@/utils/images';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import ImageWrapper from '@/components/ImageWrapper.astro';
+import { getBlueskyPostUri, atUriToBlueskyUrl } from "@/utils/bluesky";
+import BlueskyDiscussion from "@/components/BlueskyDiscussion.astro";
+
 
 export interface Props {
   page: Page;
@@ -22,6 +25,14 @@ const { Content, headings } = await render(page);
 
 // Generate SEO data
 const seoData = generatePageSEO(page, Astro.url.href);
+
+const atProtoLinks: AtProtoLinks = [
+  { rel: "site.standard.document", href: page.data.atUri || "" },
+  { rel: "site.standard.publication", href: sequoiaConfig.publicationUri },
+];
+
+const blueskyPostUri = getBlueskyPostUri(page.id);
+const blueskyUrl = blueskyPostUri ? atUriToBlueskyUrl(blueskyPostUri) : null;
 
 // Generate table of contents from headings using configurable depth
 const maxDepth = siteConfig.tableOfContents.depth;
@@ -55,7 +66,7 @@ const structuredData = {
 
 ---
 
-<BaseLayout seoData={seoData} hasTOC={shouldShowTOC}>
+<BaseLayout atProtoLinks={atProtoLinks} seoData={seoData} hasTOC={shouldShowTOC}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     {page.data.image && typeof page.data.image === 'string' && !page.data.image.startsWith('http') && (() => {
@@ -153,6 +164,12 @@ const structuredData = {
           <div class="prose" id="page-content">
             <Content />
           </div>
+
+          {
+            blueskyUrl && (
+              <BlueskyDiscussion url={blueskyUrl} label="Discuss this page on Bluesky" />
+            )
+          }
 
         </div>
       </article>
