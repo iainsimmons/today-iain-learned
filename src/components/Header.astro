@@ -1,6 +1,6 @@
 ---
-import { siteConfig } from '../config';
-import Icon from './Icon.astro';
+import { siteConfig } from "../config";
+import Icon from "./Icon.astro";
 ---
 
 <header id="main-header" class="site-header">
@@ -12,105 +12,55 @@ import Icon from './Icon.astro';
         </a>
       </div>
 
-      <div class={`site-header-nav-area ${siteConfig.navigation.style === 'minimal' ? 'site-header-nav-area--right' : 'site-header-nav-area--center'}`}>
-        {siteConfig.navigation.showNavigation && (
-          <nav class="site-header-nav" aria-label="Main navigation">
-            {siteConfig.navigation.pages.map((page) => (
-              <a href={page.url || '#'} class="site-header-nav-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
-                <span>{siteConfig.navigation.style === 'minimal' ? page.title.toLowerCase() : page.title}</span>
-                {page.url?.startsWith('http') && (
-            <Icon name="external-link" class="site-header-ext-link" size={12} />
-                )}
-              </a>
-            ))}
-          </nav>
-        )}
+      <div
+        class={`site-header-nav-area ${siteConfig.navigation.style === "minimal" ? "site-header-nav-area--right" : "site-header-nav-area--center"}`}
+      >
+        {
+          siteConfig.navigation.showNavigation && (
+            <nav class="site-header-nav" aria-label="Main navigation">
+              {siteConfig.navigation.pages.map((page) => (
+                <a
+                  href={page.url || "#"}
+                  class="site-header-nav-link"
+                  target={page.url?.startsWith("http") ? "_blank" : undefined}
+                  aria-label={`Navigate to ${page.title}`}
+                >
+                  <span>
+                    {siteConfig.navigation.style === "minimal"
+                      ? page.title.toLowerCase()
+                      : page.title}
+                  </span>
+                  {page.url?.startsWith("http") && (
+                    <Icon
+                      name="external-link"
+                      class="site-header-ext-link"
+                      size={12}
+                    />
+                  )}
+                </a>
+              ))}
+            </nav>
+          )
+        }
       </div>
 
       <div class="site-header-actions">
-        <button id="command-palette-trigger" command="show-modal" commandfor="command-palette-dialog" class="cmd-trigger" aria-label="Open command palette, search">
-          <span class="show-on-touch">search</span>
+        <button
+          id="command-palette-trigger"
+          command="show-modal"
+          commandfor="command-palette-dialog"
+          class="cmd-trigger"
+          aria-label="Open command palette, menu, search"
+        >
+          <Icon name="menu" class="show-on-touch" size={20} />
           <kbd class="cmd-trigger-kbd narrow hide-on-touch">Ctrl</kbd>
           <span class="hide-on-touch">+</span>
           <kbd class="cmd-trigger-kbd hide-on-touch">K</kbd>
         </button>
-
-        <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle mobile navigation menu" aria-expanded="false">
-          <Icon name="menu" class="mobile-toggle-icon menu-icon" size={20} />
-          <Icon name="x" class="mobile-toggle-icon close-icon hidden" size={20} />
-        </button>
       </div>
-    </div>
-
-    <div id="mobile-menu" class="mobile-menu hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
-      <nav class="mobile-menu-nav">
-        {siteConfig.navigation.pages.map((page) => (
-          <a href={page.url || '#'} class="mobile-menu-link" target={page.url?.startsWith('http') ? '_blank' : undefined} aria-label={`Navigate to ${page.title}`}>
-            <span>{page.title}</span>
-            {page.url?.startsWith('http') && (
-          <Icon name="external-link" class="site-header-ext-link" size={12} />
-            )}
-          </a>
-        ))}
-      </nav>
     </div>
   </div>
 </header>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById('mobile-menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = menuToggle!.querySelector('.menu-icon');
-    const closeIcon = menuToggle!.querySelector('.close-icon');
-
-    if (!menuToggle || !mobileMenu || !menuIcon || !closeIcon) { return; }
-    menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-
-      if (mobileMenu.classList.contains('hidden')) {
-        menuIcon!.classList.remove('hidden');
-        closeIcon!.classList.add('hidden');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      } else {
-        menuIcon!.classList.add('hidden');
-        closeIcon!.classList.remove('hidden');
-        menuToggle.setAttribute('aria-expanded', 'true');
-      }
-    });
-    
-    function closeMobileMenu() {
-      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-        if (menuToggle) {
-          const menuIcon = menuToggle.querySelector('.menu-icon');
-          const closeIcon = menuToggle.querySelector('.close-icon');
-          if (menuIcon && closeIcon) {
-            menuIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-            menuToggle.setAttribute('aria-expanded', 'false');
-          }
-        }
-      }
-    }
-    
-    const mobileMenuLinks = mobileMenu?.querySelectorAll('nav a');
-    mobileMenuLinks?.forEach(link => {
-      link.addEventListener('click', () => { closeMobileMenu(); });
-    });
-    
-    (window as any).closeMobileMenu = closeMobileMenu;
-    
-    document.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      const isMenuToggle = target.closest('#mobile-menu-toggle');
-      const isMobileMenu = target.closest('#mobile-menu');
-      if (!isMenuToggle && !isMobileMenu && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        closeMobileMenu();
-      }
-    });
-  });
-</script>
 
 <style>
   .site-header {
@@ -243,85 +193,5 @@ import Icon from './Icon.astro';
       padding: 0.25rem;
       letter-spacing: -1px;
     }
-  }
-
-  .mobile-toggle {
-    display: block;
-    padding: 0.5rem;
-    color: rgb(var(--color-primary-400));
-    background: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-  }
-
-  .mobile-toggle:hover {
-    background-color: rgb(var(--color-primary-800));
-  }
-
-  @media (min-width: 768px) {
-    .mobile-toggle { display: none; }
-  }
-
-  .mobile-toggle-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
-  .mobile-menu {
-    opacity: 1;
-    height: auto;
-    padding: 1rem 0;
-    border-top: 1px solid rgb(var(--color-primary-700));
-    transition-property: display, opacity, height;
-    transition-duration: 0.2s;
-    transition-timing-function: var(--default-easing);
-    transition-behavior: allow-discrete;
-
-    @media (prefers-reduced-motion: reduce) {
-      background-color: rgb(var(--color-primary-950));
-      width: calc(100% - 2rem);
-      position: absolute;
-      top: 100%;
-      right: 0;
-      margin-inline: 1rem;
-      transition: none;
-    }
-  }
-
-  .mobile-menu.hidden {
-    opacity: 0;
-    height: 0;
-  }
-
-  @starting-style {
-    .mobile-menu {
-      opacity: 0;
-      height: 0;
-    }
-  }
-
-  .mobile-menu-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .mobile-menu-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 0.75rem;
-    color: rgb(var(--color-primary-300));
-    font-weight: 500;
-    border-radius: 0.375rem;
-    transition: background-color 0.2s, color 0.2s;
-    text-decoration: none;
-  }
-
-  .mobile-menu-link:hover {
-    color: rgb(var(--color-highlight-400));
-    background-color: rgb(var(--color-primary-800));
   }
 </style>

@@ -153,7 +153,6 @@ export interface SiteConfig {
       loading: string;
     };
   };
-
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -221,7 +220,7 @@ export const siteConfig: SiteConfig = {
     // [CONFIG:FOOTER_CONTENT]
     content: `© {year} {author}. Built with the <a href="https://github.com/davidvkimball/astro-modular" target="_blank">Astro Modular</a> theme.`,
     // [CONFIG:FOOTER_SHOW_SOCIAL_ICONS]
-    showSocialIconsInFooter: false,
+    showSocialIconsInFooter: true,
   },
   //[CONFIG:HIDE_SCROLL_BAR]
   hideScrollBar: true,
@@ -254,7 +253,7 @@ export const siteConfig: SiteConfig = {
       // [CONFIG:COMMAND_PALETTE_SECTIONS_PAGES]
       pages: true,
       // [CONFIG:COMMAND_PALETTE_SECTIONS_SOCIAL]
-      social: false,
+      social: true,
     },
     quickActions: {
       // [CONFIG:COMMAND_PALETTE_QUICK_ACTIONS_ENABLED]
@@ -291,7 +290,7 @@ export const siteConfig: SiteConfig = {
     // [CONFIG:NAVIGATION_STYLE]
     style: "minimal", // 'minimal' or 'traditional'
     // [CONFIG:NAVIGATION_SHOW_MOBILE_MENU]
-    showMobileMenu: true,
+    showMobileMenu: false,
     // [CONFIG:NAVIGATION_PAGES]
     pages: [
       { title: "Posts", url: "/posts/" },
@@ -309,6 +308,11 @@ export const siteConfig: SiteConfig = {
         title: "GitHub",
         url: "https://github.com/iainsimmons",
         icon: "github",
+      },
+      {
+        title: "Bluesky",
+        url: "https://bsky.app/profile/iainsimmons.com",
+        icon: "bluesky",
       },
     ],
   },
