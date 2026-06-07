@@ -8,7 +8,6 @@ draft: false
 aliases:
   - using
   - defaults
-atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnp54spcgl2p"
 ---
 
 **Last updated**: <time datetime="2026-06-07">7 June 2026</time>
