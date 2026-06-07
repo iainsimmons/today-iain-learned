@@ -1,17 +1,25 @@
 {
+  "publicDir": "./public",
+  "outputDir": "./dist",
+  "pathPrefix": "/posts",
+  "publishContent": false,
+  "autoSync": true,
   "$schema": "https://tangled.org/stevedylan.dev/sequoia/raw/main/sequoia.schema.json",
   "siteUrl": "https://til.iainsimmons.com",
-  "contentDir": "./src/content/posts",
-  "outputDir": "./dist",
+  "contentDir": "./src/content",
+  "ignore": [
+    ".obsidian/*",
+    ".trash/*",
+    "bases/*",
+    "special/*"
+  ],
   "publicationUri": "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.publication/3mnlsntqzp72a",
   "frontmatter": {
     "publishDate": "date",
     "coverImage": "image"
   },
-  "publishContent": true,
   "bluesky": {
     "enabled": true,
     "maxAgeDays": 180
   }
 }
-
