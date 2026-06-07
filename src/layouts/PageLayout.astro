@@ -5,8 +5,6 @@ import { siteConfig } from '@/config';
 import { render } from 'astro:content';
 import { generatePageSEO } from '@/utils/seo';
 import { optimizeContentImagePath, getOptimizedFormat } from '@/utils/images';
-import { getBlueskyPostUri, atUriToBlueskyUrl } from '@/utils/bluesky';
-import BlueskyDiscussion from '@/components/BlueskyDiscussion.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import ImageWrapper from '@/components/ImageWrapper.astro';
@@ -158,11 +156,6 @@ const blueskyUrl = blueskyPostUri ? atUriToBlueskyUrl(blueskyPostUri) : null;
             <Content />
           </div>
 
-          {
-            blueskyUrl && (
-              <BlueskyDiscussion url={blueskyUrl} label="Discuss this page on Bluesky" />
-            )
-          }
         </div>
       </article>
 
