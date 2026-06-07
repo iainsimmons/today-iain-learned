@@ -1,31 +1,16 @@
 import { readFileSync } from "node:fs";
 
-interface SequoiaPostState {
-  bskyPostRef?: { uri: string; cid: string };
-  slug: string;
-  [key: string]: unknown;
-}
-
-function loadSequoiaState(): Record<string, SequoiaPostState> | null {
+function loadBlueskyPosts(): Record<string, string> {
   try {
-    const content = readFileSync(".sequoia-state.json", "utf-8");
-    return JSON.parse(content).posts;
+    return JSON.parse(readFileSync("public/bluesky-posts.json", "utf-8"));
   } catch {
-    return null;
+    return {};
   }
 }
 
 export function getBlueskyPostUri(postId: string): string | null {
-  const posts = loadSequoiaState();
-  if (!posts) return null;
-
-  for (const data of Object.values(posts)) {
-    if (data.slug === postId && data.bskyPostRef?.uri) {
-      return data.bskyPostRef.uri;
-    }
-  }
-
-  return null;
+  const posts = loadBlueskyPosts();
+  return posts[postId] || null;
 }
 
 export function atUriToBlueskyUrl(atUri: string): string {
