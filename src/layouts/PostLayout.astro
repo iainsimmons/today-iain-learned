@@ -2,6 +2,8 @@
 import sequoiaConfig from "../../sequoia.json";
 import type { Post, AtProtoLinks } from "@/types";
 import { siteConfig } from "@/config";
+import { getBlueskyPostUri, atUriToBlueskyUrl } from "@/utils/bluesky";
+import BlueskyDiscussion from "@/components/BlueskyDiscussion.astro";
 import { generatePostSEO } from "@/utils/seo";
 import { optimizePostImagePath, getOptimizedFormat } from "@/utils/images";
 import { getCollection } from "astro:content";
@@ -39,6 +41,9 @@ const atProtoLinks: AtProtoLinks = [
   { rel: "site.standard.document", href: post.data.atUri || "" },
   { rel: "site.standard.publication", href: sequoiaConfig.publicationUri },
 ];
+
+const blueskyPostUri = getBlueskyPostUri(post.id);
+const blueskyUrl = blueskyPostUri ? atUriToBlueskyUrl(blueskyPostUri) : null;
 
 // Generate structured data for the post
 const structuredData = {
@@ -314,6 +319,12 @@ const showCoverImage =
         <div class="prose" id="post-content">
           <Content />
         </div>
+
+        {
+          blueskyUrl && (
+            <BlueskyDiscussion url={blueskyUrl} label="Discuss this post on Bluesky" />
+          )
+        }
 
         {
           siteConfig.postOptions.linkedMentions.enabled && (

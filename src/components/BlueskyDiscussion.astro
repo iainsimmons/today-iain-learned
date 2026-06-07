@@ -1,0 +1,39 @@
+---
+import Icon from "./Icon.astro";
+
+export interface Props {
+  url: string;
+  label?: string;
+}
+
+const { url, label = "Discuss this on Bluesky" } = Astro.props;
+---
+
+<hr class="bd-divider" />
+
+<a href={url} target="_blank" rel="noopener noreferrer" class="bd-link">
+  <Icon name="bluesky" size={20} /> {label}
+</a>
+
+<style>
+  .bd-divider {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid rgb(var(--color-primary-700));
+  }
+
+  .bd-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: rgb(var(--color-highlight-500));
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .bd-link:hover {
+    color: rgb(var(--color-highlight-400));
+    text-decoration: underline;
+  }
+</style>
