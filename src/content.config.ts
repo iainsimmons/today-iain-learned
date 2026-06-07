@@ -79,6 +79,7 @@ const pagesCollection = defineCollection({
     hideCoverImage: z.boolean().optional(),
     hideTOC: z.boolean().optional(),
     noIndex: z.boolean().optional(),
+    atUri: z.string().optional(),
   }),
 });
 
