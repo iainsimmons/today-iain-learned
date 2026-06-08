@@ -16,8 +16,8 @@
     "dev": "cross-env ASTRO_CONTENT_COLLECTION_CACHE=false node scripts/setup-dev.mjs && node scripts/sync-images.js && node scripts/process-aliases.js && node scripts/generate-graph-data.js && astro dev --host 0.0.0.0",
     "build": "node scripts/sync-images.js && node scripts/process-aliases.js && node scripts/generate-graph-data.js && astro build && node scripts/post-build.js",
     "preview": "astro preview --host 0.0.0.0",
-    "bluesky": "sequoia publish && node scripts/extract-bsky-posts.js",
-    "bluesky-dry-run": "sequoia publish --dry-run && node scripts/extract-bsky-posts.js",
+    "bluesky": "sequoia publish && node --env-file=.env scripts/extract-bsky-posts.js",
+    "bluesky-dry-run": "sequoia publish --dry-run && node --env-file=.env scripts/extract-bsky-posts.js",
     "sync-images": "node scripts/sync-images.js",
     "process-aliases": "node scripts/process-aliases.js",
     "generate-graph-data": "node scripts/generate-graph-data.js",
@@ -61,6 +61,8 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@atproto/api": "^0.20.9",
+    "@atproto/syntax": "^0.6.1",
     "@types/hast": "^3.0.4",
     "@types/unist": "^3.0.3",
     "cross-env": "^10.0.0",

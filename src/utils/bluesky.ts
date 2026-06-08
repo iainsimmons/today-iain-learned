@@ -10,7 +10,7 @@ function loadBlueskyPosts(): Record<string, string> {
 
 export function getBlueskyPostUri(postId: string): string | null {
   const posts = loadBlueskyPosts();
-  return posts[postId] || null;
+  return posts[postId] || posts[`pages/${postId}`] || null;
 }
 
 export function atUriToBlueskyUrl(atUri: string): string {
