@@ -13,6 +13,7 @@ tags:
   - atproto
 hideTOC: false
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mon4talwjp2b"
 ---
 After watching the [atproto episode of the CodeTV Web Dev Challenge (Season 3, Episode 4)](https://www.youtube.com/watch?v=S-XytKfGCO8) I was inspired to connect my blog site to the [Atmosphere](https://atproto.com/guides/glossary#atmosphere) and specifically the [Standard.site lexicon](https://standard.site), especially since [Bluesky now embeds Standard.site links automatically](https://atproto.com/blog/standard-site-bluesky-timeline).
 
