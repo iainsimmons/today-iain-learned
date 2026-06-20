@@ -47,7 +47,7 @@ const lastUpdated = entries[0]?.data.lastUpdated;
 
 const seoData = generateCustomPageSEO(
   { title, description },
-  Astro.url.pathname
+  Astro.url.href
 );
 
 const toc = groups.map(group => ({

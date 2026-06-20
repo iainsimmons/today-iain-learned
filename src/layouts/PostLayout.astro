@@ -35,7 +35,7 @@ const id = post.id;
 const isDev = import.meta.env.DEV;
 
 // Generate SEO data
-const seoData = generatePostSEO(post, import.meta.env.SITE || "");
+const seoData = generatePostSEO(post, Astro.url.href);
 
 const atProtoLinks: AtProtoLinks = [
   { rel: "site.standard.document", href: post.data.atUri || "" },
