@@ -1,6 +1,6 @@
 import type { Post, PostData, ReadingTime, Heading } from "@/types";
 import { render } from "astro:content";
-import siteConfig from "@/config";
+import siteConfig, { getTableOfContentsDepth } from "@/config";
 
 export const language = siteConfig.language ?? "en-US";
 
@@ -102,10 +102,7 @@ export function getReadingTimeMobile(readingTime: ReadingTime): string {
 }
 
 // Extract reading time from remark plugin or calculate manually
-export function getReadingTime(
-  remarkData: any,
-  content?: string,
-): ReadingTime | null {
+export function getReadingTime(remarkData: any, content?: string): ReadingTime | null {
   // Validate remark plugin reading time data
   if (
     remarkData?.readingTime &&
@@ -141,11 +138,8 @@ export function getReadingTime(
 
 // Generate table of contents from headings
 export async function generateTOC(headings: Heading[]): Promise<Heading[]> {
-  const { getTableOfContentsDepth } = await import("@/config");
   const maxDepth = getTableOfContentsDepth();
-  return headings.filter(
-    (heading) => heading.depth >= 2 && heading.depth <= maxDepth,
-  );
+  return headings.filter((heading) => heading.depth >= 2 && heading.depth <= maxDepth);
 }
 
 // Process content data for display (posts, projects, docs, etc.)
@@ -172,17 +166,9 @@ export async function processPost(post: any) {
 export function formatDate(date: Date): string {
   // If the date is at midnight UTC, it was likely a YYYY-MM-DD date
   // that was parsed as UTC but should be treated as local
-  if (
-    date.getUTCHours() === 0 &&
-    date.getUTCMinutes() === 0 &&
-    date.getUTCSeconds() === 0
-  ) {
+  if (date.getUTCHours() === 0 && date.getUTCMinutes() === 0 && date.getUTCSeconds() === 0) {
     // Create a new date in local timezone using the UTC date components
-    const localDate = new Date(
-      date.getUTCFullYear(),
-      date.getUTCMonth(),
-      date.getUTCDate(),
-    );
+    const localDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
     return localDate.toLocaleDateString(language, {
       year: "numeric",
       month: "long",
@@ -201,17 +187,9 @@ export function formatDate(date: Date): string {
 export function formatDateMobile(date: Date): string {
   // If the date is at midnight UTC, it was likely a YYYY-MM-DD date
   // that was parsed as UTC but should be treated as local
-  if (
-    date.getUTCHours() === 0 &&
-    date.getUTCMinutes() === 0 &&
-    date.getUTCSeconds() === 0
-  ) {
+  if (date.getUTCHours() === 0 && date.getUTCMinutes() === 0 && date.getUTCSeconds() === 0) {
     // Create a new date in local timezone using the UTC date components
-    const localDate = new Date(
-      date.getUTCFullYear(),
-      date.getUTCMonth(),
-      date.getUTCDate(),
-    );
+    const localDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
     return localDate.toLocaleDateString(language, {
       year: "numeric",
       month: "short",
@@ -238,10 +216,7 @@ function isDevelopmentMode(): boolean {
 }
 
 // Check if a post should be shown in production
-export function shouldShowPost(
-  post: Post,
-  isDev: boolean | undefined = undefined,
-): boolean {
+export function shouldShowPost(post: Post, isDev: boolean | undefined = undefined): boolean {
   const { draft, title, date } = post.data;
 
   // Always require title and date
@@ -292,9 +267,7 @@ export function shouldShowContent(
 }
 
 // Sort content by date (newest first)
-export function sortPostsByDate<T extends { data: { date: Date } }>(
-  posts: T[],
-): T[] {
+export function sortPostsByDate<T extends { data: { date: Date } }>(posts: T[]): T[] {
   return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
@@ -305,10 +278,7 @@ export function getAdjacentPosts(posts: Post[], currentSlug: string) {
 
   return {
     prev: currentIndex > 0 ? sortedPosts[currentIndex - 1] : null,
-    next:
-      currentIndex < sortedPosts.length - 1
-        ? sortedPosts[currentIndex + 1]
-        : null,
+    next: currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null,
   };
 }
 
@@ -322,9 +292,7 @@ export function getAdjacentDocs<
   // Filter docs by the same category
   const categoryDocs = docs.filter((doc) => {
     const docCategory =
-      doc.data.category &&
-      doc.data.category.trim() !== "" &&
-      doc.data.category !== "General"
+      doc.data.category && doc.data.category.trim() !== "" && doc.data.category !== "General"
         ? doc.data.category
         : null;
 
@@ -358,10 +326,7 @@ export function getAdjacentDocs<
 
   return {
     prev: currentIndex > 0 ? sortedDocs[currentIndex - 1] : null,
-    next:
-      currentIndex < sortedDocs.length - 1
-        ? sortedDocs[currentIndex + 1]
-        : null,
+    next: currentIndex < sortedDocs.length - 1 ? sortedDocs[currentIndex + 1] : null,
   };
 }
 
@@ -374,9 +339,7 @@ export function extractTags(posts: Post[]): string[] {
     posts.forEach((post) => {
       if (post.data.tags) {
         // Handle both string and array tags, and filter out invalid values
-        const postTags = Array.isArray(post.data.tags)
-          ? post.data.tags
-          : [post.data.tags];
+        const postTags = Array.isArray(post.data.tags) ? post.data.tags : [post.data.tags];
         postTags.forEach((tag) => {
           if (tag && typeof tag === "string" && tag.trim()) {
             tags.add(tag.trim());
@@ -404,14 +367,9 @@ export function filterPostsByTag(posts: Post[], tag: string): Post[] {
       if (!post.data.tags) return false;
 
       // Handle both string and array tags
-      const postTags = Array.isArray(post.data.tags)
-        ? post.data.tags
-        : [post.data.tags];
+      const postTags = Array.isArray(post.data.tags) ? post.data.tags : [post.data.tags];
       return postTags.some(
-        (postTag) =>
-          postTag &&
-          typeof postTag === "string" &&
-          postTag.trim() === tag.trim(),
+        (postTag) => postTag && typeof postTag === "string" && postTag.trim() === tag.trim(),
       );
     });
   } catch (error) {
