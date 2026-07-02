@@ -5,7 +5,6 @@ import { generateHomeSEO } from '@/utils/seo';
 import { shouldShowPost,  sortPostsByDate, processPost } from '@/utils/markdown';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
-import Icon from '@/components/Icon.astro';
 import { optimizePostImagePath } from '@/utils/images';
 
 // Get all posts and filter by visibility
@@ -102,7 +101,6 @@ const structuredData = {
   </Fragment>
 
       {onlyBlurbContent ? (
-        <!-- Blurb-only homepage with page-like layout -->
         <article class="card home-article">
           <div class="home-article-inner">
             <!-- Page header -->

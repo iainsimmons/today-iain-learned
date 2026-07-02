@@ -175,13 +175,6 @@ export default defineConfig({
     port: 5000,
   },
 
-  experimental: {
-    rustCompiler: true,
-    queuedRendering: {
-      enabled: true,
-    },
-  },
-
   adapter: cloudflare({
     prerenderEnvironment: "node",
   }),
