@@ -178,4 +178,6 @@ export default defineConfig({
   adapter: cloudflare({
     prerenderEnvironment: "node",
   }),
+
+  compressHTML: true,
 });
