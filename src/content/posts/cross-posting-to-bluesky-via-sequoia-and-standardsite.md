@@ -19,7 +19,7 @@ After watching the [atproto episode of the CodeTV Web Dev Challenge (Season 3, E
 
 Here's what they look like:
 
-![[attachments/standard.site-post-on-bluesky.png|Standard.site post embedded on Bluesky]]
+![Standard.site post embedded on Bluesky](attachments/standard.site-post-on-bluesky.png)
 
 The [atproto team wrote a companion blog post to the video](https://atproto.com/blog/atmospheric-website) and listed a few tools for doing this. The first one listed is [Sequoia](https://sequoia.pub), which I was delighted to find out was built and is maintained by [Steve Simkins](https://stevedylan.dev/), a fellow dev / terminal / Neovim fan that I'm connected to on a few Discord servers and communities.
 

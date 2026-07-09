@@ -107,7 +107,7 @@ display_ansi_art
 
 And ends up producing a logo like this:
 
-![[attachments/coloured-terminal-output-of-iainvim_logo-command.png|coloured terminal output of iainvim_logo command]]
+![coloured terminal output of iainvim_logo command](attachments/coloured-terminal-output-of-iainvim_logo-command.png)
 
 Which can then be used as a terminal section command in the `snacks.nvim` dashboard like so:
 
@@ -138,4 +138,4 @@ return {
 
 And you get a result like this:
 
-![[attachments/iainsimmons_neovim_dashboard_2025-11-23.png|Neovim dashboard with gradient logo]]
+![Neovim dashboard with gradient logo](attachments/iainsimmons_neovim_dashboard_2025-11-23.png)

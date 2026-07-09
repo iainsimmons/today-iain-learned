@@ -17,11 +17,11 @@ Recently my [Keychron V5](https://www.keychron.com/collections/keychron-v-series
 
 I use the [VIA app](https://www.usevia.app/), and normally it's as simple as visiting the site and connecting to my keyboard via the [USB HID interface](https://en.wikipedia.org/wiki/USB_human_interface_device_class):
 
-![[attachments/via-app-connection-attempt.png|VIA app keyboard connection attempt]]
+![VIA app keyboard connection attempt](attachments/via-app-connection-attempt.png)
 
 Viewing the errors in the VIA app I was greeted with the following:
 
-![[attachments/via-app-errors.png|VIA app errors]]
+![VIA app errors](attachments/via-app-errors.png)
 
 A bit of searching around and I was highlighted to the Chromium device log, which you can access with a URL like this in your browser (may be slightly different depending on which browser you use):
 
@@ -29,7 +29,7 @@ A bit of searching around and I was highlighted to the Chromium device log, whic
 
 There I could see some errors related to permissions to this device:
 
-![[attachments/helium-device-log.png|Helium device log]]
+![Helium device log](attachments/helium-device-log.png)
 
 Here's one entry in more detail:
 
@@ -74,4 +74,4 @@ sudo udevadm trigger
 
 And then I can connect my keyboard and the VIA app will run happily!
 
-![[attachments/via-app-mascot.png|VIA app smiling mascot]]
+![VIA app smiling mascot](attachments/via-app-mascot.png)

@@ -172,36 +172,12 @@ const scrollbarClass = siteConfig.hideScrollBar ? "" : "show-scrollbars";
 
     <ImageGalleryManager />
 
-    <script>
-      try {
-        await import("../scripts/base-embeds-client.ts");
-      } catch (_) {}
-    </script>
-    <script>
-      try {
-        await import("../scripts/mermaid-client.ts");
-      } catch (_) {}
-    </script>
-
     <script
       define:vars={{ commentsEnabled: siteConfig.postOptions.comments.enabled }}
       defer
     >
       // Set window.commentsEnabled for client-side access
       window.commentsEnabled = commentsEnabled;
-
-      // Initialize on DOMContentLoaded
-      document.addEventListener("DOMContentLoaded", () => {
-        // Initialize base embeds on initial page load
-        if (window.initializeBaseEmbeds) {
-          window.initializeBaseEmbeds();
-        }
-
-        // Initialize linked mentions on initial page load
-        if (window.initializeLinkedMentions) {
-          window.initializeLinkedMentions();
-        }
-      });
 
       // Command Palette Keyboard Shortcut Handler
       function setupCommandPaletteShortcut() {

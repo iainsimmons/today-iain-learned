@@ -23,11 +23,11 @@ I started with the site title you can see in the header on this site. Then I mad
 
 Then I simply used the [Capture node screenshot](https://developer.chrome.com/docs/devtools/dom#screenshot) command in the Elements panel of Chromium DevTools (I'm using the [Helium Browser](https://helium.computer/) on my Linux computer) and with a bit of trial and error, tweaking the margins/padding to get just the right size, I got the result I was looking for, the [Open Graph](https://ogp.me/) image shown below:
 
-![[attachments/open-graph-image-for-today-iain-learned.png|Open Graph image for today iain learned]]
+![Open Graph image for today iain learned](attachments/open-graph-image-for-today-iain-learned.png)
 
 Then a little more tweaking to keep just the initials and crop to a square, without a border and I had my [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon):
 
-![[attachments/favicon-til.png|favicon with initials TIL in lowercase]]
+![favicon with initials TIL in lowercase](attachments/favicon-til.png)
 
 Finally, I replaced the existing image files used on this blog, pushed the changes and cleared the Cloudflare cache, and pretty quickly they were up and running.
 

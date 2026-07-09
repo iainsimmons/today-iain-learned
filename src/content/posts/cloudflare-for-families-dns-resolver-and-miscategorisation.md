@@ -21,7 +21,7 @@ I mostly don't have to think about it, which is good. It's nice to have a free s
 
 Recently I was going to recommend [Cassidy Williams' FancyGist markdown editor service](https://github.com/cassidoo/fancygist) to a friend, but when I visited the site at [fancygist.com](https://fancygist.com/), I saw the usual browser error for a failed connection:
 
-![[attachments/chrome-error-refused-to-connect.png|Chrome error: Refused to connect]]
+![Chrome error: Refused to connect](./attachments/chrome-error-refused-to-connect.png)
 
 I reached out to [Cassidy](https://cassidoo.co/) by replying to her email newsletter (which you should absolutely [subscribe to](https://cassidoo.co/newsletter)!) to ask if it was down for her. It seemed like it was just me, and connecting via a different network I had no problems, so that was what brought to mind the Cloudflare for Families DNS.
 

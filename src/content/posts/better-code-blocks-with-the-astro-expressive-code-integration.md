@@ -41,7 +41,7 @@ pre.astro-code {
 ```
 
 And that looked like this:
-![[attachments/old-code-block.png|Old code block styles]]
+![Old code block styles](attachments/old-code-block.png)
 
 That's not bad, but one feature that I really felt was missing was the ability to copy the code from a code block.
 

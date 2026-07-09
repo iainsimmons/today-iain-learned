@@ -37,7 +37,7 @@ map super+ctrl+shift+alt+t>h goto_session ~/.config/kitty/sessions/dotfiles.kitt
 ```
 
 Or use the simple session picker available out-of-the-box:
-![[kitty-session-picker.png|kitty session picker]]
+![kitty session picker](attachments/kitty-session-picker.png)
 
 And add a keymap for that, switching to the last session, and closing a session:
 

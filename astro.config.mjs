@@ -1,30 +1,13 @@
 import { defineConfig, fontProviders } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
-import { unified } from "@astrojs/markdown-remark";
+import { satteri } from "@astrojs/markdown-satteri";
 import {
-  remarkInternalLinks,
-  remarkFolderImages,
-  remarkImageCaptions,
-} from "./src/utils/internallinks.ts";
-import remarkCallouts from "./src/utils/remark-callouts.ts";
-import remarkImageGrids from "./src/utils/remark-image-grids.ts";
-import remarkMermaid from "./src/utils/remark-mermaid.ts";
-import { remarkObsidianEmbeds } from "./src/utils/remark-obsidian-embeds.ts";
-import remarkBases from "./src/utils/remark-bases.ts";
-import { remarkObsidianComments } from "./src/utils/remark-obsidian-comments.ts";
-import remarkMath from "remark-math";
-import remarkReadingTime from "remark-reading-time";
-import remarkToc from "remark-toc";
-import remarkBreaks from "remark-breaks";
-import rehypeKatex from "rehype-katex";
-import rehypeMark from "./src/utils/rehype-mark.ts";
-import rehypeImageAttributes from "./src/utils/rehype-image-attributes.ts";
-import { rehypeNormalizeAnchors } from "./src/utils/rehype-normalize-anchors.ts";
-import { rehypeExternalLinks } from "./src/utils/rehype-external-links.ts";
-import { rehypeTableWrappers } from "./src/utils/rehype-table-wrappers.ts";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+  satteriCalloutPlugin,
+  satteriEmbedVideo,
+  satteriHeadingAnchors,
+  satteriImageCaptions,
+} from "./src/utils/satteri/index.ts";
 import { siteConfig } from "./src/config.ts";
 import { fileURLToPath } from "url";
 
@@ -50,65 +33,11 @@ export default defineConfig({
     },
   ],
 
-  service: {
-    image: {
-      entrypoint: "astro/assets/services/sharp",
-      config: {
-        limitInputPixels: false,
-      },
-    },
-  },
-
   markdown: {
-    processor: unified({
-      remarkPlugins: [
-        remarkInternalLinks,
-        remarkObsidianComments,
-        remarkFolderImages,
-        remarkObsidianEmbeds,
-        remarkBases,
-        remarkImageCaptions,
-        remarkMath,
-        remarkCallouts,
-        remarkBreaks,
-        remarkImageGrids,
-        remarkMermaid,
-        [remarkReadingTime, {}],
-        [
-          remarkToc,
-          {
-            tight: true,
-            ordered: false,
-            maxDepth: 3,
-            heading: "contents|table[ -]of[ -]contents?|toc",
-          },
-        ],
-      ],
-      rehypePlugins: [
-        rehypeExternalLinks,
-        rehypeTableWrappers,
-        rehypeKatex,
-        rehypeMark,
-        rehypeImageAttributes,
-        [
-          rehypeSlug,
-          {
-            test: (node) => node.tagName !== "h1",
-          },
-        ],
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: "wrap",
-            test: (node) => node.tagName !== "h1",
-            properties: {
-              className: ["anchor-link"],
-              ariaLabel: "Link to this section",
-            },
-          },
-        ],
-        rehypeNormalizeAnchors,
-      ],
+    processor: satteri({
+      features: { wikilinks: true, directive: true },
+      mdastPlugins: [satteriCalloutPlugin, satteriEmbedVideo],
+      hastPlugins: [satteriHeadingAnchors, satteriImageCaptions],
     }),
     shikiConfig: {
       theme: "github-dark",
@@ -142,18 +71,17 @@ export default defineConfig({
     server: {
       host: true,
       port: 5000,
-      strictPort: false, // Allow fallback to 5001 if 5000 is occupied (e.g., AirPlay on macOS)
+      strictPort: false,
       allowedHosts: [],
       middlewareMode: false,
       hmr: true,
       watch: {
         ignored: ["**/.obsidian/**", "**/_bases/**", "**/bases/**"],
-        usePolling: process.platform === "win32", // Use polling on Windows for better file watching
+        usePolling: process.platform === "win32",
         interval: 1000,
       },
       headers: {
         "Cache-Control": "no-cache, no-store, must-revalidate",
-        // CSP headers are handled by src/middleware.ts for all routes
       },
     },
     define: {
@@ -176,6 +104,7 @@ export default defineConfig({
   },
 
   adapter: cloudflare({
+    imageService: "cloudflare",
     prerenderEnvironment: "node",
   }),
 

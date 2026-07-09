@@ -10,6 +10,7 @@ hideTOC: false
 aliases:
 atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxri25m2l"
 ---
+
 <abbr title="In Case You Missed It">ICYMI</abbr>, [Neovim version 0.12](https://neovim.io/doc/user/news-0.12/) was released at the end of March 2026. There's quite a few roundups or summaries of the various features, so I won't go into a lot of detail, but just wanted to highlight a couple of the small changes I made after upgrading.
 
 ## Undotree
@@ -46,7 +47,7 @@ This way you only load it when it is actually needed.
 
 ## Incremental selections with Treesitter
 
-Another feature that I used to use with the old [`master`  branch of nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter/tree/master?tab=readme-ov-file#incremental-selection) is incremental selection. That is, you visually select a range of text, and then with treesitter, you use keymaps to increment (expand) or decrement (contract) the selection.
+Another feature that I used to use with the old [`master` branch of nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter/tree/master?tab=readme-ov-file#incremental-selection) is incremental selection. That is, you visually select a range of text, and then with treesitter, you use keymaps to increment (expand) or decrement (contract) the selection.
 
 That used to be configured like this:
 
@@ -66,7 +67,7 @@ require'nvim-treesitter.configs'.setup {
 
 On the `main` branch of `nvim-treesitter`, that's no longer a thing, but luckily this functionality was added in to the core of Neovim 0.12, with the default keymaps of <kbd>v</kbd> <kbd>a</kbd> <kbd>n</kbd> to increment and <kbd>v</kbd> <kbd>i</kbd> <kbd>n</kbd> to decrement. See the [Neovim treesitter docs](https://neovim.io/doc/user/treesitter/#treesitter-incremental-selection).
 
-The default mappings aren't bad, though you have to first do  <kbd>v</kbd> <kbd>a</kbd> <kbd>n</kbd> to increment in normal mode, and then switch to just repeating <kbd>a</kbd> <kbd>n</kbd> to further increment in visual mode (and similar with  <kbd>v</kbd> <kbd>i</kbd> <kbd>n</kbd> to decrement from normal mode and then repeat <kbd>i</kbd> <kbd>n</kbd> in visual mode).
+The default mappings aren't bad, though you have to first do <kbd>v</kbd> <kbd>a</kbd> <kbd>n</kbd> to increment in normal mode, and then switch to just repeating <kbd>a</kbd> <kbd>n</kbd> to further increment in visual mode (and similar with <kbd>v</kbd> <kbd>i</kbd> <kbd>n</kbd> to decrement from normal mode and then repeat <kbd>i</kbd> <kbd>n</kbd> in visual mode).
 
 I wanted some alternative keymaps (normally I'd go with <kbd>Ctrl</kbd> + <kbd>Space</kbd> to increment and <kbd>Backspace</kbd> to decrement, but these were not working for me in Linux, only in macOS).
 
@@ -108,8 +109,8 @@ You'll notice that I first need to trigger visual mode if using these from norma
 
 Here's how it looks:
 
-![[attachments/nvim-incremental-selection.mp4|Incremental selection in Neovim version 0.12]]
+::video{title="Incremental selection in Neovim version 0.12" src="attachments/nvim-incremental-selection.mp4" controls}
 
 ## The rest
 
-I haven't yet switched to using [`vim.pack.add`](https://neovim.io/doc/user/pack/#vim.pack.add()) and native plugin management. I've finely tuned my lazy.nvim based config and have not yet seen a compelling reason to move away from it.
+I haven't yet switched to using [`vim.pack.add`](<https://neovim.io/doc/user/pack/#vim.pack.add()>) and native plugin management. I've finely tuned my lazy.nvim based config and have not yet seen a compelling reason to move away from it.

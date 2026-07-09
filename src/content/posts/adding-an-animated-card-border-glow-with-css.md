@@ -12,7 +12,7 @@ atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnlsxqjwbu
 ---
 I recently saw a nice top border glow effect from a site shared on the [Astro blog post from March 2026](https://astro.build/blog/whats-new-march-2026/#community), coincidentally made by [David V Kimball](https://davidvkimball.com/), author of the [Astro Modular](https://github.com/davidvkimball/astro-modular) template used to build this site. The site is no longer up (it was built for a challenge), but I nabbed a screenshot and used that as a reference:
 
-![[attachments/border-glow-reference-screenshot.png|Reference screenshot for the border glow effect]]
+![Reference screenshot for the border glow effect](attachments/border-glow-reference-screenshot.png)
 
 
 I think I've seen this effect before, maybe in a Kevin Powell or Wes Bos YouTube video, and I straight away thought of using a [radial gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/gradient/radial-gradient).
