@@ -109,7 +109,7 @@ You'll notice that I first need to trigger visual mode if using these from norma
 
 Here's how it looks:
 
-::video{title="Incremental selection in Neovim version 0.12" src="attachments/nvim-incremental-selection.mp4" controls}
+::video{title="Incremental selection in Neovim version 0.12" src="/posts/attachments/nvim-incremental-selection.mp4"}
 
 ## The rest
 
