@@ -12,7 +12,6 @@ export const satteriImageCaptions = defineHastPlugin({
       return ctx.wrapNode(node, {
         type: "element",
         tagName: "figure",
-        properties: { className: ["video-embed"] },
         children: [
           {
             type: "element",
