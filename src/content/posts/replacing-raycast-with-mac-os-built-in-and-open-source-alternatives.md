@@ -9,6 +9,7 @@ tags:
   - tools
 hideTOC: false
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mqeqy5apgj2i"
 ---
 Recently two things have happened to cause me to have to switch away from Raycast on macOS.
 
