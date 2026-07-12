@@ -107,8 +107,13 @@ export default defineConfig({
     host: true,
     port: 5000,
   },
-
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+    },
+  },
   adapter: cloudflare({
+    imageService: "passthrough",
     prerenderEnvironment: "node",
   }),
 
