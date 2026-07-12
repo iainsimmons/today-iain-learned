@@ -80,8 +80,8 @@ Simply add custom "search engines" in your browser of choice. Here's the docs fo
 
 For example, to add a search for the [Mozilla Developer Network docs](https://developer.mozilla.org):
 
-**Search engine:** Mozilla Developer Network
-**Shortcut:** `mdn`
+**Search engine:** Mozilla Developer Network  
+**Shortcut:** `mdn`  
 **URL:** `https://developer.mozilla.org/en-US/search?q=%s`
 
 Then you can type `mdn`, press <kbd>Space</kbd> or <kbd>Tab</kbd> and then your search query and it will open the search results page directly.
@@ -90,11 +90,11 @@ It doesn't have to be a "search" in the normal sense, it can fill any part of th
 
 Here's an example for checking what a HTTP status code means (thank me later):
 
-**Search engine:** HTTP Status Dogs
-**Shortcut:** `status`
+**Search engine:** HTTP Status Dogs  
+**Shortcut:** `status`  
 **URL:** `https://http.dog/%s`
 
-So typing `status 418` in the address bar will take me to https://http.dog/418
+So typing `status 418` in the address bar will take me to <https://http.dog/418>
 
 For some of the other features of Quicklinks, like choosing from a list, I used [Shortcuts](https://support.apple.com/en-au/guide/shortcuts-mac/apdf22b0444c/mac). Shortcuts in macOS are a little funky to use. I almost prefer the old Automator, but maybe it will just take some time to get used to. Maybe I'll see if there's a good way to replace more things with CLI commands and mapping them to keys via skhd.
 
@@ -105,11 +105,13 @@ Some of these are now also [built in to Spotlight](https://support.apple.com/en-
 ## Other actions
 
 There's [a bunch of other things you can now do in Spotlight with Actions](https://support.apple.com/en-au/guide/mac-help/mchl4953dfeb/26/mac/26). I just needed to disable Actions from a bunch of built-in Apple apps that I don't use, most of which I have an alternative that I like better:
+
 - Notes (TickTick/Obsidian)
-* Reminders (TickTick)
-* Mail & Calendar (Google Mail / Calendar in the browser)
-* Podcasts (either Spotify or AntennaPod on my Android Phone)
+- Reminders (TickTick)
+- Mail & Calendar (Google Mail / Calendar in the browser)
+- Podcasts (either Spotify or AntennaPod on my Android Phone)
 
 ## Other features of Raycast
 
 I was not using the AI features of Raycast. If you do, then I expect you would just use the individual AI tools directly. Anything else I would try to find a CLI equivalent.
+
