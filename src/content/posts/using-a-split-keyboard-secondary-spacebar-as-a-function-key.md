@@ -1,10 +1,11 @@
 ---
 title: Using a split keyboard secondary spacebar as a function key
 date: 2026-07-12
-description: "today iain learned: Using a split keyboard secondary spacebar as a function key"
+description: "today iain learned: How to map a split keyboard secondary spacebar as a function key when held down"
 tags:
   - keyboard
   - hardware
+  - productivity
 hideTOC: false
 draft: false
 ---
@@ -28,22 +29,22 @@ A bit of regular typing on the Split65 confirmed that I typically use the left s
 
 I then added the following keymaps:
 
-<kbd>FN</kbd> + <kbd>H</kbd>  => `Left Arrow`
-<kbd>FN</kbd> + <kbd>J</kbd>  => `Down Arrow`
-<kbd>FN</kbd> + <kbd>K</kbd>  => `Up Arrow`
-<kbd>FN</kbd> + <kbd>L</kbd>  => `Right Arrow`
-<kbd>FN</kbd> + <kbd>Space</kbd> => `Enter`
+- <kbd>FN</kbd> + <kbd>H</kbd>  => `Left Arrow`
+- <kbd>FN</kbd> + <kbd>J</kbd>  => `Down Arrow`
+- <kbd>FN</kbd> + <kbd>K</kbd>  => `Up Arrow`
+- <kbd>FN</kbd> + <kbd>L</kbd>  => `Right Arrow`
+- <kbd>FN</kbd> + <kbd>Space</kbd> => `Enter`
 
 And then later, after watching/reading about the Emacs celebrity [Prot teaching streamer and Neovim user Linkarzu about Emacs](https://protesilaos.com/codelog/2026-07-04-emacs-for-beginners-with-linkarzu/), I stole his idea of adding layer 1 keymaps for the navigation keys:
 
-<kbd>FN</kbd> + <kbd>Y</kbd>  => `Home`
-<kbd>FN</kbd> + <kbd>U</kbd>  => `PgDn`
-<kbd>FN</kbd> + <kbd>I</kbd>  => `PgUp`
-<kbd>FN</kbd> + <kbd>O</kbd>  => `End`
+- <kbd>FN</kbd> + <kbd>Y</kbd>  => `Home`
+- <kbd>FN</kbd> + <kbd>U</kbd>  => `PgDn`
+- <kbd>FN</kbd> + <kbd>I</kbd>  => `PgUp`
+- <kbd>FN</kbd> + <kbd>O</kbd>  => `End`
 
 And then finally I added `Backspace` and `Delete` to the left side home row too:
 
-<kbd>FN</kbd> + <kbd>D</kbd>  => `Backspace`
-<kbd>FN</kbd> + <kbd>F</kbd>  => `Delete`
+- <kbd>FN</kbd> + <kbd>D</kbd>  => `Backspace`
+- <kbd>FN</kbd> + <kbd>F</kbd>  => `Delete`
 
 You can find the [layout (exported as JSON) in my dotfiles](https://github.com/iainsimmons/dotfiles/blob/main/epomaker_split65.layout.json).
