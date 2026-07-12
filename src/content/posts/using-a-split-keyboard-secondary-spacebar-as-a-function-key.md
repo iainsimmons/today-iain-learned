@@ -8,6 +8,7 @@ tags:
   - productivity
 hideTOC: false
 draft: false
+atUri: at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mqhex62k4sjg
 ---
 I recently received a new keyboard as a birthday gift, my first ***split*** mechanical keyboard (not an ortholinear though, baby steps!), the [Epomaker Split65](https://epomaker.com/products/epomaker-split-65). It's a great, affordable option, with a decent amount of features for the price (tri-mode wired/wireless/bluetooth, RGB lighting, hot-swappable switches, QMK/VIA programmable, and a good amount of sound dampening).
 
