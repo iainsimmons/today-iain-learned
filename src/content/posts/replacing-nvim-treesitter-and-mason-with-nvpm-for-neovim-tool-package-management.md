@@ -16,7 +16,7 @@ Most of you who are actively maintaining and updating your own Neovim config wou
 
 I won't go into that or the politics around open source software, but you can read about it on Reddit or elsewhere if you're curious: [What happened to nvim-treesitter… Why did it get archived?](https://www.reddit.com/r/neovim/comments/1sbrnir/what_happened_to_nvimtreesitter_why_did_it_get/)
 
-Instead I'll focus on an alternative solution for managing things like Tree-sitter parsers that also addresses the rising concerns with supply chain attacks on open source software in git repositories that are often updated automatically via package management tools.
+Instead, I'll focus on an alternative solution for managing things like Tree-sitter parsers that also addresses the rising concerns with supply chain attacks on open source software in git repositories that are often updated automatically via package management tools.
 
 ## NVPM
 
@@ -26,7 +26,7 @@ The [NVPM client](https://github.com/mistweaverco/nvpm-client) is the heart of t
 
 By default, it uses the [NVPM registry](https://registry.nvpm.dev/) to source the packages (or at least the metadata about them), but you can use something else. Installs still use the original source, such as `npm`, `golang` or a git repository.
 
-There is also a [nvpm.nvim plugin](https://github.com/mistweaverco/nvpm.nvim) for Neovim integration, but if you have all the necessary files/binaries in the right paths, it is not required. It can even be used a replacement for [lazy.nvim](https://github.com/folke/lazy.nvim), though I've not yet taken things that far.
+There is also a [nvpm.nvim plugin](https://github.com/mistweaverco/nvpm.nvim) for Neovim integration, but if you have all the necessary files/binaries in the right paths, it is not required. It can even be used as a replacement for [lazy.nvim](https://github.com/folke/lazy.nvim), though I've not yet taken things that far.
 
 ## Tree-sitter
 
@@ -35,15 +35,13 @@ My Tree-sitter configuration was greatly simplified, and now, aside from other p
 ```lua title="lua/plugins/treesitter.lua"
 vim.api.nvim_create_autocmd("FileType", {
   callback = function(args)
-    -- Enable highlighting and indentation for all filetypes
+    -- Enable highlighting for all filetypes
     local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
     if lang and pcall(vim.treesitter.language.add, lang) then
       -- Only start treesitter when the parser ships highlight queries; otherwise
       -- fall back to the built-in syntax highlighting
       if vim.treesitter.query.get(lang, "highlights") then
         pcall(vim.treesitter.start, args.buf, lang)
-        -- set indentation
-        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         -- disable Treesitter Context for Kulala UI buffers
         if lang == "kulala_ui" then
           vim.cmd("TSContext disable")
@@ -130,10 +128,18 @@ nvpm update --all  # or: nvpm up -A
 You might see an error while attempting to install or update, similar to the following:
 
 ```
-✗ Failed to update npm:@mistweaverco/kulala-fmter-regex
-level=ERROR msg="min-release-age: npm:@mistweaverco/kulala-fmt@4.5.3 was first discovered 17h55m15s ago; wait 150h4m45s more or pass --force"
+Updating all installed packages to latest versions...
+Found 38 installed packages
+Updating 2 package(s) with available updates (skipping 36 up-to-date package(s))
+
+level=ERROR msg="min-release-age: github:tree-sitter/tree-sitter-regex@v1.0.0+17a3293714312c691ef14217f60593a3d093381c was first discovered 20h3m1s ago; wait 147h56m59s more or pass --force"
+[✗] Failed to update github:tree-sitter/tree-sitter-regex
+
+level=ERROR msg="min-release-age: npm:@mistweaverco/kulala-fmt@4.5.3 was first discovered 20h3m1s ago; wait 147h56m59s more or pass --force"
+[✗] Failed to update npm:@mistweaverco/kulala-fmt
+
 Update Summary:
-  Successfully updated: 0ckages to latest versions...
+  Successfully updated: 0
   Failed to update: 2
   Skipped (up to date): 36
 Failed to update some packages
@@ -158,3 +164,5 @@ There are many other CLI flags and configuration options described in the [nvpm-
 ## Registry
 
 Finally, you can browse the NVPM registry in a browser: [registry.nvpm.dev](https://registry.nvpm.dev/).
+
+I'd recommend giving NVPM a shot if you want to securely manage your Neovim tool packages.
