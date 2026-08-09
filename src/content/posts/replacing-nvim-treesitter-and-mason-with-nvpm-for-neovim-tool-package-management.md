@@ -10,6 +10,7 @@ tags:
   - Tree-sitter
   - LSP
 hideTOC: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3msmobhrtfk2u"
 ---
 
 Most of you who are actively maintaining and updating your own Neovim config would be aware of the drama earlier this year (April 2026) surrounding [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) where the maintainer archived the repository.
