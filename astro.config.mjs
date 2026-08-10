@@ -113,4 +113,9 @@ export default defineConfig({
   }),
 
   compressHTML: true,
+  session: false,
+
+  experimental: {
+    incrementalBuild: true,
+  },
 });
