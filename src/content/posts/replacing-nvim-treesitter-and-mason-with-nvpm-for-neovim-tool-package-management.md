@@ -13,6 +13,8 @@ hideTOC: false
 atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3msmobhrtfk2u"
 ---
 
+**Updated 17 August 2026**
+
 Most of you who are actively maintaining and updating your own Neovim config would be aware of the drama earlier this year (April 2026) surrounding [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) where the maintainer archived the repository.
 
 I won't go into that or the politics around open source software, but you can read about it on Reddit or elsewhere if you're curious: [What happened to nvim-treesitter… Why did it get archived?](https://www.reddit.com/r/neovim/comments/1sbrnir/what_happened_to_nvimtreesitter_why_did_it_get/)
@@ -30,6 +32,39 @@ By default, it uses the [NVPM registry](https://registry.nvpm.dev/) to source th
 There is also a [nvpm.nvim plugin](https://github.com/mistweaverco/nvpm.nvim) for Neovim integration, but if you have all the necessary files/binaries in the right paths, it is not required. It can even be used as a replacement for [lazy.nvim](https://github.com/folke/lazy.nvim), though I've not yet taken things that far.
 
 ## Tree-sitter
+
+**Edit**: I'm not using the above mentioned [nvpm.nvim plugin](https://github.com/mistweaverco/nvpm.nvim) for integrating Tree-sitter parsers with Neovim. My config is as follows:
+
+```lua
+return {
+  "mistweaverco/nvpm.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {
+    ---@type NvpmConfigLsp
+    lsp = {
+      -- Defaults to `true`, set to `false` to disable
+      -- Loads "custom" user configurations for LSP servers from
+      -- `vim.fn.stdpath('config') .. "/lsp/<server>.lua`
+      -- If you're using `nvim-lspconfig`,
+      -- You probably want to disable this.
+      loader = false,
+    },
+    ---@type NvpmConfigTreesitter
+    treesitter = {
+      -- Defaults to `true`, set to `false` to disable
+      -- Loads "custom" user configurations for LSP servers from
+      -- `vim.fn.stdpath('data') .. "/site/parser/<ft>.{so,dylib,dll}`
+      -- `vim.fn.stdpath('data') .. "/site/queries/<ft>/*.scm`
+      -- If you're using another plugin to manage treesitter parsers and queries,
+      -- You probably want to disable this.
+      loader = true,
+    },
+  },
+}
+```
+
+Here's what I previously had, for reference (should still work):
 
 My Tree-sitter configuration was greatly simplified, and now, aside from other plugins based on Tree-sitter, is mostly powered by the following (which assumes the parsers are already available in the `/site/parser/` subdirectory in Neovim's [data standard path](https://neovim.io/doc/user/starting/#_standard-paths)):
 
