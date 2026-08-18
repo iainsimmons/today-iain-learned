@@ -33,7 +33,7 @@ There is also a [nvpm.nvim plugin](https://github.com/mistweaverco/nvpm.nvim) fo
 
 ## Tree-sitter
 
-**Edit**: I'm not using the above mentioned [nvpm.nvim plugin](https://github.com/mistweaverco/nvpm.nvim) for integrating Tree-sitter parsers with Neovim. My config is as follows:
+**Edit**: Now I am using the above mentioned [nvpm.nvim plugin](https://github.com/mistweaverco/nvpm.nvim) for integrating Tree-sitter parsers with Neovim. My config is as follows:
 
 ```lua
 return {
