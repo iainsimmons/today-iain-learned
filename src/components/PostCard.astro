@@ -1,21 +1,32 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import { formatDate, formatDateMobile, processMarkdown, calculateReadingTime, getReadingTimeMobile } from '../utils/markdown';
-import { siteConfig, getPostCardAspectRatio } from '../config';
-import { getOptimizedFormat } from '@/utils/images';
-import ImageWrapper from './ImageWrapper.astro';
+import type { CollectionEntry } from "astro:content";
+import {
+  formatDate,
+  formatDateMobile,
+  processMarkdown,
+  calculateReadingTime,
+  getReadingTimeMobile,
+} from "../utils/markdown";
+import { siteConfig, getPostCardAspectRatio } from "../config";
+import { getOptimizedFormat } from "@/utils/images";
+import ImageWrapper from "./ImageWrapper.astro";
 
 interface Props {
-  post: CollectionEntry<'posts'>;
+  post: CollectionEntry<"posts">;
   featured?: boolean;
   eager?: boolean;
-  context?: 'featured' | 'recent' | 'posts' | 'tags';
+  context?: "featured" | "recent" | "posts" | "tags";
 }
 
-const { post, featured = false, eager = false, context = 'posts' } = Astro.props;
+const {
+  post,
+  featured = false,
+  eager = false,
+  context = "posts",
+} = Astro.props;
 
-const { excerpt, wordCount } = processMarkdown(post.body || '');
-const readingTime = calculateReadingTime(post.body || '');
+const { excerpt, wordCount } = processMarkdown(post.body || "");
+const readingTime = calculateReadingTime(post.body || "");
 
 const { title, description, date, tags, image: rawImage, imageAlt } = post.data;
 const id = post.id;
@@ -26,10 +37,10 @@ const image = (() => {
   if (Array.isArray(rawImage)) {
     imageValue = rawImage[0];
   }
-  if (typeof imageValue !== 'string') {
+  if (typeof imageValue !== "string") {
     return imageValue;
   }
-  if (imageValue.startsWith('[[') && imageValue.endsWith(']]')) {
+  if (imageValue.startsWith("[[") && imageValue.endsWith("]]")) {
     return imageValue.slice(2, -2);
   }
   return imageValue;
@@ -39,114 +50,182 @@ const shouldShowCoverImage = (() => {
   if (!image) return false;
   const showCoverImages = siteConfig.postOptions.showPostCardCoverImages;
   switch (showCoverImages) {
-    case 'all': return true;
-    case 'featured': return context === 'featured' || featured;
-    case 'home': return context === 'featured' || context === 'recent';
-    case 'posts': return context === 'posts' || context === 'tags';
-    case 'featured-and-posts': return context === 'featured' || context === 'posts' || context === 'tags' || featured;
-    case 'none': default: return false;
+    case "all":
+      return true;
+    case "featured":
+      return context === "featured" || featured;
+    case "home":
+      return context === "featured" || context === "recent";
+    case "posts":
+      return context === "posts" || context === "tags";
+    case "featured-and-posts":
+      return (
+        context === "featured" ||
+        context === "posts" ||
+        context === "tags" ||
+        featured
+      );
+    case "none":
+    default:
+      return false;
   }
 })();
 ---
 
-<article id={`post-article-${id}`} style={`view-transition-name: post-article-${id}`} class={`card post-card ${featured ? 'post-card--featured' : ''} border-glow-top`} role="article" aria-labelledby={`post-title-${post.id}`}>
-<div class="post-card-inner">
-    {image && shouldShowCoverImage && (
-      <div class="post-card-image-wrap" style={`aspect-ratio: ${getPostCardAspectRatio()};`}>
-        <ImageWrapper
-          src={(() => {
-            let cleanImagePath = image;
-            if (!cleanImagePath || typeof cleanImagePath !== 'string') return '';
-            if (cleanImagePath.startsWith('[[') && cleanImagePath.endsWith(']]')) {
-              cleanImagePath = cleanImagePath.slice(2, -2);
-            }
-            if (cleanImagePath.startsWith('http')) return cleanImagePath;
-            const isFileBased = cleanImagePath.startsWith('attachments/');
-            if (isFileBased) {
-              cleanImagePath = cleanImagePath.replace('attachments/', '');
-            } else {
-              if (cleanImagePath.startsWith('images/') || cleanImagePath.startsWith('attachments/')) {
-                cleanImagePath = cleanImagePath.replace(/^(images|attachments)\//, '');
+<article
+  id={`post-article-${id}`}
+  style={`view-transition-name: post-article-${id}`}
+  class={`card post-card ${featured ? "post-card--featured" : ""} border-glow-top`}
+  role="article"
+  aria-labelledby={`post-title-${post.id}`}
+>
+  <div class="post-card-inner">
+    {
+      image && shouldShowCoverImage && (
+        <div
+          class="post-card-image-wrap"
+          style={`aspect-ratio: ${getPostCardAspectRatio()};`}
+        >
+          <ImageWrapper
+            src={(() => {
+              let cleanImagePath = image;
+              if (!cleanImagePath || typeof cleanImagePath !== "string")
+                return "";
+              if (
+                cleanImagePath.startsWith("[[") &&
+                cleanImagePath.endsWith("]]")
+              ) {
+                cleanImagePath = cleanImagePath.slice(2, -2);
               }
-            }
-            return getOptimizedFormat(cleanImagePath);
-          })()}
-          basePath={(() => {
-            if (typeof image === 'string' && image.startsWith('http')) return '';
-            let cleanImagePath = image;
-            if (typeof cleanImagePath === 'string' && cleanImagePath.startsWith('[[') && cleanImagePath.endsWith(']]')) {
-              cleanImagePath = cleanImagePath.slice(2, -2);
-            }
-            if (typeof cleanImagePath === 'string' && cleanImagePath.startsWith('attachments/')) {
-              return '/posts/attachments/';
-            }
-            if (post.id) {
-              return `/posts/${post.id}/`;
-            } else {
-              return '/posts/attachments/';
-            }
-          })()}
-          alt={imageAlt || `Featured image for post: ${title}`}
-          class="post-card-image"
-          width={800}
-          height={450}
-          format="webp"
-          quality={85}
-          loading={featured || eager ? "eager" : "lazy"}
-          fetchpriority={featured || eager ? "high" : "auto"}
-        />
-      </div>
-    )}
+              if (cleanImagePath.startsWith("http")) return cleanImagePath;
+              const isFileBased = cleanImagePath.startsWith("attachments/");
+              if (isFileBased) {
+                cleanImagePath = cleanImagePath.replace("attachments/", "");
+              } else {
+                if (
+                  cleanImagePath.startsWith("images/") ||
+                  cleanImagePath.startsWith("attachments/")
+                ) {
+                  cleanImagePath = cleanImagePath.replace(
+                    /^(images|attachments)\//,
+                    "",
+                  );
+                }
+              }
+              return getOptimizedFormat(cleanImagePath);
+            })()}
+            basePath={(() => {
+              if (typeof image === "string" && image.startsWith("http"))
+                return "";
+              let cleanImagePath = image;
+              if (
+                typeof cleanImagePath === "string" &&
+                cleanImagePath.startsWith("[[") &&
+                cleanImagePath.endsWith("]]")
+              ) {
+                cleanImagePath = cleanImagePath.slice(2, -2);
+              }
+              if (
+                typeof cleanImagePath === "string" &&
+                cleanImagePath.startsWith("attachments/")
+              ) {
+                return "/posts/attachments/";
+              }
+              if (post.id) {
+                return `/posts/${post.id}/`;
+              } else {
+                return "/posts/attachments/";
+              }
+            })()}
+            alt={imageAlt || `Featured image for post: ${title}`}
+            class="post-card-image"
+            width={800}
+            height={450}
+            format="webp"
+            quality={85}
+            loading={featured || eager ? "eager" : "lazy"}
+            fetchpriority={featured || eager ? "high" : "auto"}
+          />
+        </div>
+      )
+    }
 
-    <div class={`post-card-body ${image && shouldShowCoverImage ? 'post-card-body--with-image' : ''}`}>
+    <div
+      class={`post-card-body ${image && shouldShowCoverImage ? "post-card-body--with-image" : ""}`}
+    >
       <div class="post-card-meta">
         <time datetime={date.toISOString()}>
           <span class="post-card-date-desktop">{formatDate(date)}</span>
           <span class="post-card-date-mobile">{formatDateMobile(date)}</span>
         </time>
 
-        {siteConfig.postOptions.readingTime && readingTime && (
-          <>
-            <span class="post-card-sep-desktop">•</span>
-            <span class="post-card-sep-mobile">•</span>
-            <span>
-              <span class="post-card-rt-desktop">{readingTime.text && readingTime.text !== 'read0' && readingTime.text !== '' ? readingTime.text : '1 min read'}</span>
-              <span class="post-card-rt-mobile">{getReadingTimeMobile(readingTime)}</span>
-            </span>
-          </>
-        )}
+        {
+          siteConfig.postOptions.readingTime && readingTime && (
+            <>
+              <span class="post-card-sep-desktop">•</span>
+              <span class="post-card-sep-mobile">•</span>
+              <span>
+                <span class="post-card-rt-desktop">
+                  {readingTime.text &&
+                  readingTime.text !== "read0" &&
+                  readingTime.text !== ""
+                    ? readingTime.text
+                    : "1 min read"}
+                </span>
+                <span class="post-card-rt-mobile">
+                  {getReadingTimeMobile(readingTime)}
+                </span>
+              </span>
+            </>
+          )
+        }
 
-        {siteConfig.postOptions.wordCount && wordCount !== undefined && (
-          <>
-            <span class="post-card-sep-desktop">•</span>
-            <span class="post-card-sep-mobile">•</span>
-            <span class="post-card-wc-wrap">
-              <span class="post-card-wc-desktop">{wordCount === 1 ? '1 word' : `${wordCount} words`}</span>
-              <span class="post-card-wc-mobile">{wordCount === 1 ? '1 word' : `${wordCount.toLocaleString()} words`}</span>
-            </span>
-          </>
-        )}
+        {
+          siteConfig.postOptions.wordCount && wordCount !== undefined && (
+            <>
+              <span class="post-card-sep-desktop">•</span>
+              <span class="post-card-sep-mobile">•</span>
+              <span class="post-card-wc-wrap">
+                <span class="post-card-wc-desktop">
+                  {wordCount === 1 ? "1 word" : `${wordCount} words`}
+                </span>
+                <span class="post-card-wc-mobile">
+                  {wordCount === 1
+                    ? "1 word"
+                    : `${wordCount.toLocaleString()} words`}
+                </span>
+              </span>
+            </>
+          )
+        }
       </div>
 
       <h3>
-        <a href={`/posts/${post.id}`} class={`post-card-title ${featured ? 'post-card-title--featured' : ''}`}>
+        <a
+          href={`/posts/${post.id}`}
+          class={`post-card-title ${featured ? "post-card-title--featured" : ""}`}
+        >
           {title}
         </a>
       </h3>
 
-      {featured && description && (
-        <p class="post-card-desc">{description}</p>
-      )}
+      {featured && description && <p class="post-card-desc">{description}</p>}
 
-      {tags && tags.length > 0 && siteConfig.postOptions.tags && (
-        <div class="post-card-tags">
-          {tags.map((tag) => (
-            <a href={`/posts/tag/${tag}`} class="tag post-card-tag" aria-label={`View posts tagged with ${tag}`}>
-              {tag}
-            </a>
-          ))}
-        </div>
-      )}
+      {
+        tags && tags.length > 0 && siteConfig.postOptions.tags && (
+          <div class="post-card-tags">
+            {tags.map((tag) => (
+              <a
+                href={`/posts/tag/${tag}`}
+                class="tag post-card-tag"
+                aria-label={`View posts tagged with ${tag}`}
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        )
+      }
     </div>
   </div>
 </article>
@@ -202,25 +281,61 @@ const shouldShowCoverImage = (() => {
     margin-bottom: 0.25rem;
   }
 
-  .post-card-date-desktop { display: inline; }
-  .post-card-date-mobile { display: none; }
-  .post-card-sep-desktop { display: inline; color: rgb(var(--color-primary-600)); }
-  .post-card-sep-mobile { display: none; }
-  .post-card-rt-desktop { display: inline; }
-  .post-card-rt-mobile { display: none; }
-  .post-card-wc-wrap { min-width: 0; }
-  .post-card-wc-desktop { display: inline; }
-  .post-card-wc-mobile { display: none; }
+  .post-card-date-desktop {
+    display: inline;
+  }
+  .post-card-date-mobile {
+    display: none;
+  }
+  .post-card-sep-desktop {
+    display: inline;
+    color: rgb(var(--color-primary-600));
+  }
+  .post-card-sep-mobile {
+    display: none;
+  }
+  .post-card-rt-desktop {
+    display: inline;
+  }
+  .post-card-rt-mobile {
+    display: none;
+  }
+  .post-card-wc-wrap {
+    min-width: 0;
+  }
+  .post-card-wc-desktop {
+    display: inline;
+  }
+  .post-card-wc-mobile {
+    display: none;
+  }
 
   @media (max-width: 639px) {
-    .post-card-date-desktop { display: none; }
-    .post-card-date-mobile { display: inline; }
-    .post-card-sep-desktop { display: none; }
-    .post-card-sep-mobile { display: inline; color: rgb(var(--color-primary-600)); }
-    .post-card-rt-desktop { display: none; }
-    .post-card-rt-mobile { display: inline; }
-    .post-card-wc-desktop { display: none; }
-    .post-card-wc-mobile { display: inline; }
+    .post-card-date-desktop {
+      display: none;
+    }
+    .post-card-date-mobile {
+      display: inline;
+    }
+    .post-card-sep-desktop {
+      display: none;
+    }
+    .post-card-sep-mobile {
+      display: inline;
+      color: rgb(var(--color-primary-600));
+    }
+    .post-card-rt-desktop {
+      display: none;
+    }
+    .post-card-rt-mobile {
+      display: inline;
+    }
+    .post-card-wc-desktop {
+      display: none;
+    }
+    .post-card-wc-mobile {
+      display: inline;
+    }
   }
 
   .post-card-title {
@@ -238,7 +353,7 @@ const shouldShowCoverImage = (() => {
     display: block;
     position: absolute;
     inset: 0;
-}
+  }
 
   .post-card-title:hover {
     color: rgb(var(--color-highlight-400));
@@ -252,6 +367,7 @@ const shouldShowCoverImage = (() => {
     color: rgb(var(--color-primary-300));
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 0.875rem;

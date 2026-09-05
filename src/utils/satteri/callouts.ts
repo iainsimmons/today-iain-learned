@@ -14,7 +14,7 @@ export const satteriCalloutPlugin = defineMdastPlugin({
 
     const type = match[1].toLowerCase();
 
-    firstText.value = firstText.value.slice(match[0].length);
+    ctx.setProperty(firstText, "value", firstText.value.slice(match[0].length));
 
     ctx.setProperty(node, "data", {
       hProperties: {
