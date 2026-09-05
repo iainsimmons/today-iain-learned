@@ -9,6 +9,7 @@ tags:
   - tools
 hideTOC: false
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3muqqmad54t2n"
 ---
 
 As mentioned in a previous post about [replacing Raycast with other tools on macOS](/posts/replacing-raycast-with-mac-os-built-in-and-open-source-alternatives), I've been trying to find good open-source alternatives for the functionality that Raycast provided. One of those things was global snippets or text replacements.
