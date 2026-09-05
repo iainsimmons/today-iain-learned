@@ -2,7 +2,7 @@
   "publicDir": "./public",
   "outputDir": "./dist",
   "pathPrefix": "/posts",
-  "publishContent": false,
+  "publishContent": true,
   "autoSync": true,
   "$schema": "https://tangled.org/stevedylan.dev/sequoia/raw/main/sequoia.schema.json",
   "siteUrl": "https://til.iainsimmons.com",
