@@ -1081,7 +1081,8 @@ textarea:focus {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 
-.prose mark {
+.prose mark,
+.lm-mark {
   background-color: rgb(var(--color-highlight-900) / 0.3);
   color: rgb(var(--color-highlight-200));
   padding: 0.125rem 0.25rem;
