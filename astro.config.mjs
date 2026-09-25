@@ -58,6 +58,24 @@ export default defineConfig({
   ],
 
   vite: {
+    plugins: [
+      {
+        name: "astro-modular:dev-content-live-reload",
+        apply: "serve",
+        handleHotUpdate(ctx) {
+          try {
+            const isContentMd =
+              /[\\/]content[\\/]/.test(ctx.file) && /\.(md|mdx)$/u.test(ctx.file);
+            if (!isContentMd) return;
+            const prerenderEnv = ctx.server.environments?.prerender;
+            prerenderEnv?.moduleGraph?.invalidateAll();
+            ctx.server.ws.send({ type: "full-reload" });
+          } catch (error) {
+            console.warn("[dev-content-live-reload] skipped:", error?.message);
+          }
+        },
+      },
+    ],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
