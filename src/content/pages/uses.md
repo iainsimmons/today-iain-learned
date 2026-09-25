@@ -1,6 +1,6 @@
 ---
 title: Uses
-date: 2026-07-12
+date: 2026-09-25
 description: A list of the things I'm currently using for work and play
 noIndex: false
 hideTOC: false
@@ -11,7 +11,7 @@ aliases:
 atUri: at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mnp54spcgl2p
 ---
 
-**Last updated**: <time datetime="2026-07-12">12 July 2026</time>
+**Last updated**: <time datetime="2026-09-25">25 September 2026</time>
 
 ## Intro
 
@@ -32,10 +32,11 @@ Also see my [dotfiles](https://github.com/iainsimmons/dotfiles) and [Neovim conf
   - [lazy.nvim](https://github.com/folke/lazy.nvim): still the best plugin manager for my needs, I'm lazy loading everything
   - [mini.nvim](https://github.com/echasnovski/mini.nvim): a bunch of mini quality-of-life plugins in one
   - [nvim-lint](https://github.com/mfussenegger/nvim-lint): linting
+  - [nvpm.nvim](https://github.com/mistweaverco/nvpm.nvim) for NVPM integration for Tree-sitter, etc (I no longer use `nvim-treesitter` or any Mason plugins)
   - [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim): awesome markdown editing experience in Neovim
   - [snacks.nvim](https://github.com/folke/snacks.nvim): still using the dashboard, picker and a few other nice plugins from this
   - [snipe.nvim](https://github.com/leath-dub/snipe.nvim): quick buffer switcher, prefer this to Harpoon
-  - [vscode-diff.nvim](https://github.com/esmuellert/vscode-diff.nvim): really nice diff tool
+  - [codediff.nvim](https://github.com/esmuellert/codediff.nvim): really nice diff tool
 - [kitty](https://sw.kovidgoyal.net/kitty/): terminal emulator, have been using since switching from WezTerm in early 2026 (after a brief stint with Ghostty)
 - [tmux](https://github.com/tmux/tmux): terminal multiplexer, I mainly use it for having different sessions, and plugins
 - [sesh](https://github.com/joshmedeski/sesh): flexible and configurable CLI for quickly switching tmux sessions
@@ -43,27 +44,27 @@ Also see my [dotfiles](https://github.com/iainsimmons/dotfiles) and [Neovim conf
 - [Tokyo Night](https://github.com/folke/tokyonight.nvim): Still my favourite theme/colour scheme that I just keep coming back to
 - [CommitMono](https://commitmono.com/): monospace/programming font, can be tweaked and configured, really well balanced
 - [Starship](https://starship.rs/): shell prompt, fast and configurable
-- [GNU stow](https://www.gnu.org/software/stow/): dotfiles symlinking/management
+- [mise dotfiles](https://mise.jdx.dev/dotfiles.html#dotfiles): packages, tools and dotfiles management across multiple machines/OSes. See my [dotfiles setup](https://github.com/iainsimmons/dotfiles#setup)
 - [Yazi](https://yazi-rs.github.io/): file explorer TUI, with image previews and custom file handlers
 - [fzf](https://github.com/junegunn/fzf): fuzzy finder CLI and [fzf.fish](https://github.com/PatrickF1/fzf.fish) fzf plugin for fish shell
 - [zoxide](https://github.com/ajeetdsouza/zoxide): A smarter `cd` command
-- [lsd](https://github.com/lsd-rs/lsd): A better `ls` command
-- [atuin](https://atuin.sh/): magical shell history
+- [eza](https://github.com/eza-community/eza): A modern alternative to ls
 - [ov](https://noborus.github.io/ov/index.html): pager, with custom formats for log files, sticky headers and more
-- [fnm](https://github.com/Schniz/fnm): fast and simple Node.js version manager
 - [fx](https://fx.wtf/): JSON viewer & processor TUI
 - [Lazygit](https://github.com/jesseduffield/lazygit): simple terminal UI for git commands
+- [NVPM](https://nvpm.dev/): package manager for Tree-sitter parsers, LSP servers, DAP servers, linters, formatters, etc
+- [OpenCode](https://opencode.ai/): a nice way to get started with AI. I'm cheap and don't pay for anything…
 
 ## Productivity
 
 - [Omarchy](https://omarchy.org/): easy, but powerful introduction to the world of Arch Linux + Hyprland, well suited for web dev and customising everything to my liking
 - [Helium](https://helium.computer/): minimal browser that just does a few things well, privacy focused, using on my Linux PC
-- [Vicinae](https://www.vicinae.com/): basically Raycast for Linux
 - [Obsidian](https://obsidian.md/): still the best notes app I've used, great for customising, and it's basically the CMS I'm using for this site (via [Astro Modular](https://github.com/davidvkimball/astro-modular))
 - [TickTick](https://www.ticktick.com/): To-Do app that I sync everywhere and [[Always-on mini-monitor as a dashboard|always have running on my mini-monitor dashboard]]
 - [Shottr](https://shottr.cc/): screenshot tool on macOS, with great annotation features
 - [Maccy](https://github.com/p0deje/Maccy): clipboard history/manager for macOS
 - [skhd](https://github.com/asmvik/skhd): keyboard daemon for macOS (global keyboard shortcuts)
+- [espanso](https://espanso.org/): text expansion and global snippets
 
 ## Gear
 
