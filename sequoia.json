@@ -13,7 +13,7 @@
     "coverImage": "image"
   },
   "bluesky": {
-    "enabled": true,
+    "enabled": false,
     "maxAgeDays": 180
   }
 }
