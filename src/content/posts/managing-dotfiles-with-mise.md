@@ -17,7 +17,7 @@ I recently replaced my old [GNU Stow](https://www.gnu.org/software/stow/) dotfil
 
 I now manage my dotfiles, installed tools (like Node.js, Go, Python, etc), packages (CLIs/TUIs, etc) and other configuration across both operating systems (macOS and Omarchy/Arch Linux) and multiple machines that I use.
 
-Configs are now in `~/.config/mise/`, including a shared `config.toml`, `config.linux.toml` for Omarchy/Arch Linux and `config.macos.toml` for macOS, automatically loaded via [mise's `auto_env`](https://mise.jdx.dev/configuration/environments.html#platform-environments). The old `custom-omarchy-install.sh` shell script I had became the mise config section `[bootstrap.packages]` and the `bootstrap` task (`mise task run bootstrap`). See my [dotfiles Setup section](https://github.com/iainsimmons/dotfiles#setup).
+Configs are now in `~/.config/mise/`, including a shared `config.toml`, `config.linux.toml` for Omarchy/Arch Linux and `config.macos.toml` for macOS, automatically loaded via [mise's `auto_env`](https://mise.jdx.dev/configuration/environments.html#platform-environments). My old `custom-omarchy-install.sh` shell script became the mise bootstrap packages and tasks sections. See my [dotfiles Setup section](https://github.com/iainsimmons/dotfiles#setup).
 
 ## Tools
 
@@ -43,7 +43,7 @@ Here you can see there are a few sources of supported tools that can be managed 
 
 ## Packages
 
-The OS specific configs use the corresponding package managers (Pacman/AUR on Arch Linux, [Homebrew](https://brew.sh/) on macOS) and the installed packages can differ without me having to manage different setups in different git branches. I used to use [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile) to manage bulk-installing packages on macOS, and a custom bash script to install packages on Arch via [yay](https://github.com/jguer/yay).
+The OS-specific configs use the corresponding package managers (Pacman/AUR on Arch Linux, [Homebrew](https://brew.sh/) on macOS) and the installed packages can differ without me having to manage different setups in different git branches. I used to use [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile) to manage bulk-installing packages on macOS, and a custom bash script to install packages on Arch via [yay](https://github.com/jguer/yay).
 
 Here are some examples, first for Linux:
 
