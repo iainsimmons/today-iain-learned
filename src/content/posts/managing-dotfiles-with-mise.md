@@ -11,6 +11,7 @@ tags:
   - CLI
 hideTOC: false
 draft: false
+atUri: "at://did:plc:aoqs4f5ru6ztomatyvept7bf/site.standard.document/3mwdgmmrd7y2p"
 ---
 
 I recently replaced my old [GNU Stow](https://www.gnu.org/software/stow/) dotfiles setup and its multiple Git branches (per OS/machine) with a consolidated [mise bootstrap and dotfiles](https://mise.jdx.dev/bootstrap.html) setup.
