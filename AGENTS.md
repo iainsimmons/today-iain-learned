@@ -160,14 +160,14 @@ These files have been updated to use `id` instead of `slug`:
 
 - [RSS and Atom Feeds](#rss-and-atom-feeds)
 
-11. [Version Management](#version-management)
-12. [Configuration & Customization](#configuration--customization)
+ 1. [Version Management](#version-management)
+ 2. [Configuration & Customization](#configuration--customization)
 
 - [Typography Configuration](#typography-configuration)
 
-13. [Troubleshooting](#troubleshooting)
-14. [Best Practices](#best-practices)
-15. [Common AI Agent Mistakes](#common-ai-agent-mistakes)
+ 1. [Troubleshooting](#troubleshooting)
+ 2. [Best Practices](#best-practices)
+ 3. [Common AI Agent Mistakes](#common-ai-agent-mistakes)
 
 ## Project Vision & Philosophy
 
@@ -449,10 +449,7 @@ a[href], button {
 ```bash
 pnpm run dev              # Start development server
 pnpm run build            # Build for production
-pnpm run check-images     # Check for missing images
 pnpm run sync-images      # Sync images from content to public
-pnpm run process-aliases  # Process content aliases
-pnpm run generate-deployment-config # Generate deployment configs
 ```
 
 ## Content Organization
@@ -888,9 +885,6 @@ The theme includes a sophisticated URL mapping system that ensures Obsidian-styl
 - **Caching friendly** - mappings are applied during build time
 - **No runtime overhead** - all processing happens during markdown compilation
 
-### Automatic Aliases & Redirects
-When you rename a post or page in Obsidian, the old filename is automatically stored as an alias. Astro processes these aliases and creates redirect rules, so old URLs continue to work. You don't need to add aliases manually - they appear automatically when you use Obsidian's rename functionality.
-
 ### Content Collections Structure
 
 The theme uses Astro's content collections system with predefined collections:
@@ -1191,19 +1185,6 @@ The theme automatically handles image resolution for folder-based posts:
 
 ### Development Tools
 
-#### Check Missing Images
-
-```bash
-pnpm run check-images
-```
-
-This script will:
-
-- Scan all markdown files for image references
-- Check if referenced images exist
-- Report missing images with file locations and line numbers
-- Provide helpful tips for fixing issues
-
 #### Development Configuration
 
 Located in `src/config/dev.ts`:
@@ -1261,9 +1242,8 @@ public/posts/my-post/
 The build process includes several pre-build steps:
 
 1. **Sync Media Files**: Copy images, audio, video, and PDF files from content to public directory
-2. **Process Aliases**: Convert content aliases to redirects
-3. **Generate Redirects**: Create redirect rules for deployment platforms
-4. **Build Astro**: Compile the site
+2. **Generate Redirects**: Create redirect rules for deployment platforms
+3. **Build Astro**: Compile the site
 
 ### RSS and Atom Feeds
 
@@ -2211,7 +2191,7 @@ For users who have config.ts files without markers, provide a migration script t
 
 #### Best Practices for AI Agents
 
-#### ✅ DO:
+#### ✅ DO
 
 - **Always check for markers** before modifying config.ts
 - **Add markers for new configurable values** immediately
@@ -2220,7 +2200,7 @@ For users who have config.ts files without markers, provide a migration script t
 - **Update plugin code** when adding new markers
 - **Document new markers** in plugin documentation
 
-#### ❌ DON'T:
+#### ❌ DON'T
 
 - **Remove existing markers** under any circumstances
 - **Modify marker format** or naming
@@ -2610,11 +2590,13 @@ The math processing is integrated into the existing markdown pipeline:
 
 - **Syntax**: `$$...$$` (double dollar signs)
 - **Example**:
+
   ```markdown
   $$
   \int_0^{2\pi} d\theta x+e^{-i\theta}
   $$
   ```
+
 - **Use Cases**: Centered mathematical equations
 
 #### Common Mathematical Notation
@@ -3302,6 +3284,7 @@ This comprehensive embed support maintains the theme's core principles of clarit
 - **NEVER hide MathML output** - MathML is the properly formatted version
 - **ALWAYS hide HTML output** - HTML output is the broken, plain text version
 - **The correct CSS is:**
+
   ```css
   .katex-mathml {
     display: inline-block !important;
@@ -3310,7 +3293,9 @@ This comprehensive embed support maintains the theme's core principles of clarit
     display: none !important;
   }
   ```
+
 - **WRONG approach (causes duplication):**
+
   ```css
   .katex-mathml {
     display: none !important;
@@ -3319,6 +3304,7 @@ This comprehensive embed support maintains the theme's core principles of clarit
     display: inline-block !important;
   } /* DON'T DO THIS */
   ```
+
 - **This mistake causes "E=mc2E=mc2" duplication where math appears twice**
 
 #### 3. **🚨 USE `id` NOT `slug` (CRITICAL - ASTRO v6)**
@@ -3429,6 +3415,7 @@ This comprehensive embed support maintains the theme's core principles of clarit
 - **Plugins execute sequentially** - each plugin transforms the AST and passes it to the next
 - **Changes in one plugin affect subsequent plugins** - always trace the full data flow
 - **Critical plugin order** (from `astro.config.mjs`):
+
   ```javascript
   remarkPlugins: [
     remarkInternalLinks, // 1. Process wikilinks and standard links
@@ -3445,11 +3432,13 @@ This comprehensive embed support maintains the theme's core principles of clarit
     remarkToc, // 12. Generate table of contents
   ];
   ```
+
 - **The Problem**: `remarkFolderImages` runs BEFORE `remarkObsidianEmbeds`
   - `remarkFolderImages` processes ALL image nodes and converts URLs to WebP
   - If it processes audio/video/PDF embeds, they get converted to `.webp` extensions
   - Then `remarkObsidianEmbeds` can't detect them because extensions are wrong
 - **The Solution**: `remarkFolderImages` MUST skip non-image files:
+
   ```typescript
   // ✅ CORRECT - Skip non-image files in remarkFolderImages
   const nonImageExtensions = [
@@ -3472,6 +3461,7 @@ This comprehensive embed support maintains the theme's core principles of clarit
     return; // Let remarkObsidianEmbeds handle these
   }
   ```
+
 - **URL Resolution**: `remarkObsidianEmbeds` handles both relative and absolute URLs:
   - Relative: `attachments/video.mp4` → `/posts/attachments/video.mp4`
   - Absolute: `/posts/attachments/video.mp4` → Use as-is (already converted by remarkFolderImages)
@@ -3591,7 +3581,6 @@ This comprehensive embed support maintains the theme's core principles of clarit
 
 #### 1. **Not Using Development Tools**
 
-- Run `pnpm run check-images` regularly
 - Monitor console for development warnings
 - Use placeholder system for missing assets
 
